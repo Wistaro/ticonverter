@@ -16,7 +16,7 @@ class membres {
 			$this->$type_final = $final;
 			$this->user = $user;
 
-        
+
 
 
 	}
