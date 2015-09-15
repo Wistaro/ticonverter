@@ -6,20 +6,38 @@
 
 class membres {
 
-		public $type_original;
-		public $type_final;
-		private $user;
+		
+		private $pseudo;
+		private $mdp;
+		private $mail;
+		private $type;
 
-	public function __construct($original, $final, $user = "Guest"){
 
-			$this->$type_original = $original;
-			$this->$type_final = $final;
-			$this->user = $user;
+	public function __construct($psd, $mdp, $mail, $type = "membre"){
 
+			$this->pseudo = $psd;
+			$this->mdp = $mdp;
+			$this->mail = $mail;
+			$this->type = $type;
+
+
+	}
+
+	private function uploadfile($type, $public = true, $content){
+
+			
+
+
+	}
+
+
+	private function promote($user, $newrank){
 
 
 
 	}
+
+
 
 
 
