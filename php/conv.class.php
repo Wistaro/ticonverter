@@ -1,12 +1,10 @@
 <?php
-/*
-	
-	Convertisseur - By Wistaro
-
-*/
 
 
-class = convert {
+
+
+
+class convert {
 
 		public $type_original;
 		public $type_final;
@@ -20,6 +18,8 @@ class = convert {
 
 
 	}
+
+
 
 
 
