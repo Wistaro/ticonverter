@@ -22,12 +22,54 @@ class convertisseur {
 
 			//conversion vers basic 83+/84+
 
+
+
+
+
+	}
+
+	private static function get_lang($content){
+
+		$lang = "FR"; //default lang: french
+
+		//Comparative tables of French and English functions
+		$fr_spec = array('EffTable', 'EffEcran', 'EffDess', 'Cercle', 'Ligne(', 'Ombre(', 'Texte(', 'Pt-Aff(', 'Pt-NAff(', 'Pt-Changer(', '');
+		$en_spec = array('ClrTable', 'ClrHome', 'ClrDraw', 'Circle(', 'Line(', 'Shade', 'Text(', 'Pt-On(', 'Pt-Off(', 'Pt-Chang(', '');
+
+		//Language recognition based on the syntax of the commands
+
+
+
+
+
+		return $lang;
 	}
 
 	public function to83PCE($format_initial, $content){
 
 
 			//conversion vers basic couleur 83PCE
+
+		$lang = self::get_lang($content);
+
+
+			$specific_tokens_83PCE_FR = array(
+				'CouleurGraph(' , 
+				'CouleurTexte(' , 
+				'ArrPlanAff' , 
+				'ArrPlanNAff' , 
+				'' 
+			);
+
+			$specific_tokens_83PCE_EN = array(
+				'' , 
+				'CouleurTexte(' , 
+				'ArrPlanAff' , 
+				'ArrPlanNAff' , 
+				'' 
+			);
+
+
 
 	}
 
