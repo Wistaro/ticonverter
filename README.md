@@ -1,6 +1,5 @@
-# README #
+#Bienvenue#
 
-Merci de lire le README avant tout.
 
 
 ##Membres##
@@ -10,4 +9,3 @@ Adrien BERTAND (Adriweb)
 Epharius
 
 ##A FAIRE##
-
