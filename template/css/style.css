@@ -1,0 +1,28 @@
+body {
+
+
+
+
+}
+
+
+.itemmenu{
+
+	display: inline;
+	background-color: blue;
+	width: 80px;
+	height: 80px; 
+	padding-left: 10px;
+	padding-right: 10px;
+
+
+
+}
+
+.menu ul{
+
+	width: 100px;
+	height: 80px; 
+	display: inline;
+
+}
