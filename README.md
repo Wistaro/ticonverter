@@ -4,8 +4,9 @@
 
 ##Membres##
 
-William ROMIGUIERES (Wistaro)
-Adrien BERTAND (Adriweb)
-Epharius
+*  William ROMIGUIERES (Wistaro)
+*  Adrien BERTAND (Adriweb)
+*  Epharius
 
+ 
 ##A FAIRE##
