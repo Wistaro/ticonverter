@@ -4,7 +4,7 @@
 
 
 
-class convert {
+class membres {
 
 		public $type_original;
 		public $type_final;
@@ -15,6 +15,8 @@ class convert {
 			$this->$type_original = $original;
 			$this->$type_final = $final;
 			$this->user = $user;
+
+        
 
 
 	}
