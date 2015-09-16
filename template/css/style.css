@@ -1,28 +1,67 @@
-body {
+body
+{
 
+	background: #333;
+	font-family: arial;
+	color: #DDD;
 
+}
 
+a
+{
+
+	color: #CCC;
+	text-decoration: none; 
+
+}
+a:hover
+{
+
+	text-decoration: underline;
 
 }
 
 
-.itemmenu{
-
-	display: inline;
+.itemmenu
+{
 	
-	width: 80px;
-	height: 80px; 
-	padding-left: 10px;
-	padding-right: 10px;
-
-
+	margin: 20px 10px;
+	list-style: none;
 
 }
 
-.menu ul{
+.menu
+{
 
-	width: 100px;
-	height: 80px; 
-	display: inline;
+	position: fixed;
+	top: 0; left: 0; bottom: 0;
+	width: 200px;
+	background: #222;
+	padding: 30px 20px;
+
+}
+
+.TTREA_code
+{
+
+	background: #555;
+	color: #DDD;
+	font-size: 15px;
+	width: 400%;
+	height: 500px;
+
+}
+
+.SEC_main
+{
+	position: absolute;
+	left: 300px;
+}
+
+.BT_send
+{
+
+	display: block;
+	margin-top: 10px;
 
 }
