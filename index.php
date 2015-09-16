@@ -12,24 +12,26 @@
 
 		<div class="menu">
 			<ul>
-				<li class="itemmenu">Accueil</li>
-				<li class="itemmenu">Documentation</li>
-				<li class="itemmenu">Votre espace</li>
-				<li class="itemmenu">A propos</li>
+				<li class="itemmenu"><a href="#">Accueil</a></li>
+				<li class="itemmenu"><a href="#">Documentation</a></li>
+				<li class="itemmenu"><a href="#">Votre espace</a></li>
+				<li class="itemmenu"><a href="#">A propos</a></li>
 
 			</ul>
 
 		</div>
 	</menu>
 
-	<h1>Convertisseur multi-TI</h1>
-	<form method="post" action="" enctype="multipart/form-data">
-
-		<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
-		<p>Ou </p>
- 		<textarea name="code_input" cols="70" rows="30" placeholder="Saisissez votre code ici"></textarea> 
-
- 		<input type="submit" action="envoyer" />
- 	</form>
+	<section class="SEC_main">
+		<h1>Convertisseur multi-TI</h1>
+		<form method="post" action="" enctype="multipart/form-data">
+	
+			<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
+			<p>Ou </p>
+ 			<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea> 
+	
+ 			<input type="submit" action="envoyer" class="BT_send" />
+ 		</form>
+ 	</section
 </body>
 </html>
