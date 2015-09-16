@@ -26,9 +26,19 @@
 		<h1>Convertisseur multi-TI</h1>
 		<form method="post" action="" enctype="multipart/form-data">
 	
-			<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
-			<p>Ou </p>
- 			<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea> 
+			<?php if($_GET['mode'] == "upload") { ?>
+
+				<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
+
+			<?php } elseif($_GET['mode'] == "input") { ?>
+
+ 				<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea> 
+
+ 			<?php } else { ?>
+
+ 				<p></p>
+
+ 			<?php } ?>
 	
  			<input type="submit" action="envoyer" class="BT_send" />
  		</form>
