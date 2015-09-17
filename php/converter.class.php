@@ -1,6 +1,6 @@
 <?php
 
-
+namespace php;
 
 class converter {
 
