@@ -86,13 +86,27 @@ class converter {
 	}
 
 
+	static public function read_line($path, $line){
+
+		$programm = fopen($path, 'r+');
+
+		for ($i=1; $i<=$line; $i++) { 
+
+			$line_effect = fgets($programm);
+			
+		}
+		
+		return $line_effect;
+        fclose($programm);
+
+	}
 /*
 
 
 
 
 */
-	public function print_prgm($path){
+	static public function print_prgm($path){
 
 			$programm = fopen($path, 'r+');
    	 		$nb_line = 0;
@@ -137,6 +151,9 @@ class converter {
 
 
 }
+
+
+
 
 
 

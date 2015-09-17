@@ -3,8 +3,6 @@
 	require('php/converter.class.php');
 
 
-        $prog = new converter();
-
-        $prog->print_prgm('ressources/sudoku_color.txt');
+        echo converter::read_line('ressources/sudoku_color.txt', 1);
 
 ?>
