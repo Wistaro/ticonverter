@@ -3,8 +3,8 @@
 	require('php/converter.class.php');
 
 
-        $prog = new php\converter();
+        $prog = new converter();
 
-        $prog->print_prgm('ressources/sudoku_color.php');
+        $prog->print_prgm('ressources/sudoku_color.txt');
 
 ?>

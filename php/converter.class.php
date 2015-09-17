@@ -1,6 +1,6 @@
 <?php
 
-namespace php;
+
 
 class converter {
 
@@ -86,6 +86,12 @@ class converter {
 	}
 
 
+/*
+
+
+
+
+*/
 	public function print_prgm($path){
 
 			$programm = fopen($path, 'r+');
