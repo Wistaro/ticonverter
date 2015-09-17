@@ -2,13 +2,13 @@
 
 
 
-class convertisseur {
+class converter {
 
 		public $type_original;
 		public $type_final;
 		private $user;
 
-	public function __construct($original, $final, $user = "Guest"){
+	public function __construct($original = "", $final="", $user = "Guest"){
 
 			$this->type_original = $original;
 			$this->type_final = $final;
@@ -86,7 +86,53 @@ class convertisseur {
 	}
 
 
+	public function print_prgm($path){
+
+			$programm = fopen($path, 'r+');
+   	 		$nb_line = 0;
+    		$max_leng = 0;
+  			$global = "";
+
+
+
+    
+    	if ($programm) {
+
+       	 while (!feof($programm)) {
+
+            	 $line_effect = fgets($programm);
+
+             		 if (strlen(trim($line_effect)) > $max_leng) {
+
+                       		 	$max_leng = strlen(trim($line_effect));
+                     
+                		 	}
+
+            		 	$global = $global.($line_effect).'  ';
+
+
+          			 $nb_line++;
+     		  	}
+        
+  		  	}
+
+    
+
+  		 	 echo '<textarea cols='.$nb_line.' rows='.$max_leng.'>'.$global.'</textarea>';
+	
+
+			fclose($programm);
+
+
+		}
+
+
 
 
 
 }
+
+
+
+
+

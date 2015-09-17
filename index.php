@@ -1,3 +1,15 @@
+<?php
+
+	if(isset($_GET['mode'])){
+
+			$mode = htmlspecialchars($_GET['mode']);
+	}else{
+
+			$mode = "";
+	}
+
+
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -26,21 +38,31 @@
 		<h1>Convertisseur multi-TI</h1>
 		<form method="post" action="" enctype="multipart/form-data">
 	
-			<?php if($_GET['mode'] == "upload") { ?>
+			<?php if($mode == "upload") { ?>
 
-				<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
+				<input type="file" name="fichier" id="fichier" name="fichier"/><br />
+				<input type="submit" action="envoyer" class="BT_send" />
 
-			<?php } elseif($_GET['mode'] == "input") { ?>
+			<?php } elseif($mode == "input") { ?>
 
- 				<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea> 
+ 				<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea><br />
+ 				<input type="submit" action="envoyer" class="BT_send" />
 
- 			<?php } else { ?>
+ 			<?php } elseif($mode == "") { ?>
 
- 				<p></p>
+ 				
 
+ 					<p><b>TI-Converter est  un outils gratuit de conversion de programmes écrits en TI-basic z80. </b></p>
+
+ 					<p>Marre des programmes qui ne sont pas compatibles avec le modèle de votre calculatrice? TI-Converter ets fait pour vous. </p>
+
+ 					<br / ><br />
+
+
+ 					
  			<?php } ?>
 	
- 			<input type="submit" action="envoyer" class="BT_send" />
+ 			
  		</form>
  	</section
 </body>

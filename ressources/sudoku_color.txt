@@ -1,0 +1,160 @@
+StoreGDB GDB0
+:"S|u[|d]ok|u
+ClrHome
+Full
+[AUTO]
+randIntNoRep(1,12
+Ans+2(Ans>=5
+For(A,1,12
+Output(4,Ans(A)+6,sub("Al[|e]x  Li[t][z][|a]|u'[s]",Ans(A),1
+For(B,1,30
+End
+End
+Output(6,11,"S|u[|d]ok|u
+Normal
+Float
+PlotsOff 
+FnOff 
+GridOff
+AxesOff
+LabelOff
+BackgroundOff
+182->Xmax
+82->Ymax
+~Ans->Xmin
+Ans->Ymin
+45->A
+58->D
+getKey
+Output(10,7,"P[r][|e][s][s] [|a][n]y k[|e]y
+Repeat getKey
+End
+ClrHome
+Repeat A=22
+If A=45:Then
+Output(2,11,"S|u[|d]ok|u
+Output(4,9,"Diffi[|c]|ul[t]y
+Output(8,9,"2[n][|d]-S[|e]l[|e][|c][t]
+Output(9,9,"Mo[|d][|e]-Q|ui[t]
+0getKey
+Repeat Ans=21
+			D-18(Ans=24 and D!=40)+18(Ans=26 and D!=76->D
+			Output(6,9,sub("   E[|a][s]y  [|>][<|] M[|e][|d]i|um [|>][<|]  H[|a][r][|d]   ",5Ans/9-191/9,10
+			Repeat Ans
+				getKey
+			End
+			If Ans=22:Goto 0
+		End
+		ClrHome
+		Output(4,10,"Lo[|a][|d]i[n]g...
+		Output(6,13,"0 %
+		DelVar YClrDraw
+		~[[1,7,8,3,4,2,6,5,9][4,9,3,5,1,6,7,8,2][5,6,2,9,7,8,4,1,3][9,5,4,7,3,1,2,6,8][8,1,7,6,2,9,5,3,4][3,2,6,8,5,4,1,9,7][7,8,5,2,6,3,9,4,1][6,3,1,4,9,7,8,2,5][2,4,9,1,8,5,3,7,6->[J]
+		randInt(0,8->C
+		For(A,1,9
+			For(B,1,9
+				C+[J](A,B
+				Ans-9(Ans>=0->[J](A,B
+				Y+1->Y
+				round(Ans|E2/(D+90),0
+				Output(6,12+(Ans<=9),Ans
+			End
+		End
+		For(A,0,[e],3^^-1
+			3int(A)+seq(randInt(1,3),B,1,4
+			rowSwap(rowSwap([J]^^T,Ans(1),Ans(2))^^T,Ans(3),Ans(4->[J]
+			Y+1->Y
+			Output(6,12,round(Ans|E2/(D+90),0
+		End
+		For(A,1,D
+			0->[J](randInt(1,9),randInt(1,9
+			Y+1->Y
+			round(Ans|E2/(D+90),0
+			Output(6,13-int(log(Ans)),Ans
+		End
+		81->C
+		~Ans->B
+		{83,82,64,46,28,27,9
+		ClrHome
+		For(A,1,7
+			Vertical ~Ans(A),1,Navy
+			Vertical Ans(A),1,Navy
+			Line(~81,Ans(A),81,Ans(A),Navy,1
+			Line(~81,~Ans(A),81,~Ans(A),Navy,1
+		End
+		TextColor(Green
+		Line(90,76,175,76,Red
+		Line(90,74,90,49,Red
+		Text(~1,13,180,"SUDOKU
+		Line(174,74,174,49,Red
+		Line(90,48,175,48,Red
+		TextColor(Brown
+		Text(81,185,"Co[n][t][r]ol[s]
+		Line(103,~13,163,~13,Brown,1
+		Text(97,180,"2ND: Ch[|e][|c]k
+		Text(111,178,"DEL: D[|e]l[|e][t][|e]
+		Text(125,179,"CLEAR: N[|e]|w
+		Text(139,181,"MODE: Q|ui[t]
+		TextColor(Black
+		For(A,1,9
+			For(Y,1,9
+				If [J](A,Y:Text(~1,18A+int(A/3.1)-17,18Y+int(Y/3.1)-14,abs([J](A,Y
+			End
+		End
+		8pi->A
+		getKey
+	End
+	TextColor(Blue
+	Repeat max(Ans={21,22,45
+		If A>=24 and A<=26 or A=34:Then
+			Line(B,C,B,C-16,0
+			Line(B+15,C,B+15,C-16,0
+			B-(A=24)(18+(B=~26 or B=29)-164(B=~81))+(A=26)(18+(B=~45 or B=10)-164(B=65->B
+			C-(A=34)(18+(C=~10 or C=45)-164(C=~65))+(A=25)(18+(C=~29 or C=26)-164(C=81->C
+			Line(B,Ans,B,Ans-16,Orange
+			Line(B+15,Ans,B+15,Ans-16,Orange
+		End
+		If A=23 or A>=72 and A<=94 and .2<fPart(A/5:Then
+			round(2[e]-.05C,0->Y
+			round(2[e]+.05B,0
+			If 0<=[J](Y,Ans:Then
+				A-65-13(A>80)-13(A>90)+42(A=23->[J](Y,Ans
+				If Ans:Text(~1,82-C,B+85,Ans
+				If not(Ans:Text(~1,82-C,B+85," 
+			End
+		End
+		Repeat Ans
+			getKey->A
+		End
+	End
+	If Ans=21:Then
+		TextColor(Black
+		Text(52,180,"Ch[|e][|c]ki[n]g...
+		For(A,1,9
+			abs([J]
+			Matr>list(Ans,A,|LX
+			Matr>list(Ans^^T,A,|LY
+			seq(Ans(3int(A/3.1)+int(Y/3.1)+1,3A-9int(A/3.1)+Y-3int(Y/3.1)-3),Y,1,9->|LZ
+			SortA(|LX
+			SortA(|LY
+			SortA(|LZ
+			seq(Y,Y,1,9
+			If max(Ans!=|LX or Ans!=|LY or Ans!=|LZ:98->A
+		End
+		Text(~1,51,180,"      
+		If A=99:Then
+			TextColor(Red
+			Text(52,193,"W[r]o[n]g!
+			Else
+			TextColor(Green
+			Text(52,186,"Co[r][r][|e][|c][t]!
+		End
+		getKey
+		Repeat getKey
+		End
+		Text(~1,51,186,"     
+	End
+End
+Lbl 0
+RecallGDB GDB0
+DelVar [J]DelVar |LXDelVar |LYDelVar |LZDelVar ADelVar BDelVar CDelVar DDelVar Y"
