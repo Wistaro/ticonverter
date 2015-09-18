@@ -1,14 +1,9 @@
 <?php
-
 	if(isset($_GET['mode'])){
-
 			$mode = htmlspecialchars($_GET['mode']);
 	}else{
-
 			$mode = "";
 	}
-
-
 ?>
 <!doctype html>
 <html lang="fr">
@@ -16,6 +11,8 @@
   <meta charset="utf-8">
   <title>TI-Convertisseur</title>
   <link rel="stylesheet" href="template/css/style.css">
+  <link rel="stylesheet" href="codeMirror-5.6/lib/codemirror.css">
+  <link rel="stylesheet" href="codeMirror-5.6/theme/3024-night.css">
   <script src="js/script.js"></script>
 </head>
 <body>
@@ -38,32 +35,37 @@
 		<h1>Convertisseur multi-TI</h1>
 		<form method="post" action="" enctype="multipart/form-data">
 	
-			<?php if($mode == "upload") { ?>
-
-				<input type="file" name="fichier" id="fichier" name="fichier"/><br />
-				<input type="submit" action="envoyer" class="BT_send" />
-
-			<?php } elseif($mode == "input") { ?>
-
- 				<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code"></textarea><br />
- 				<input type="submit" action="envoyer" class="BT_send" />
-
- 			<?php } elseif($mode == "") { ?>
-
- 				
-
- 					<p><b>TI-Converter est  un outils gratuit de conversion de programmes écrits en TI-basic z80. </b></p>
-
- 					<p>Marre des programmes qui ne sont pas compatibles avec le modèle de votre calculatrice? TI-Converter ets fait pour vous. </p>
-
- 					<br / ><br />
-
-
- 					
- 			<?php } ?>
+			<?php if(isset($_GET['mode']))
+			{
+				if($_GET['mode'] == "upload") { ?>
 	
- 			
- 		</form>
- 	</section
+					<input type="file" name="fichier" id="fichier" name="fichier"/><br /><br />
+					<input type="submit" action="envoyer" class="BT_send" />
+	
+				<?php } elseif($_GET['mode'] == "input") { ?>
+	
+					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code">If A=5</textarea> 
+					<input type="submit" action="envoyer" class="BT_send" />
+			
+			<?php } } else { ?>
+
+				<p></p>
+
+			<?php } ?>
+	
+		</form>
+	</section>
+
+	<script src="codeMirror-5.6/lib/codemirror.js"></script>
+	<script src="codeMirror-5.6/mode/tibasic/tibasic.js"></script>
+	<script src="codeMirror-5.6/addon/selection/active-line.js"></script>
+	<script type="text/javascript">
+		var editor = CodeMirror.fromTextArea(document.getElementById("TTREA_code"), {
+			mode: "tibasic",
+			styleActiveLine: true,
+			lineNumbers: true,
+			theme: "3024-night"
+		});
+	</script>
 </body>
 </html>
