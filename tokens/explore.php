@@ -3,39 +3,47 @@
 <head>
   <meta charset="utf-8">
   <title>TI-Convertisseur</title>
-  <link rel="stylesheet" href="../template/css/style.css">
-  <script src="../js/script.js"></script>
+  
 </head>
 <body>
-
-	<menu>
-
-		<div class="menu">
-			<ul>
-				<li class="itemmenu"><a href="#">Accueil</a></li>
-				<li class="itemmenu"><a href="#">Documentation</a></li>
-				<li class="itemmenu"><a href="#">Votre espace</a></li>
-				<li class="itemmenu"><a href="#">A propos</a></li>
-
-			</ul>
-
-		</div>
-	</menu>
-
-	<section class="SEC_main">
 <?php 
+	
+		
+/*
+$lang = "FR";
+
+	if($lang == "FR"){
+
+		$col1 = 5;
+		$col2 = 6;
+
+	}elseif ($lang == "EN") {
+		
+		$col1 = 4;
+		$col2 = 5;
+
+	}
+
+
 $fichier = "tokens.csv";
+$cpt = 0;
 $fic = fopen($fichier, 'r+');
 
 echo "<table border='1'>\n";
+
 for ($ligne = fgetcsv($fic, 1024); !feof($fic); $ligne = fgetcsv($fic, 1024)) {
+
+	$cpt++;
+
   echo "<tr>";
-  $j = 6;
-  for ($i = 4; $i < $j; $i++) {
+
+  $j = $col2;
+
+  for ($i = $col1; $i < $j; $i++) {
 
 
 
-    echo "<td> $ligne[$i]</td>";
+    echo "<td>N°$cpt -  $ligne[$i]</td>";
 
 
     }
@@ -44,12 +52,26 @@ for ($ligne = fgetcsv($fic, 1024); !feof($fic); $ligne = fgetcsv($fic, 1024)) {
 
   }
 
-echo "</table>\n";
+echo "</table>\n";*/
+
+include('../php/converter.class.php');
+include('../tokens/tokens_array_type.php');
+
+converter::get_function_readable("FR", 35);
+
+	
+foreach ($color_only as $value) {
+
+		echo converter::get_function_readable("FR", $value).'<br />';
+
+}
+
+
+
+
+
 
 ?>
 
-</section>
 </body>
-
-
 </html>

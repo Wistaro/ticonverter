@@ -32,9 +32,7 @@ class converter {
 
 		$lang = "FR"; //default lang: french
 
-		//Comparative tables of French and English functions
-		$fr_spec = array('EffTable', 'EffEcran', 'EffDess', 'Cercle', 'Ligne(', 'Ombre(', 'Texte(', 'Pt-Aff(', 'Pt-NAff(', 'Pt-Changer(', '');
-		$en_spec = array('ClrTable', 'ClrHome', 'ClrDraw', 'Circle(', 'Line(', 'Shade', 'Text(', 'Pt-On(', 'Pt-Off(', 'Pt-Chang(', '');
+		
 
 		//Language recognition based on the syntax of the commands
 
@@ -45,6 +43,67 @@ class converter {
 		return $lang;
 	}
 
+
+	public static function get_typeofprogramm($path){
+
+
+
+
+	}
+
+/**
+	@param: string $lang default="EN" Language of the token choosen, int $ID id of the token/readable function
+	@return: string the readable name of the fonction whith the ID selected
+*/
+
+	public static function get_function_readable($lang = "EN", $ID){
+
+	
+
+		if($lang == "FR"){
+
+			$col1 = 5;
+			$col2 = 6;
+
+			}elseif ($lang == "EN") {
+		
+			$col1 = 4;
+			$col2 = 5;
+
+		}
+
+
+		$fichier = "../tokens/tokens.csv";
+		$function = '';
+		$cpt = 0;
+		$fic = fopen($fichier, 'r+');
+
+	
+		for ($ligne = fgetcsv($fic, 1024); $cpt<=$ID; $ligne = fgetcsv($fic, 1024)) {
+
+			$cpt++;
+
+  		
+
+  			$j = $col2;
+
+  			for ($i = $col1; $i < $j; $i++) {
+
+  				$function = $ligne[$i]; 	
+
+  				}		
+
+  		}
+  	
+
+		return $function;
+
+	}
+
+
+
+
+
 	public function to83PCE($format_initial, $content){
 
 
@@ -53,21 +112,7 @@ class converter {
 		$lang = self::get_lang($content);
 
 
-			$specific_tokens_83PCE_FR = array(
-				'CouleurGraph(' , 
-				'CouleurTexte(' , 
-				'ArrPlanAff' , 
-				'ArrPlanNAff' , 
-				'' 
-			);
-
-			$specific_tokens_83PCE_EN = array(
-				'' , 
-				'CouleurTexte(' , 
-				'ArrPlanAff' , 
-				'ArrPlanNAff' , 
-				'' 
-			);
+			
 
 
 
@@ -100,18 +145,41 @@ class converter {
         fclose($programm);
 
 	}
-/*
 
+	static private function linesofpgm($path){
 
+		$programm = fopen($path, 'r+');
+   	 	$nb_line = 0;
 
+   	 	while (!feof($programm)) {
 
+            	 $line_effect = fgets($programm);
+
+                   			 $nb_line++;
+     		  	}
+
+     		return $nb_line;
+
+	}
+
+/**
+	@param: string $path path of txt file, boolean $colorSyntax if color syntax is activated in the textarea
+	@return: string the textarea
 */
-	static public function print_prgm($path){
+	static public function print_prgm($path, $colorSyntax = false){
 
 			$programm = fopen($path, 'r+');
-   	 		$nb_line = 0;
-    		$max_leng = 0;
+       		$max_leng = 0;
   			$global = "";
+
+  			if($colorSyntax === true){
+
+  					$id_textarea = "TTREA_code";
+
+  			}else{
+
+  					$id_textarea = "normal";
+  			}
 
 
 
@@ -131,14 +199,19 @@ class converter {
             		 	$global = $global.($line_effect).'  ';
 
 
-          			 $nb_line++;
-     		  	}
+          			     		  	}
         
   		  	}
 
     
+  		  	echo '<p><b>Nombre de lignes: </b>'.self::linesofpgm($path).'</p>';
+  		  	/*echo '<p><b>Type: </b>TI-Basic eZ80</p>';
+  		  	echo '<p><b>Compatibilité: </b>Ecrans couleurs, écran monochrome</p>';
+  		  	echo '<p><b>Calculatrices incompatibles: </b> <i>aucunes</i></p>'; */
+  		 	 echo '<textarea id="'.$id_textarea.'" cols='.self::linesofpgm($path).' rows='.$max_leng.'>'.$global.'</textarea>';
 
-  		 	 echo '<textarea cols='.$nb_line.' rows='.$max_leng.'>'.$global.'</textarea>';
+  		  	/*echo '<br /><button>Convertir</button>'; */
+
 	
 
 			fclose($programm);
