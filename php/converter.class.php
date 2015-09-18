@@ -28,13 +28,13 @@ class converter {
 
 	}
 
-	private static function get_lang($content){
+	private static function get_lang($path){
 
 		$lang = "FR"; //default lang: french
 
 		
 
-		//Language recognition based on the syntax of the commands
+		
 
 
 
@@ -46,8 +46,23 @@ class converter {
 
 	public static function get_typeofprogramm($path){
 
+	$frfind = false;
+
+		
+	
+
+		for ($ligne=0; $ligne <= self::linesofpgm($path); $ligne++) { 
+
+			$current_line = self::read_line($path, $ligne);
 
 
+
+
+
+
+			
+
+			}
 
 	}
 
@@ -56,7 +71,7 @@ class converter {
 	@return: string the readable name of the fonction whith the ID selected
 */
 
-	public static function get_function_readable($lang = "EN", $ID){
+	private static function get_function_readable($lang = "EN", $ID){
 
 	
 
@@ -112,6 +127,8 @@ class converter {
 		$lang = self::get_lang($content);
 
 
+
+
 			
 
 
@@ -133,6 +150,8 @@ class converter {
 
 	static public function read_line($path, $line){
 
+		$line_effect = '';
+
 		$programm = fopen($path, 'r+');
 
 		for ($i=1; $i<=$line; $i++) { 
@@ -142,6 +161,7 @@ class converter {
 		}
 		
 		return $line_effect;
+
         fclose($programm);
 
 	}
@@ -190,13 +210,13 @@ class converter {
 
             	 $line_effect = fgets($programm);
 
-             		 if (strlen(trim($line_effect)) > $max_leng) {
+             		 if (strlen(ltrim($line_effect)) > $max_leng) {
 
-                       		 	$max_leng = strlen(trim($line_effect));
+                       		 	$max_leng = strlen(ltrim($line_effect));
                      
                 		 	}
 
-            		 	$global = $global.($line_effect).'  ';
+            		 	$global = $global.(ltrim($line_effect)).'  ';
 
 
           			     		  	}

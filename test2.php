@@ -10,7 +10,12 @@
 			<p>Fichier: sudoku.txt</p>
 			<hr>
 
-			<?php echo converter::print_prgm('ressources/sudoku_color.txt', true); ?>
+			<?php //echo converter::print_prgm('ressources/sudoku_color.txt', true); ?>
+
+			<?php
+				converter::print_prgm('ressources/sudoku_color.txt', true);
+
+			?>
 			
 				
 
