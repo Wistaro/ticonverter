@@ -7,6 +7,7 @@
 *  William ROMIGUIERES (Wistaro)
 *  Adrien BERTAND (Adriweb)
 *  Mathis.L (Epharius)
+*  Clément Nerma (Clement.7)
 
  
 ##A FAIRE##
