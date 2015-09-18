@@ -10,7 +10,7 @@
 		?>
 
 	<section class="SEC_main">
-		<h1>Convertisseur multi-TI</h1>
+		<h1 id="BT_send">Convertisseur multi-TI</h1>
 		<form method="post" action="" enctype="multipart/form-data">
 	
 			<?php 
