@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>TI-Convertisseur</title>
   <link rel="stylesheet" href="template/css/style.css">
-  <link rel="stylesheet" href="codeMirror-5.6/lib/codemirror.css">
-  <link rel="stylesheet" href="codeMirror-5.6/theme/3024-night.css">
+  <link rel="stylesheet" href="codemirror-5.6/lib/codemirror.css">
+  <link rel="stylesheet" href="codemirror-5.6/theme/3024-night.css">
   <script src="js/script.js"></script>
 </head>
 <body>
