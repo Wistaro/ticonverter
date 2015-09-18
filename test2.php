@@ -10,12 +10,19 @@
 			<p>Fichier: sudoku.txt</p>
 			<hr>
 
-			<?php //echo converter::read_line('ressources/sudoku_color.txt', 10); ?>
+			
 
 
 
 			<?php
-				echo converter::get_typeofprogramm('ressources/sudoku_color.txt', 'EN');
+
+				$myprgm = new converter('ressources/sudoku_color.txt');
+
+
+				echo '<p><b>Path: </b>'.$myprgm->getpath().'</p>';
+				echo '<p><b>Type de programme: </b>'.$myprgm->get_type_of_programm().'</p>';
+				echo $myprgm->print_prgm(true);
+
 
 			?>
 			

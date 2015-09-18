@@ -7,15 +7,25 @@ class converter {
 		public $type_original;
 		public $type_final;
 		private $user;
+		private $path_txt; 
+		private $lang_prgm;
 
-	public function __construct($original = "", $final="", $user = "Guest"){
+	public function __construct($path, $lang = "EN", $original = "", $final="", $user = "Guest"){
 
 			$this->type_original = $original;
 			$this->type_final = $final;
 			$this->user = $user;
+			$this->path_txt = $path;
+			$this->lang_prgm = $lang;
 
+			if(empty($lang)){
 
-	}
+				self::get_lang();
+
+			}
+
+			
+			}
 
 	public function to83Plus($format_initial, $content){
 
@@ -28,39 +38,37 @@ class converter {
 
 	}
 
-	private static function get_lang($path){
+	private function get_lang(){
 
-		$lang = "FR"; //default lang: french
+		//genere la langue du programme si elle n'est pas spécifiée par l'utilisateur
 
-		
-
-		
-
-
-
-
-
-		return $lang;
+			
 	}
 
-
-	public static function get_typeofprogramm($path, $lang = "EN"){
+/**
+* To get the type of the programm, for load good conversion module
+	@return: string The type of program (color or black & white), and the calculators compatibles
+*/
+	public function get_type_of_programm(){
 
 		//echo self::read_line('ressources/sudoku_color.txt', 10).'ptin';
 
 		include('tokens/tokens_array_type.php');
 
+		if(!file_exists($this->path_txt)){
 
-	
+					return 'Erreur lors de l\'louverture du fichier!';
+			}
 
-		for ($ligne=1; $ligne <= self::linesofpgm($path); $ligne++) { 
+		
+		for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
 
-			$current_line = self::read_line('ressources/sudoku_color.txt', $ligne);
+			$current_line = $this->read_line($ligne);
 			
 
 				for ($i=0; $i <= 6 ; $i++) { 
 
-						$search = stripos($current_line, self::get_function_readable($lang, $color_only[$i]));
+						$search = stripos($current_line, $this->get_function_readable($color_only[$i]));
 
 						if($search !== false){
 
@@ -79,13 +87,13 @@ class converter {
 	}
 
 /**
-	@param: string $lang default="EN" Language of the token choosen, int $ID id of the token/readable function
-	@return: string the readable name of the fonction whith the ID selected
+	@param:  int $ID id of the token/readable function
+	@return: string  the readable name of the fonction whith the ID selected
 */
 
-	private static function get_function_readable($lang = "EN", $ID){
+	private function get_function_readable($ID){
 
-	
+	$lang = $this->lang_prgm;
 
 		if($lang == "FR"){
 
@@ -136,13 +144,7 @@ class converter {
 
 			//conversion vers basic couleur 83PCE
 
-		$lang = self::get_lang($content);
-
-
-
-
-			
-
+		
 
 
 	}
@@ -160,10 +162,13 @@ class converter {
 	}
 
 
-	static public function read_line($path, $line){
+	private function read_line($line){
 
+		$path = $this->path_txt;
+
+			
 		$line_effect = '';
-
+		
 		$programm = fopen($path, 'r+');
 
 		for ($i=1; $i<=$line; $i++) { 
@@ -178,7 +183,9 @@ class converter {
 
 	}
 
-	static private function linesofpgm($path){
+	private function linesofpgm(){
+
+	$path = $this->path_txt;
 
 		$programm = fopen($path, 'r+');
    	 	$nb_line = 0;
@@ -195,10 +202,19 @@ class converter {
 	}
 
 /**
-	@param: string $path path of txt file, boolean $colorSyntax if color syntax is activated in the textarea
+	@param: boolean $colorSyntax if color syntax is activated in the textarea
 	@return: string the textarea
 */
-	static public function print_prgm($path, $colorSyntax = false){
+	 public function print_prgm($colorSyntax = false){
+
+	 	$path = $this->path_txt;
+
+	 	if(!file_exists($this->path_txt)){
+
+					return 'Erreur lors de l\'louverture du fichier!';
+			}
+
+
 
 			$programm = fopen($path, 'r+');
        		$max_leng = 0;
@@ -252,7 +268,11 @@ class converter {
 		}
 
 
+	public function getpath(){
 
+			return $this->path_txt;
+
+	}
 
 
 }
