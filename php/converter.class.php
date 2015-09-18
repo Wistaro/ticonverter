@@ -44,25 +44,37 @@ class converter {
 	}
 
 
-	public static function get_typeofprogramm($path){
+	public static function get_typeofprogramm($path, $lang = "EN"){
 
-	$frfind = false;
+		//echo self::read_line('ressources/sudoku_color.txt', 10).'ptin';
 
-		
+		include('tokens/tokens_array_type.php');
+
+
 	
 
-		for ($ligne=0; $ligne <= self::linesofpgm($path); $ligne++) { 
+		for ($ligne=1; $ligne <= self::linesofpgm($path); $ligne++) { 
 
-			$current_line = self::read_line($path, $ligne);
-
-
-
-
-
-
+			$current_line = self::read_line('ressources/sudoku_color.txt', $ligne);
 			
 
+				for ($i=0; $i <= 6 ; $i++) { 
+
+						$search = stripos($current_line, self::get_function_readable($lang, $color_only[$i]));
+
+						if($search !== false){
+
+								return 'Modèle couleur - 83PCE/84+CE';
+
+						}
+
+
+				}
+
+				
 			}
+
+			return 'Modèle monochrome - 83(+)/84(+)(SE)';
 
 	}
 
@@ -88,7 +100,7 @@ class converter {
 		}
 
 
-		$fichier = "../tokens/tokens.csv";
+		$fichier = "tokens/tokens.csv";
 		$function = '';
 		$cpt = 0;
 		$fic = fopen($fichier, 'r+');

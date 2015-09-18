@@ -10,10 +10,12 @@
 			<p>Fichier: sudoku.txt</p>
 			<hr>
 
-			<?php //echo converter::print_prgm('ressources/sudoku_color.txt', true); ?>
+			<?php //echo converter::read_line('ressources/sudoku_color.txt', 10); ?>
+
+
 
 			<?php
-				converter::print_prgm('ressources/sudoku_color.txt', true);
+				echo converter::get_typeofprogramm('ressources/sudoku_color.txt', 'EN');
 
 			?>
 			
