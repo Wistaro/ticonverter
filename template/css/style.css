@@ -44,12 +44,9 @@ a:hover
 .TTREA_code
 {
 
+	background: #090300;
+	color: #d6d5d4;
 	position: relative;
-	background: #555;
-	color: #DDD;
-	font-size: 15px;
-	width: 100%;
-	height: 500px;
 
 }
 

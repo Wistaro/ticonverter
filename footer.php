@@ -7,10 +7,17 @@
 			mode: "tibasic",
 			styleActiveLine: true,
 			lineNumbers: true,
+			//viewportMargin: Infinity,
 			theme: "3024-night"
 		});
-		document.getElementById("BT_send").addEventListener("click", function() {
-			editor.replaceRange("ClrAllLists", {line: 0, ch: 0});
+		document.getElementById("BT_triangle").addEventListener("click", function() {
+			editor.replaceRange("►", editor.getCursor());
+		});
+		document.getElementById("BT_arrow").addEventListener("click", function() {
+			editor.replaceRange("→", editor.getCursor());
+		});
+		editor.on("change", function() {
+			alert('test');
 		});
 	</script>
 </body>

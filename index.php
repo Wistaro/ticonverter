@@ -21,6 +21,7 @@
 	
 				<?php } elseif($mode == "input") { ?>
 	
+					<button id="BT_arrow" onclick="return false;">→</button><button id="BT_triangle" onclick="return false;">►</button>
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code">If A=5</textarea> 
 					<input type="submit" action="envoyer" class="BT_send" />
 			
