@@ -413,7 +413,7 @@ Category,Sub-category,Sub-sub-category,Name,Readable Name,Readable Name (FR),# o
 ,,,normalcdf(,normalcdf(,normalFRép(,2,BB,10,,Function,,,,
 ,,,invNorm(,invNorm(,FracNormale(,2,BB,11,,Function,,,,
 ,,,tcdf(,tcdf(,studentFRép(,2,BB,12,,Function,,,,
-,,,\u03c7\u00b2cdf(,χ²cdf(,X²FRép(	,2,BB,13,,Function,,,,
+,,,\u03c7\u00b2cdf(,χ²cdf(,X²FRép(  ,2,BB,13,,Function,,,,
 ,,,\uf021cdf(,Fcdf(,FFRép(,2,BB,14,,Function,,,,
 ,,,binompdf(,binompdf(,binomfdp(,2,BB,15,,Function,,,,
 ,,,binomcdf(,binomcdf(,binomFRép(,2,BB,16,,Function,,,,

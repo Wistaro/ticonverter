@@ -10,7 +10,7 @@ class converter {
 		private $path_txt; 
 		private $lang_prgm;
 
-	public function __construct($path, $lang = "EN", $original = "", $final="", $user = "Guest"){
+	public function __construct($path, $lang = "", $original = "", $final="", $user = "Guest"){
 
 			$this->type_original = $original;
 			$this->type_final = $final;
@@ -18,15 +18,9 @@ class converter {
 			$this->path_txt = $path;
 			$this->lang_prgm = $lang;
 
-			if(empty($lang)){
-
-				self::get_lang();
-
-			}
+		}
 
 			
-			}
-
 	public function to83Plus($format_initial, $content){
 
 
@@ -38,16 +32,67 @@ class converter {
 
 	}
 
-	private function get_lang(){
+/**
+* Genere la langue du programme si elle n'est pas spécifiée par l'utilisateur
+* @param: 
+* @return: 
+*/
+	public function search_lang(){
 
-		//genere la langue du programme si elle n'est pas spécifiée par l'utilisateur
+		include('tokens/tokens_array_type.php');
+
+		
+
+		if(!file_exists($this->path_txt)){
+
+					return 'Erreur lors de l\'louverture du fichier!';
+			}
+
+
+		if($this->lang_prgm == ""){
+
+				//searching langage 
+
+			for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
+
+			$current_line = $this->read_line($ligne);
+			
+
+				for ($i=0; $i <= 236 ; $i++) { 
+
+
+						
+						$search = stripos($current_line, $this->get_function_readable($fr_only[$i]));
+
+						if($search !== false){
+
+								$this->lang_prgm = 'FR';
+
+								return $this->lang_prgm;
+
+						}
+
+
+				}
+
+				
+			}
+
+
+					$this->lang_prgm = 'EN';
+
+					return $this->lang_prgm;
+
+
+		}
+		
 
 			
 	}
 
 /**
 * To get the type of the programm, for load good conversion module
-	@return: string The type of program (color or black & white), and the calculators compatibles
+*	@return: string The type of program (color or black & white), and the calculators compatibles
 */
 	public function get_type_of_programm(){
 
@@ -64,10 +109,12 @@ class converter {
 		for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
 
 			$current_line = $this->read_line($ligne);
+
 			
 
 				for ($i=0; $i <= 6 ; $i++) { 
 
+						
 						$search = stripos($current_line, $this->get_function_readable($color_only[$i]));
 
 						if($search !== false){
@@ -87,53 +134,48 @@ class converter {
 	}
 
 /**
-	@param:  int $ID id of the token/readable function
-	@return: string  the readable name of the fonction whith the ID selected
+*	@param:  int $ID id of the token/readable function
+*	@return: string  the readable name of the fonction whith the ID selected
 */
 
-	private function get_function_readable($ID){
+	public function get_function_readable($ID){
+
 
 	$lang = $this->lang_prgm;
 
-		if($lang == "FR"){
 
+		if($lang == "FR" OR $lang == ""){
 			$col1 = 5;
 			$col2 = 6;
-
 			}elseif ($lang == "EN") {
 		
 			$col1 = 4;
 			$col2 = 5;
-
 		}
 
-
 		$fichier = "tokens/tokens.csv";
+		
 		$function = '';
 		$cpt = 0;
 		$fic = fopen($fichier, 'r+');
+		
+
+
+
 
 	
 		for ($ligne = fgetcsv($fic, 1024); $cpt<=$ID; $ligne = fgetcsv($fic, 1024)) {
-
 			$cpt++;
-
   		
-
   			$j = $col2;
-
   			for ($i = $col1; $i < $j; $i++) {
-
   				$function = $ligne[$i]; 	
-
   				}		
-
   		}
   	
-
 		return $function;
-
 	}
+	
 
 
 
@@ -202,8 +244,8 @@ class converter {
 	}
 
 /**
-	@param: boolean $colorSyntax if color syntax is activated in the textarea
-	@return: string the textarea
+*	@param: boolean $colorSyntax if color syntax is activated in the textarea
+*	@return: string the textarea
 */
 	 public function print_prgm($colorSyntax = false){
 
@@ -271,6 +313,12 @@ class converter {
 	public function getpath(){
 
 			return $this->path_txt;
+
+	}
+
+	public function getlang(){
+
+			return $this->lang_prgm;
 
 	}
 

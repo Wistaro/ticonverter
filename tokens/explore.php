@@ -55,14 +55,14 @@ for ($ligne = fgetcsv($fic, 1024); !feof($fic); $ligne = fgetcsv($fic, 1024)) {
 echo "</table>\n";*/
 
 include('../php/converter.class.php');
-include('../tokens/tokens_array_type.php');
+include('tokens_array_type.php');
 
-converter::get_function_readable("FR", 35);
+$myprgm = new converter('ressources/sudoku_color.txt');
 
 	
 foreach ($color_only as $value) {
 
-		echo converter::get_function_readable("FR", $value).'<br />';
+		$myprgm->get_function_readable($value).'<br />';
 
 }
 
