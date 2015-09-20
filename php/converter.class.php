@@ -4,24 +4,22 @@
 
 class converter {
 
-		public $type_original;
-		public $type_final;
 		private $user;
 		private $path_txt; 
 		private $lang_prgm;
+		public $type;
 
-	public function __construct($path, $lang = "", $original = "", $final="", $user = "Guest"){
+	public function __construct($path, $type="", $lang = "EN", $user = "Guest"){
 
-			$this->type_original = $original;
-			$this->type_final = $final;
 			$this->user = $user;
 			$this->path_txt = $path;
 			$this->lang_prgm = $lang;
+			$this->type = $type;
 
 		}
 
 			
-	public function to83Plus($format_initial, $content){
+	public function to83Plus(){
 
 
 			//conversion vers basic 83+/84+
@@ -58,7 +56,7 @@ class converter {
 			$current_line = $this->read_line($ligne);
 			
 
-				for ($i=0; $i <= 236 ; $i++) { 
+				for ($i=0; $i <= 158 ; $i++) { 
 
 
 						
@@ -66,7 +64,7 @@ class converter {
 
 						if($search !== false){
 
-								$this->lang_prgm = 'FR';
+								$this->lang_prgm('FR');	
 
 								return $this->lang_prgm;
 
@@ -105,7 +103,10 @@ class converter {
 					return 'Erreur lors de l\'louverture du fichier!';
 			}
 
-		
+	if($this->type == ""){
+
+
+	
 		for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
 
 			$current_line = $this->read_line($ligne);
@@ -119,7 +120,8 @@ class converter {
 
 						if($search !== false){
 
-								return 'Modèle couleur - 83PCE/84+CE';
+								$this->type = 'Couleur - 83PCE/84+CE';
+								return 'Couleur - 83PCE/84+CE';
 
 						}
 
@@ -129,7 +131,10 @@ class converter {
 				
 			}
 
+			$this->type = 'Monochrome - 83(+)/84(+)(SE)';
 			return 'Modèle monochrome - 83(+)/84(+)(SE)';
+
+		}
 
 	}
 

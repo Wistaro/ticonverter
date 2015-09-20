@@ -29,19 +29,20 @@
 
 
 
-				$myprgm = new converter('ressources/test.txt.txt');
+				$myprgm = new converter('ressources/sudoku_color.txt');
 
 
 				echo '<p><b>Path: </b>'.$myprgm->getpath().'</p>';
 
-				$myprgm->search_lang();
+				//$myprgm->search_lang();
 
 
-				//echo '<p><b>Type de programme: </b>'.$myprgm->get_type_of_programm().'</p>';
+				echo '<p><b>Type de programme: </b>'.$myprgm->get_type_of_programm().'</p>';
 
 				
 
 				echo '<p><b>Langue: </b>'.$myprgm->getlang().'</p>';
+
 				echo $myprgm->print_prgm(true);
 
 
