@@ -8,9 +8,8 @@
 
 namespace tivars\TypeHandlers;
 
-interface ITIVarTypeHandler
-{
-    public function makeDataFromString($str = '');
+include_once "TH_0x05.php";
 
-    public function makeStringFromData($data = null);
-}
+// Type Handler for type 0x06: Protected Program
+// Nothing else to handle than TH_0x05 (Program)
+class TH_0x06 extends TH_0x05 {}

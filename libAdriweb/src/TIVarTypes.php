@@ -91,7 +91,7 @@ abstract class TIVarTypes
     }
 
     /**
-     * @param   string  $name    The type name
+     * @param   string  $name   The type name
      * @return  int             The type ID for that name
      */
     public static function getIDFromName($name = '')
@@ -134,7 +134,12 @@ abstract class TIVarTypes
 
     public static function isValidTypeID($id = -1)
     {
-        return ($id !== -1 && is_int($id) && isset(self::$types[$id]));
+        return ($id >= 0 && is_int($id) && isset(self::$types[$id]));
+    }
+
+    public static function isValidTypeName($name = '')
+    {
+        return ($name !== '' && isset(self::$types[$name]));
     }
 }
 

@@ -37,10 +37,13 @@ class TIVarFile extends BinaryFile
 
     // TODO: Handle multiple varEntries
 
+
+    /*** Constructors ***/
+
     /**
      * Internal constructor, called from loadFromFile and createNew.
-     * @param null $filePath
-     * @throws \Exception
+     * @param   string  $filePath
+     * @throws  \Exception
      */
     protected function __construct($filePath = '')
     {
@@ -48,6 +51,10 @@ class TIVarFile extends BinaryFile
         {
             $this->isFromFile = true;
             parent::__construct($filePath);
+            if ($this->fileSize < 76) // bare minimum for header + a var entry
+            {
+                throw new \Exception("This file is not a valid TI-[e]z80 variable file");
+            }
             $this->makeHeaderFromFile();
             $this->makeVarEntryFromFile();
             $this->computedChecksum = $this->computeChecksumFromFileData();
@@ -72,11 +79,14 @@ class TIVarFile extends BinaryFile
     {
         if ($type !== null)
         {
-            $name = preg_replace('/[^A-Z0-9]/', '', $name);
             if ($name === '')
             {
                 $name = 'FILE' . ((count($type->getExts()) > 0) ? $type->getExts()[0] : '');
-                echo "Warning: Name was modified to: " . strtoupper(substr($name, 0, 8));
+            }
+            $newName = preg_replace('/[^a-zA-Z0-9]/', '', $name);
+            if ($newName !== $name || strlen($newName) > 8 || $newName === '' || is_numeric($newName[0]))
+            {
+                throw new \Exception("Invalid name given. 8 chars (A-Z, 0-9) max, starting by a letter");
             }
             $name = strtoupper(substr($name, 0, 8));
 
@@ -86,17 +96,17 @@ class TIVarFile extends BinaryFile
                 'signature'     =>  "**TI83F*",
                 'sig_extra'     =>  [ 0x1A, 0x0A, 0x00 ],
                 'comment'       =>  str_pad("Created by tivars_lib on " . date("M j, Y"), 42, "\0"),
-                'entries_len'   =>  [ 0x00, 0x00 ] // will have to be overwritten later
+                'entries_len'   =>  0 // will have to be overwritten later
             ];
             $instance->varEntry = [
                 'constBytes'    =>  [ 0x0B, 0x00 ],
-                'data_length'   =>  [ 0x00, 0x00 ], // will have to be overwritten later
+                'data_length'   =>  0, // will have to be overwritten later
                 'typeID'        =>  $type->getId(),
                 'varname'       =>  str_pad($name, 8, "\0"),
                 'version'       =>  0,
                 'archivedFlag'  =>  0, // TODO: check when that needs to be 1.
-                'data_length2'  =>  [ 0x00, 0x00 ], // will have to be overwritten later
-                'data'          =>  null // will have to be overwritten later
+                'data_length2'  =>  0, // will have to be overwritten later
+                'data'          =>  [] // will have to be overwritten later
             ];
             return $instance;
         } else {
@@ -106,6 +116,7 @@ class TIVarFile extends BinaryFile
 
 
     /*** Makers ***/
+
     private function makeHeaderFromFile()
     {
         rewind($this->file);
@@ -133,6 +144,7 @@ class TIVarFile extends BinaryFile
 
 
     /*** Getters ***/
+
     public function getHeader()
     {
         return $this->header;
@@ -150,27 +162,15 @@ class TIVarFile extends BinaryFile
 
 
     /*** Utils. ***/
+
     public function isValid()
     {
-        return ($this->isFromFile) ? ($this->computedChecksum === $this->inFileChecksum) : ($this->computedChecksum !== null);
+        return ($this->isFromFile) ? ($this->computedChecksum === $this->inFileChecksum)
+                                   : ($this->computedChecksum !== null);
     }
 
 
-    /*** Actions ***/
-    public function fixChecksumInFile()
-    {
-        if ($this->isFromFile)
-        {
-            if (!$this->isValid())
-            {
-                fseek($this->file, $this->fileSize - 2);
-                fwrite($this->file, chr($this->computedChecksum & 0xFF) . chr($this->computedChecksum >> 8));
-                $this->inFileChecksum = $this->getChecksumValueFromFile();
-            }
-        } else {
-            echo "[Error] No file loaded";
-        }
-    }
+    /*** Private actions ***/
 
     public function computeChecksumFromFileData()
     {
@@ -195,7 +195,7 @@ class TIVarFile extends BinaryFile
         return array_sum($this->varEntry['data']) & 0xFFFF;
     }
 
-    public function getChecksumValueFromFile()
+    private function getChecksumValueFromFile()
     {
         if ($this->isFromFile)
         {
@@ -207,21 +207,39 @@ class TIVarFile extends BinaryFile
         }
     }
 
-    public function setContentFromData($data = null)
+    /**
+     *  Updates the length fields in both the header and the var entry, as well as the checksum
+     */
+    private function refreshMetadataFields()
     {
-        if ($data !== null)
+        $oldVarEntryLen = $this->varEntry['data_length'];
+        $this->varEntry['data_length'] = $this->varEntry['data_length2'] = count($this->varEntry['data']);
+        $this->header['entries_len'] += $this->varEntry['data_length'] - $oldVarEntryLen;
+        $this->computedChecksum = $this->computeChecksumFromInstanceData();
+    }
+
+
+    /*** Public actions **/
+
+    /**
+    * @param    array   $data   The array of bytes
+    */
+    public function setContentFromData(array $data = [])
+    {
+        if ($data !== [])
         {
             $this->varEntry['data'] = $data;
-            $this->computedChecksum = $this->computeChecksumFromInstanceData();
+            $this->refreshMetadataFields();
         } else {
             echo "[Error] No data given";
         }
     }
 
-    public function setContentFromString($str = '')
+    public function setContentFromString($str = '', $options = [])
     {
-        $this->varEntry['data'] = $this->type->getTypeHandler()->makeDataFromString($str);
-        $this->computedChecksum = $this->computeChecksumFromInstanceData();
+        $handler = $this->type->getTypeHandler();
+        $this->varEntry['data'] = $handler::makeDataFromString($str, $options);
+        $this->refreshMetadataFields();
     }
 
     public function getRawContent()
@@ -229,9 +247,25 @@ class TIVarFile extends BinaryFile
         return $this->varEntry['data'];
     }
 
-    public function getReadableContent()
+    public function getReadableContent($options = [])
     {
-        return $this->type->getTypeHandler()->makeStringFromData($this->varEntry['data']);
+        $handler = $this->type->getTypeHandler();
+        return $handler::makeStringFromData($this->varEntry['data'], $options);
+    }
+
+    public function fixChecksumInFile()
+    {
+        if ($this->isFromFile)
+        {
+            if (!$this->isValid())
+            {
+                fseek($this->file, $this->fileSize - 2);
+                fwrite($this->file, chr($this->computedChecksum & 0xFF) . chr($this->computedChecksum >> 8));
+                $this->inFileChecksum = $this->getChecksumValueFromFile();
+            }
+        } else {
+            echo "[Error] No file loaded";
+        }
     }
 
     public function saveVarToFile($filePath = '')
