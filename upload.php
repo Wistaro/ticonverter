@@ -30,14 +30,14 @@ if($_POST['upload'] == 'input'){
 
 	
 
-	fputs($fichier, $_POST['code_input']);
+	$content = $_POST['code_input'];
 
-	/*$gcode = explode("\n", $content);
+	$gcode = explode("\n", $content);
 
 	foreach ($gcode as $key => $value) {
 		echo 'ligne='.$key.' et '.$value.'<br />';
 
-	}*/
+	}
 
 
 	
