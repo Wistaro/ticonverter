@@ -47,6 +47,9 @@ a:hover
 	background: #090300;
 	color: #d6d5d4;
 	position: relative;
+	display: block;
+	width: 70%;
+	height: 300px;
 
 }
 
@@ -68,6 +71,7 @@ a:hover
 .BT
 {
 	margin: 10px 10px 10px 0;
+	*position: ;
 }
 
 .loader {

@@ -46,7 +46,6 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 
 					if (keywords1.test(w)) {
 						state.context = 1;
-						alert(w);
 						return 'keyword';
 					} else if (keywords2.test(w)) {
 						state.context = 2;
