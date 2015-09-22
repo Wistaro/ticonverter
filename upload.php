@@ -20,24 +20,56 @@ if($type == 'auto'){
 
 if($_POST['upload'] == 'input'){
 
-	$name = uniqid().'.txt';
-	$fichier = fopen('files/'.$name, 'w+');
-
-	fseek($fichier, 0);
-
-
-
-
 	
-
 	$content = $_POST['code_input'];
 
-	$gcode = explode("\n", $content);
 
-	foreach ($gcode as $key => $value) {
-		echo 'ligne='.$key.' et '.$value.'<br />';
+	function linesofprgm($source, $type){
 
-	}
+	if($type == 'input'){
+
+				return substr_count($source, "\n");
+
+
+
+		}elseif ($type == 'file') {
+			
+				$rpl = str_replace('\\n', '<br />', $source);
+				return substr_count($rpl, "<br />")+1;
+
+		}
+
+
+
+}
+
+
+
+
+
+function get_line($line, $source, $type){
+
+		if($type == 'input'){
+
+				$gcode = explode("\n", $source);
+
+		}elseif ($type == 'file') {
+			
+				$rpl = str_replace('\\n', '<br />', $source); //on transforme provisoirement les \n en <br />, car les \n ne sont pas détecté par la suite par le explode..???
+				$gcode = explode("<br />", $rpl);
+
+		}
+
+		
+
+	return $gcode[$line-1];
+}	
+	
+
+for ($i=1; $i <= linesofprgm($content, 'input'); $i++) { 
+
+		echo get_line($i, $content, 'input').'<br />';
+	} 
 
 
 	

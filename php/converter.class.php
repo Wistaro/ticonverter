@@ -5,16 +5,18 @@
 class converter {
 
 		private $user;
-		private $path_txt; 
+		private $prgm_decode; 
 		private $lang_prgm;
 		public $type;
+		private $typeofinput;
 
-	public function __construct($path, $type="", $lang = "EN", $user = "Guest"){
+	public function __construct($prgm, $typeofinput, $type="", $lang = "EN", $user = "Guest"){
 
 			$this->user = $user;
-			$this->path_txt = $path;
+			$this->prgm_decode = $prgm;
 			$this->lang_prgm = $lang;
 			$this->type = $type;
+			$this->typeofinput = $typeofinput; //type: 'input' OR 'file' only! See docs for further informations
 
 		}
 
@@ -39,14 +41,7 @@ class converter {
 
 		include('tokens/tokens_array_type.php');
 
-		
-
-		if(!file_exists($this->path_txt)){
-
-					return 'Erreur lors de l\'louverture du fichier!';
-			}
-
-
+	
 		if($this->lang_prgm == ""){
 
 				//searching langage 
@@ -196,11 +191,22 @@ class converter {
 
 	}
 
-	public function decode8xp($type_entree, $content){
+	/*public static function decode8xp($path, $lang){
 
-			//convertisseur fichier 8xp vers txt (text/plain)
+			include_once "src/autoloader.php";
 
-	}
+			use tivars\TIVarFile;
+			use tivars\TIVarType;
+			use tivars\TIVarTypes;
+
+		$current_prgm = TIVarFile::loadFromFile($path);
+		$source = $current_prgm->getReadableContent(['lang' => $lang]);
+
+		return $source;
+
+
+
+	}*/
 
 	public function encode8xp($type_entree, $content){
 
@@ -211,40 +217,44 @@ class converter {
 
 	private function read_line($line){
 
-		$path = $this->path_txt;
+		$type = $this->typeofinput;
+		$source = $this->prgm_decode;
 
+			if($type == 'input'){
+
+					$gcode = explode("\n", $source);
+
+			}elseif ($type == 'file') {
 			
-		$line_effect = '';
+					$rpl = str_replace('\\n', '<br />', $source); //on transforme provisoirement les \n en <br />, car les \n ne sont pas détecté par la suite par le explode..???
+					$gcode = explode("<br />", $rpl);
+
+			}
+
 		
-		$programm = fopen($path, 'r+');
 
-		for ($i=1; $i<=$line; $i++) { 
+			return $gcode[$line-1];
 
-			$line_effect = fgets($programm);
-			
 		}
-		
-		return $line_effect;
-
-        fclose($programm);
-
-	}
 
 	private function linesofpgm(){
 
-	$path = $this->path_txt;
+		$type = $this->typeofinput;
+		$source = $this->prgm_decode;
 
-		$programm = fopen($path, 'r+');
-   	 	$nb_line = 0;
+			if($type == 'input'){
 
-   	 	while (!feof($programm)) {
+				return substr_count($source, "\n")+1;
 
-            	 $line_effect = fgets($programm);
 
-                   			 $nb_line++;
-     		  	}
 
-     		return $nb_line;
+		}elseif ($type == 'file') {
+			
+				$rpl = str_replace('\\n', '<br />', $source);
+				return substr_count($rpl, "<br />")+1;
+
+		}
+
 
 	}
 

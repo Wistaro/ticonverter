@@ -1,3 +1,9 @@
+<?php
+
+	require('php/converter.class.php');
+	require('php/functions.php');
+
+?>
 <!doctype html>
 <html lang="fr">
 <head>
