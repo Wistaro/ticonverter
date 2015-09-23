@@ -96,9 +96,9 @@ function get_line($line, $source, $type){
 
 //echo $gcode[0];
 
+$sourceFR = str_replace("\n", "<br />", $sourceFR);
 
-
-//echo '<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code">'.$sourceFR.'</textarea>';
+echo '<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code">'.$sourceFR.'</textarea>';
 
 
 
@@ -114,4 +114,4 @@ function get_line($line, $source, $type){
 </p>
 <?php
 
-	require('footer.php');
+	//require('footer.php');
