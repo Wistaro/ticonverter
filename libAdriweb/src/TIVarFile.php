@@ -99,7 +99,7 @@ class TIVarFile extends BinaryFile
                 'entries_len'   =>  0 // will have to be overwritten later
             ];
             $instance->varEntry = [
-                'constBytes'    =>  [ 0x0B, 0x00 ],
+                'constBytes'    =>  [ 0x0D, 0x00 ],
                 'data_length'   =>  0, // will have to be overwritten later
                 'typeID'        =>  $type->getId(),
                 'varname'       =>  str_pad($name, 8, "\0"),
@@ -192,7 +192,13 @@ class TIVarFile extends BinaryFile
 
     private function computeChecksumFromInstanceData()
     {
-        return array_sum($this->varEntry['data']) & 0xFFFF;
+        $sum = 0;
+        $sum += array_sum($this->varEntry['constBytes']);
+        $sum += 2 * (($this->varEntry['data_length'] & 0xFF) + (($this->varEntry['data_length'] >> 8) & 0xFF));
+        $sum += $this->varEntry['typeID'] + $this->varEntry['version'] + $this->varEntry['archivedFlag'];
+        $sum += array_sum(array_map('ord', str_split($this->varEntry['varname'])));
+        $sum += array_sum($this->varEntry['data']);
+        return $sum & 0xFFFF;
     }
 
     private function getChecksumValueFromFile()
@@ -212,9 +218,8 @@ class TIVarFile extends BinaryFile
      */
     private function refreshMetadataFields()
     {
-        $oldVarEntryLen = $this->varEntry['data_length'];
         $this->varEntry['data_length'] = $this->varEntry['data_length2'] = count($this->varEntry['data']);
-        $this->header['entries_len'] += $this->varEntry['data_length'] - $oldVarEntryLen;
+        $this->header['entries_len'] = $this->varEntry['data_length'] + 17; // 17 == sum of the individual sizes.
         $this->computedChecksum = $this->computeChecksumFromInstanceData();
     }
 
@@ -260,7 +265,7 @@ class TIVarFile extends BinaryFile
             if (!$this->isValid())
             {
                 fseek($this->file, $this->fileSize - 2);
-                fwrite($this->file, chr($this->computedChecksum & 0xFF) . chr($this->computedChecksum >> 8));
+                fwrite($this->file, chr($this->computedChecksum & 0xFF) . chr(($this->computedChecksum >> 8) & 0xFF));
                 $this->inFileChecksum = $this->getChecksumValueFromFile();
             }
         } else {
@@ -268,9 +273,71 @@ class TIVarFile extends BinaryFile
         }
     }
 
-    public function saveVarToFile($filePath = '')
+    /**
+     * Writes a variable to an actual file on the FS
+     * If the variable was already loaded from a file, it will be used and overwritten,
+     * except if a specific directory and name are provided.
+     *
+     * @param   string  $directory  Directory to save the file to
+     * @param   string  $name       Name of the file, without the extension
+     */
+    public function saveVarToFile($directory = '', $name = '')
     {
-        // TODO
+        if ($this->isFromFile && $directory === '')
+        {
+            $this->close();
+            $handle = fopen($this->filePath, 'wb');
+        } else {
+            if ($name === '')
+            {
+                $name = $this->varEntry['varname'];
+            }
+            // TODO: make user be able to precise for which model the extension will be fitted
+            $fileName = str_replace("\0", '', $name) . '.' . $this->getType()->getExts()[0];
+            if ($directory === '')
+            {
+                $directory = './';
+            }
+            $directory = rtrim($directory, '/');
+            $fullPath = realpath($directory) . '/' . $fileName;
+            $handle = fopen($fullPath, 'wb');
+        }
+
+        $this->refreshMetadataFields();
+
+        $bin_data = '';
+        foreach ([$this->header, $this->varEntry] as $whichData)
+        {
+            foreach ($whichData as $key => $data)
+            {
+                switch (gettype($data))
+                {
+                    case 'integer':
+                        // The length fields are the only ones on 2 bytes.
+                        if ($key === "entries_len" || $key === "data_length" || $key === "data_length2")
+                        {
+                            $bin_data .= chr($data & 0xFF) . chr(($data >> 8) & 0xFF);
+                        } else {
+                            $bin_data .= chr($data & 0xFF);
+                        }
+                        break;
+                    case 'string':
+                        $bin_data .= $data;
+                        break;
+                    case 'array':
+                        foreach ($data as $subData)
+                        {
+                            $bin_data .= chr($subData & 0xFF);
+                        }
+                        break;
+                }
+            }
+        }
+
+        fwrite($handle, $bin_data);
+        fwrite($handle, chr($this->computedChecksum & 0xFF) . chr(($this->computedChecksum >> 8) & 0xFF));
+
+        fclose($handle);
     }
 
 }

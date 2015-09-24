@@ -8,9 +8,26 @@
 		
 			<p>GlobalTest</p>
 
-			<?
-				$test = "ClrDraw\nDisp A\nDisp B\nPause B";
-				$myprgm = new converter($test, 'input');
+			<?php
+
+				include_once "libAdriweb\src/autoloader.php";
+
+				use tivars\TIVarFile;
+				use tivars\TIVarType;
+				use tivars\TIVarTypes;
+
+	$testPrgm = TIVarFile::loadFromFile('ressources/snake.8xp');
+
+	$source = $testPrgm->getReadableContent(['lang' => 'fr']);
+
+	$myprgm = new converter($source, 'file');
+
+	
+	
+	
+	
+
+	
 
 
 			?>

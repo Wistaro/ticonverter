@@ -22,13 +22,19 @@ class BinaryFile
     {
         if ($filePath !== null)
         {
-            $this->file = fopen($filePath, 'rb+');
-            if ($this->file === false)
+            if (file_exists($filePath))
             {
-                throw new \Exception("Can't open the input file");
+                $filePath = realpath($filePath);
+                $this->file = fopen($filePath, 'rb+');
+                if ($this->file === false)
+                {
+                    throw new \Exception("Can't open the input file");
+                }
+                $this->filePath = $filePath;
+                $this->fileSize = fstat($this->file)['size'];
+            } else {
+                throw new \Exception("No such file");
             }
-            $this->filePath = $filePath;
-            $this->fileSize = fstat($this->file)['size'];
         } else {
             throw new \Exception("No file path given");
         }
@@ -37,47 +43,42 @@ class BinaryFile
     /**
      * Returns an array of $bytes bytes read from the file
      *
-     * @param int $bytes
-     * @return array|bool
-     * @throws \Exception
+     * @param   int $bytes
+     * @return  array
+     * @throws  \Exception
      */
-    public function get_raw_bytes($bytes = 1)
+    public function get_raw_bytes($bytes = -1)
     {
         if ($this->file !== null)
         {
-            return array_merge(unpack("C*", fread($this->file, $bytes)));
+            if ($bytes !== -1)
+            {
+                return array_merge(unpack("C*", fread($this->file, $bytes)));
+            } else {
+                throw new \Exception("Invalid number of bytes to read");
+            }
         } else {
             throw new \Exception("No file loaded");
         }
     }
 
     /**
-     * Returns a string of up to $bytes bytes read from the file (stops at NUL)
+     * Returns a string of $bytes bytes read from the file (doesn't stop at NUL)
      *
-     * @param   int $bytes
-     * @return string
-     * @throws \Exception
+     * @param   int $bytes The number of bytes to read
+     * @return  string
+     * @throws  \Exception
      */
-    public function get_string_bytes($bytes = 1)
+    public function get_string_bytes($bytes = -1)
     {
         if ($this->file !== null)
         {
-            $str = '';
-            $finished = false;
-            while ($bytes--)
+            if ($bytes !== -1)
             {
-                $tmp = fread($this->file, 1);
-                if (!$finished)
-                {
-                    if (ord($tmp) === 0)
-                    {
-                        $finished = true;
-                    } else {
-                        $str .= $tmp;
-                    }
-                }
+                return fread($this->file, $bytes);
+            } else {
+                throw new \Exception("Invalid number of bytes to read");
             }
-            return $str;
         } else {
             throw new \Exception("No file loaded");
         }

@@ -10,7 +10,7 @@ class converter {
 		public $type;
 		private $typeofinput;
 
-	public function __construct($prgm, $typeofinput, $type="", $lang = "EN", $user = "Guest"){
+	public function __construct($prgm, $typeofinput, $type="", $lang = "", $user = "Guest"){
 
 			$this->user = $user;
 			$this->prgm_decode = $prgm;
@@ -22,6 +22,14 @@ class converter {
 
 			
 	public function to83Plus(){
+
+
+		$source = $this->prgm_decode;
+
+		for ($ligne=1; $ligne<=$this->linesofpgm(); $ligne++) { 
+			
+				echo $this->read_line($ligne).'<br />';
+		}
 
 
 			//conversion vers basic 83+/84+
@@ -49,13 +57,14 @@ class converter {
 			for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
 
 			$current_line = $this->read_line($ligne);
-			
+			echo $current_line;
 
-				for ($i=0; $i <= 158 ; $i++) { 
+				for ($i=0; $i <= 50 ; $i++) { 
 
 
 						
 						$search = stripos($current_line, $this->get_function_readable($fr_only[$i]));
+
 
 						if($search !== false){
 
@@ -79,7 +88,7 @@ class converter {
 
 		}
 		
-
+		return $this->lang_prgm;
 			
 	}
 
@@ -93,16 +102,13 @@ class converter {
 
 		include('tokens/tokens_array_type.php');
 
-		if(!file_exists($this->path_txt)){
-
-					return 'Erreur lors de l\'louverture du fichier!';
-			}
-
+		
 	if($this->type == ""){
 
+		$nblines = count(explode("\n", $this->prgm_decode))-1;
 
 	
-		for ($ligne=1; $ligne <= $this->linesofpgm(); $ligne++) { 
+		for ($ligne=1; $ligne <= $nblines; $ligne++) { 
 
 			$current_line = $this->read_line($ligne);
 
@@ -181,7 +187,7 @@ class converter {
 
 
 
-	public function to83PCE($format_initial, $content){
+	public function to83PCE(){
 
 
 			//conversion vers basic couleur 83PCE
@@ -191,22 +197,6 @@ class converter {
 
 	}
 
-	/*public static function decode8xp($path, $lang){
-
-			include_once "src/autoloader.php";
-
-			use tivars\TIVarFile;
-			use tivars\TIVarType;
-			use tivars\TIVarTypes;
-
-		$current_prgm = TIVarFile::loadFromFile($path);
-		$source = $current_prgm->getReadableContent(['lang' => $lang]);
-
-		return $source;
-
-
-
-	}*/
 
 	public function encode8xp($type_entree, $content){
 
@@ -215,48 +205,25 @@ class converter {
 	}
 
 
-	private function read_line($line){
+	public function read_line($line){
 
 		$type = $this->typeofinput;
 		$source = $this->prgm_decode;
+		$tbl = explode("\n", $this->prgm_decode);
+		$nblines = count($tbl)-1;
 
-			if($type == 'input'){
+		if($line <= 0 OR $line > $nblines+1){
 
-					$gcode = explode("\n", $source);
+				return 'Out of bounds';
+		}else{
 
-			}elseif ($type == 'file') {
 			
-					$rpl = str_replace('\\n', '<br />', $source); //on transforme provisoirement les \n en <br />, car les \n ne sont pas détecté par la suite par le explode..???
-					$gcode = explode("<br />", $rpl);
+					return $tbl[$line-1];
 
-			}
-
-		
-
-			return $gcode[$line-1];
+				}
 
 		}
 
-	private function linesofpgm(){
-
-		$type = $this->typeofinput;
-		$source = $this->prgm_decode;
-
-			if($type == 'input'){
-
-				return substr_count($source, "\n")+1;
-
-
-
-		}elseif ($type == 'file') {
-			
-				$rpl = str_replace('\\n', '<br />', $source);
-				return substr_count($rpl, "<br />")+1;
-
-		}
-
-
-	}
 
 /**
 *	@param: boolean $colorSyntax if color syntax is activated in the textarea
@@ -264,17 +231,11 @@ class converter {
 */
 	 public function print_prgm($colorSyntax = false){
 
-	 	$path = $this->path_txt;
-
-	 	if(!file_exists($this->path_txt)){
-
-					return 'Erreur lors de l\'louverture du fichier!';
-			}
+	 	$source = $this->prgm_decode;
 
 
 
-			$programm = fopen($path, 'r+');
-       		$max_leng = 0;
+	     		$max_leng = 0;
   			$global = "";
 
   			if($colorSyntax === true){

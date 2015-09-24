@@ -28,24 +28,6 @@ $testPrgm = TIVarFile::loadFromFile('libAdriweb/testData/ProtectedProgram_long.8
 $sourceFR = $testPrgm->getReadableContent(['lang' => 'en']);
 
 
-function linesofprgm($source, $type){
-
-	if($type == 'input'){
-
-				return substr_count($source, "\n");
-
-
-
-		}elseif ($type == 'file') {
-			
-				$rpl = str_replace('\\n', '<br />', $source);
-				return substr_count($rpl, "<br />")+1;
-
-		}
-
-
-
-}
 
 
 
