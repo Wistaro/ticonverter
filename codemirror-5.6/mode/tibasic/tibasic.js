@@ -35,7 +35,7 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 
 			var w;
 
-			if (stream.eatWhile(/\w/)) {
+			if (stream.eatWhile(/[\w-]/)) {
 			 
 				w = stream.current();
 

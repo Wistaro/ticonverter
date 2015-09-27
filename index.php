@@ -37,7 +37,6 @@
 				<?php } elseif($mode == "input") { ?>
 	
 					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button>
-<<<<<<< HEAD
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code2">If A=5</textarea> 
 					<br />
 					<label>Langue: </label><select name="lang">
@@ -53,9 +52,7 @@
 
 					</select><br />
 					<input type="hidden" name="upload" value="input" />
-=======
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> 
->>>>>>> Commit pour l'éditeur de code (non-terminé)
 					<input type="submit" action="envoyer" class="BT_send" />
 			
 			<?php }  else { ?>
