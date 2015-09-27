@@ -54,7 +54,7 @@
 					</select><br />
 					<input type="hidden" name="upload" value="input" />
 =======
-					<div name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code codepress javascript linenumbers-on" id="TTREA_code"></div> 
+					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> 
 >>>>>>> Commit pour l'éditeur de code (non-terminé)
 					<input type="submit" action="envoyer" class="BT_send" />
 			
