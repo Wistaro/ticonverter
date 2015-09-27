@@ -2,9 +2,6 @@
 <script src="codemirror-5.6/lib/codemirror.js"></script>
 <script src="codemirror-5.6/mode/tibasic/tibasic.js"></script>
 	<script type="text/javascript">
-		var editor = ace.edit("TTREA_code");
-   		editor.setTheme("ace/theme/monokai");
-   		editor.getSession().setMode("ace/mode/basic");
 		var editor = CodeMirror.fromTextArea(document.getElementById("TTREA_code"), {
 			mode: "tibasic",
 			styleActiveLine: true,
