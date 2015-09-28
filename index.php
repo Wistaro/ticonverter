@@ -36,22 +36,19 @@
 	
 				<?php } elseif($mode == "input") { ?>
 	
-					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button>
-					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code2">If A=5</textarea> 
-					<br />
 					<label>Langue: </label><select name="lang">
 						<option value="EN" selected>Anglais (défaut)</option>
 						<option value="FR">Français</option>
 
 					</select>
-					<br /><br />
-					<label>Type: </label><select name="type">
+					<label class="SELECT_type">Type: </label><select name="type">
 						<option value="auto" selected>Automatique (défaut)</option>
 						<option value="mono">Monochrome - 83(+)/84(+)(SE)</option>
 						<option value="color">Couleur - 83PCE/84+CE</option>
-
-					</select><br />
+					</select><br /><br />
 					<input type="hidden" name="upload" value="input" />
+					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button>
+					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> 
 					<input type="submit" action="envoyer" class="BT_send" />
 			

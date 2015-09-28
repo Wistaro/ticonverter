@@ -35,7 +35,7 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 
 			var w;
 
-			if (stream.eatWhile(/[\w-]/)) {
+			if (stream.eatWhile(/[\w\(-]/)) {
 			 
 				w = stream.current();
 
@@ -49,7 +49,6 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 						return 'keyword';
 					} else if (keywords2.test(w)) {
 						state.context = 2;
-						alert('plop');
 						return 'keyword2';
 					} else if (state.context == 4 && numbers.test(w)) {
 						return 'number';

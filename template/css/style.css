@@ -85,3 +85,8 @@ height : 100%;
 width : 100%;
 cursor : wait;
 }
+
+.SELECT_type
+{
+	margin-left: 50px;
+}
