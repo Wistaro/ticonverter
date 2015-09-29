@@ -12,7 +12,7 @@
 
 	$pxlcolor = '#^Pxl-(Aff|On)\(([0-9A-Z+-]+\,){2}[A-Z\s]{3,8}#i'; //is pxl colored
 
-	$ptchangecolor'#^Pt-changer?\((([0-9A-Z+-])+\,){2}([0-9A-Z+-]+\,)?[A-Z\s]{3,8}#i'; //is ptchange colored
+   // $ptchangecolor'#^Pt-changer?\(([0-9A-Z+-])+\,){2}([0-9A-Z+-]+\,)?[A-Z\s]{3,8}#i'; //is ptchange colored
 
 
 

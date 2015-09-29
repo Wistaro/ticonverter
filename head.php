@@ -2,6 +2,7 @@
 
 	require('php/converter.class.php');
 	require('php/functions.php');
+	require('php/regex.php');
 
 ?>
 <!doctype html>
