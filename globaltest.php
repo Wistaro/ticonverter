@@ -5,6 +5,16 @@
 
 	<section class="SEC_main">
 		<h1>GlobalTests</h1>
+
+
+			<p>
+
+				<?php
+					
+									?>
+
+
+			</p>
 		
 			<p>GlobalTest</p>
 
@@ -22,28 +32,40 @@
 
 
 
-	$toto = "Disp A\nTextColor(RED)\nDisp \"toto\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\n";
+	$toto = "Line(2A+3,5,999,88,Red)\nDisp A\nTextColor(RED)\nDisp \"Background On\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\nGraphColor RED\nLine(0,0,0,0,Red)\n";
 
 	
 
-	function iscoloredonly($currentline){
+	function iscoloredtotal($currentline){
 
-		/* version without regex*/
-			$return = false;
-			$totalcolor = array('Background', 'TextColor', 'CouleurTexte', 'ArrPlan', 'GraphColor', 'CouleurGraph', 'BorderColor', 'CouleurBord');
+		include('php/regex.php');
+
+	                   
+
+		$totalcolor = array('Background', 'TextColor', 'CouleurTexte', 'ArrPlan', 'GraphColor', 'CouleurGraph', 'BorderColor', 'CouleurBord');
 
 			for ($i=0; $i <=count($totalcolor)-1; $i++) { 
 				
-					if (stripos($currentline,$totalcolor[$i]) !== false) {
-						return true;
+					if (preg_match('#^'.$totalcolor[$i].'#i', $currentline)) {
+						return "delall";
 					}
+
 			}
 
-				return false; 
-	}	
+			if(preg_match($linecolor,$currentline,$regexline)){
 
 
+					$correction = substr($currentline, 0, stripos($currentline, $regexline[2]) -1).')';
+					
+					return $correction;
 
+			}
+		
+		return "nothing";
+
+		}
+
+	
  /*  Effacement ligne test  - AVANT transformation */
 
 	echo 'AVANT (colored)<br ><br />';
@@ -61,19 +83,23 @@
 		for ($i=1; $i <=count($aze)-1; $i++) { 
 			
 			$currentline = $aze[$i-1]."\n";
+			
 
+			
 	
-						if(iscoloredonly($currentline)){
+						if(iscoloredtotal($currentline) == "delall"){
 
 							//effacement total
 							$currentline = "";
 							
+							}elseif (iscoloredtotal($currentline) != "nothing") {
+								
+								$currentline = iscoloredtotal($currentline)."\n";
+
 							}
 
-					if("toto" == "toto"){ //vérification par regex, à faire. Les regex à tester sont dans php/regex.php
-
-								//effacement partiel
-					}
+								
+					
 
 				$toto2 = $toto2.$currentline;
 

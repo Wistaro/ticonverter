@@ -1,6 +1,7 @@
 <?php
 
-	$linecolor = '#^(Line|Ligne)\(+[a-zA-Z0-9_.-]+,[a-zA-Z0-9_.-]+,[a-zA-Z0-9_.-]+,[a-zA-Z0-9_.-]+,[a-zA-Z]#i'; //is line colored 
+	$linecolor = '#^Lig?ne\(([0-9A-Z+*-\/]+\,){4}([A-Za-z \n]{3,8})#i'; //is line colored 
+
 
 	$ptoncolor = '#^Pt-(On|Aff)\(([0-9A-Z+-]+\,){2}([0-9A-Z+-]+\,)?([a-zA-Z\s]+)\)#i'; //is pt colored
 
