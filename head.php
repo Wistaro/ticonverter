@@ -12,7 +12,7 @@
   <title>TI-Convertisseur</title>
   <link rel="stylesheet" href="template/css/style.css">
   <link rel="stylesheet" href="codemirror-5.6/lib/codemirror.css">
-  <link rel="stylesheet" href="codemirror-5.6/theme/3024-night.css">
+  <link rel="stylesheet" href="codemirror-5.6/theme/base16-dark.css">
 </head>
 <body>
 

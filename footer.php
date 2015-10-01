@@ -7,9 +7,9 @@
 			styleActiveLine: true,
 			lineNumbers: true,
 			viewportMargin: Infinity,
-			theme: "3024-night"
+			theme: "base16-dark"
 		});
-//
+
 		document.getElementById("BT_triangle").addEventListener("click", function() {
 			editor.replaceRange("►", editor.getCursor());
 		});
@@ -25,7 +25,7 @@
 		document.getElementById("BT_delta").addEventListener("click", function() {
 			editor.replaceRange("Δ", editor.getCursor());
 		});
-//
+
 		editor.on("change", function() {
 			if(editor.lineCount() > 20)
 				document.querySelector(".cm-s-3024-night.CodeMirror").style.height = "auto";
