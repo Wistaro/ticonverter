@@ -32,7 +32,7 @@
 
 
 
-	$toto = "Line(2A+3,5,999,88,Red)\nDisp A\nTextColor(RED)\nDisp \"Background On\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\nGraphColor RED\nLine(0,0,0,0,Red)\n";
+	$toto = "Line(2A+3,5,999,88,Red)\nDisp A\nTextColor(RED)\nDisp \"Background On\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\nGraphColor RED\nLine(0,0,0,0)\nHorizontale ROUGE\nHorizontale 20,BLEU CMR\n";
 
 	
 
@@ -60,6 +60,18 @@
 					return $correction;
 
 			}
+			if(preg_match($horizcolor,$currentline,$regexhoriz)){
+
+
+					
+					$correction = substr($currentline, 0, stripos($currentline, $regexhoriz[count($regexhoriz)-1]) -1);
+					
+					return $correction;
+
+			}
+
+
+			
 		
 		return "nothing";
 
