@@ -3,17 +3,17 @@
 	$linecolor = '#^Lig?ne\(([0-9A-Z+*-\/]+\,){4}([A-Za-z \n]{3,8})#i'; //is line colored 
 
 
-	$ptoncolor = '#^Pt-(On|Aff)\(([0-9A-Z+-]+\,){2}([0-9A-Z+-]+\,)?([a-zA-Z\s]+)\)#i'; //is pt colored
+	$ptoncolor = '#^Pt-(On|Aff)\(([0-9A-Z*+-\/]+\,){2}([0-9A-Z*+-\/]+\,)?([a-zA-Z\s]+)\)#i'; //is pt colored
 
 	$horizcolor = '#^horizontale?\s([0-9A-Z*+-\/]+\,)?([A-Za-z- \n]{3,8})#i'; //is horizontal colored
 
     $verticcolor = '#^Verticale?\s([0-9A-Z*+-\/]+\,)?([A-Za-z- \n]{3,8})#i'; //is vertical colored
 
-	$textcolor = '#^Texte?\(([0-9A-Z-+]+\,){2}"[\w \s-+*\/\\\.]+"\,[A-Z\s]{3,8}#i'; //is text colored
+	$textcolor = '#^Texte?\(([0-9A-Z*+-\/]+\,){2}"[\w \s-+*\/\\\.]+"\,([a-zA-Z\s]{3,8})#i'; //is text colored
 
-	$pxlcolor = '#^Pxl-(Aff|On)\(([0-9A-Z+-]+\,){2}[A-Z\s]{3,8}#i'; //is pxl colored
+	$pxlcolor = '#^Pxl-(Aff|On)\(([0-9A-Z*+-\/]+\,){2}([A-Za-z\s]{3,8})#i'; //is pxl colored
 
-   // $ptchangecolor'#^Pt-changer?\(([0-9A-Z+-])+\,){2}([0-9A-Z+-]+\,)?[A-Z\s]{3,8}#i'; //is ptchange colored
+   // $ptchangecolor'#^Pt-changer?\(([0-9A-Z*+-\/])+\,){2}([0-9A-Z*+-\/]+\,)?[a-zA-Z\s]{3,8}#i'; //is ptchange colored
 
 		
 
