@@ -47,7 +47,7 @@
 						<option value="color">Couleur - 83PCE/84+CE</option>
 					</select><br /><br />
 					<input type="hidden" name="upload" value="input" />
-					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button>
+					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button>
 					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> 
 					<input type="submit" action="envoyer" class="BT_send" />
