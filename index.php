@@ -47,10 +47,10 @@
 						<option value="color">Couleur - 83PCE/84+CE</option>
 					</select><br /><br />
 					<input type="hidden" name="upload" value="input" />
-					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button>
+					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_neg" class="BT" onclick="return false;">(-)</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button><button id="BT_subT" class="BT" style="height: 26px;" onclick="return false;">ᴛ</button>
 					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> 
-					<input type="submit" action="envoyer" class="BT_send" />
+					<input type="submit" action="envoyer" style="float: left;" class="BT_send" /><button style="float: right; margin: 10px 0 10px 25px;" onclick="editor.setValue(localStorage.getItem('converterValue')); return false;">Restaurer</button><button style="float: right; margin: 10px 0 10px 25px;" onclick="localStorage.setItem('converterValue', editor.getValue()); return false;">Sauvegarder</button>
 			
 			<?php }  else { ?>
 

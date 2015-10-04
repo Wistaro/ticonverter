@@ -1,6 +1,7 @@
 
 <script src="codemirror-5.6/lib/codemirror.js"></script>
-<script src="codemirror-5.6/mode/tibasic/tibasic.js"></script>
+<script src="codemirror-5.6/addon/selection/active-line.js"></script>
+<script src="codemirror-5.6/mode/tibasic/tibasic_fr.js"></script>
 	<script type="text/javascript">
 		var editor = CodeMirror.fromTextArea(document.getElementById("TTREA_code"), {
 			mode: "tibasic",
@@ -23,10 +24,16 @@
 			editor.replaceRange("Σ", editor.getCursor());
 		});
 		document.getElementById("BT_delta").addEventListener("click", function() {
-			editor.replaceRange("Δ", editor.getCursor());
+			editor.replaceRange("∆", editor.getCursor());
 		});
 		document.getElementById("BT_list").addEventListener("click", function() {
 			editor.replaceRange("⌊", editor.getCursor());
+		});
+		document.getElementById("BT_neg").addEventListener("click", function() {
+			editor.replaceRange("⁻", editor.getCursor());
+		});
+		document.getElementById("BT_subT").addEventListener("click", function() {
+			editor.replaceRange("ᴛ", editor.getCursor());
 		});
 
 		editor.on("change", function() {
@@ -35,6 +42,8 @@
 			else
 				document.querySelector(".cm-s-base16-dark.CodeMirror").style.height = "330px";
 		});
+		if(editor.lineCount() > 20)
+			document.querySelector(".cm-s-base16-dark.CodeMirror").style.height = "auto";
 	</script>
 	
 </body>
