@@ -54,7 +54,7 @@ class TIVarType
     public static function determineTypeHandler($typeID)
     {
         $typeID = (int)$typeID;
-        if (TIVarTypes::isValidTypeID($typeID))
+        if (TIVarTypes::isValidID($typeID))
         {
             $typeID_hex = (($typeID < 0x10) ? '0' : '') . dechex($typeID);
             $handlerName = "TH_0x{$typeID_hex}";
@@ -81,7 +81,7 @@ class TIVarType
      */
     public static function createFromID($id = -1)
     {
-        if (TIVarTypes::isValidTypeID($id))
+        if (TIVarTypes::isValidID($id))
         {
             $instance = new self();
             $instance->id = $id;
@@ -101,7 +101,7 @@ class TIVarType
      */
     public static function createFromName($name = '')
     {
-        if (TIVarTypes::isValidTypeName($name))
+        if (TIVarTypes::isValidName($name))
         {
             $instance = new self();
             $instance->name = $name;

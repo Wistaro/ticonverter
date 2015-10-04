@@ -30,7 +30,10 @@ class TIVarFile extends BinaryFile
         'data_length2'  => null,
         'data'          => null
     ];
+    /** @var TIVarType */
     private $type = null;
+    /** @var TIModel */
+    private $calcModel = null;
     private $computedChecksum = null;
     private $inFileChecksum = null;
     private $isFromFile = null;
@@ -75,7 +78,7 @@ class TIVarFile extends BinaryFile
         }
     }
 
-    public static function createNew(TIVarType $type = null, $name = '')
+    public static function createNew(TIVarType $type = null, $name = '', TIModel $version = null)
     {
         if ($type !== null)
         {
@@ -92,19 +95,27 @@ class TIVarFile extends BinaryFile
 
             $instance = new self();
             $instance->type = $type;
+            $instance->calcModel = ($version !== null) ? $version : TIModel::createFromName('84+'); // default
+
+            if (!$instance->calcModel->supportsType($instance->type))
+            {
+                throw new \Exception('This calculator model (' . $instance->calcModel->getName() . ') does not support the type ' . $instance->type->getName());
+            }
+
             $instance->header = [
-                'signature'     =>  "**TI83F*",
+                'signature'     =>  $instance->calcModel->getSig(),
                 'sig_extra'     =>  [ 0x1A, 0x0A, 0x00 ],
                 'comment'       =>  str_pad("Created by tivars_lib on " . date("M j, Y"), 42, "\0"),
                 'entries_len'   =>  0 // will have to be overwritten later
             ];
+            $calcFlags = $instance->calcModel->getFlags();
             $instance->varEntry = [
                 'constBytes'    =>  [ 0x0D, 0x00 ],
                 'data_length'   =>  0, // will have to be overwritten later
                 'typeID'        =>  $type->getId(),
                 'varname'       =>  str_pad($name, 8, "\0"),
-                'version'       =>  0,
-                'archivedFlag'  =>  0, // TODO: check when that needs to be 1.
+                'version'       =>  ($calcFlags >= TIFeatureFlags::hasFlash) ? 0 : null,
+                'archivedFlag'  =>  ($calcFlags >= TIFeatureFlags::hasFlash) ? 0 : null, // TODO: check when that needs to be 1.
                 'data_length2'  =>  0, // will have to be overwritten later
                 'data'          =>  [] // will have to be overwritten later
             ];
@@ -125,10 +136,12 @@ class TIVarFile extends BinaryFile
         $this->header['sig_extra']   = $this->get_raw_bytes(3);
         $this->header['comment']     = $this->get_string_bytes(42);
         $this->header['entries_len'] = $this->get_raw_bytes(1)[0] + ($this->get_raw_bytes(1)[0] << 8);
+        $this->calcModel = TIModel::createFromSignature($this->header['signature']);
     }
 
     private function makeVarEntryFromFile()
     {
+        $calcFlags = $this->calcModel->getFlags();
         $dataSectionOffset = (8+3+42+2); // after header
         fseek($this->file, $dataSectionOffset);
         $this->varEntry = [];
@@ -136,8 +149,8 @@ class TIVarFile extends BinaryFile
         $this->varEntry['data_length']  = $this->get_raw_bytes(1)[0] + ($this->get_raw_bytes(1)[0] << 8);
         $this->varEntry['typeID']       = $this->get_raw_bytes(1)[0];
         $this->varEntry['varname']      = $this->get_string_bytes(8);
-        $this->varEntry['version']      = $this->get_raw_bytes(1)[0];
-        $this->varEntry['archivedFlag'] = $this->get_raw_bytes(1)[0];
+        $this->varEntry['version']      = ($calcFlags >= TIFeatureFlags::hasFlash) ? $this->get_raw_bytes(1)[0] : null;
+        $this->varEntry['archivedFlag'] = ($calcFlags >= TIFeatureFlags::hasFlash) ? $this->get_raw_bytes(1)[0] : null;
         $this->varEntry['data_length2'] = $this->get_raw_bytes(1)[0] + ($this->get_raw_bytes(1)[0] << 8);
         $this->varEntry['data']         = $this->get_raw_bytes($this->varEntry['data_length']);
     }
@@ -195,7 +208,7 @@ class TIVarFile extends BinaryFile
         $sum = 0;
         $sum += array_sum($this->varEntry['constBytes']);
         $sum += 2 * (($this->varEntry['data_length'] & 0xFF) + (($this->varEntry['data_length'] >> 8) & 0xFF));
-        $sum += $this->varEntry['typeID'] + $this->varEntry['version'] + $this->varEntry['archivedFlag'];
+        $sum += $this->varEntry['typeID'] + (int)$this->varEntry['version'] + (int)$this->varEntry['archivedFlag'];
         $sum += array_sum(array_map('ord', str_split($this->varEntry['varname'])));
         $sum += array_sum($this->varEntry['data']);
         return $sum & 0xFFFF;
@@ -310,6 +323,11 @@ class TIVarFile extends BinaryFile
         {
             foreach ($whichData as $key => $data)
             {
+                // fields not used for this calc version, for instance.
+                if ($data === null)
+                {
+                    continue;
+                }
                 switch (gettype($data))
                 {
                     case 'integer':

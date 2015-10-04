@@ -8,8 +8,8 @@
 
 include_once "TIVarTypes.php";
 include_once "TIVarType.php";
+include_once "TIModels.php";
+include_once "TIModel.php";
 include_once "TIVarFile.php";
 
 // Put all the files to include here.
-
-?>
