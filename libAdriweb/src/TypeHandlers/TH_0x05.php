@@ -73,6 +73,7 @@ class TH_0x05 implements ITIVarTypeHandler
             trigger_error("[Warning] Token count (" . count($data) . ") and size field (" . $howManyBytes . ") mismatch!");
         }
 
+        $errCount = 0;
         $str = '';
         for ($i = 0; $i < $howManyBytes; $i++)
         {
@@ -89,7 +90,23 @@ class TH_0x05 implements ITIVarTypeHandler
                 $bytesKey = $nextToken + ($currentToken << 8);
                 $i++;
             }
-            $str .= isset(self::$tokens_BytesToName[$bytesKey]) ? self::$tokens_BytesToName[$bytesKey][$langIdx] : ' [???] ';
+            if (isset(self::$tokens_BytesToName[$bytesKey]))
+            {
+                $str .= self::$tokens_BytesToName[$bytesKey][$langIdx];
+            } else  {
+                $str .= ' [???] ';
+                $errCount++;
+            }
+        }
+
+        if ($errCount > 0)
+        {
+            trigger_error("[Warning] {$errCount} token(s) could not be detokenized (' [???] ' was used)!");
+        }
+
+        if (isset($options['prettify']) && $options['prettify'] === true)
+        {
+            $str = preg_replace('/\[?\|?([a-z]+)\]?/g', '\1', $str);
         }
 
         return $str;
@@ -123,6 +140,8 @@ class TH_0x05 implements ITIVarTypeHandler
                 }
             }
             fclose($handle);
+        } else {
+            throw new \Exception("Could not open the tokens csv file")
         }
     }
 }
