@@ -9,10 +9,7 @@
 
 			<p>
 
-				<?php
-					
-									?>
-
+				
 
 			</p>
 		
@@ -20,19 +17,19 @@
 
 			<?php
 
-	/*			include_once "libAdriweb\src/autoloader.php";
+			include_once "libAdriweb\src/autoloader.php";
 
 				use tivars\TIVarFile;
 				use tivars\TIVarType;
 				use tivars\TIVarTypes;
 
-	 $testPrgm = TIVarFile::loadFromFile('ressources/snake.8xp');
+	 $testPrgm = TIVarFile::loadFromFile('ressources/FRANCE.8xp');
 	$source = $testPrgm->getReadableContent(['lang' => 'fr']);
-	$myprgm = new converter($toto, 'input'); */
+	$myprgm = new converter($toto, 'input'); 
 
 
 
-	$toto = "Line(2A+3,5,999,88,Red)\nDisp A\nTextColor(RED)\nVerticale 999\nDisp \"Background On\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\nGraphColor RED\nLine(0,0,0,0)\nHorizontale 20,BLEU CMR\nVertical A+2, Navy\nText(0,0,\"dj++-956sfh//*sfhkjh\",BLEU CMR)\nPt-On(2,5,RED)\nPt-Aff(A+B/C,78,BLEU CMR)\nPxl-Aff(56,A+9-9*8,ORANGE)\n";
+	//$toto = "Line(2A+3,5,999,88,Red)\nDisp A\nTextColor(RED)\nVerticale 999\nDisp \"Background On\"\nBackground On\nBackground Off\nDisp B+D\nBorderColor\nGraphColor RED\nLine(0,0,0,0)\nHorizontale 20,BLEU CMR\nVertical A+2, Navy\nText(0,0,\"dj++-956sfh//*sfhkjh\",BLEU CMR)\nPt-On(2,5,RED)\nPt-Aff(A+B/C,78,BLEU CMR)\nPxl-Aff(56,A+9-9*8,ORANGE)\n";
 
 	
 

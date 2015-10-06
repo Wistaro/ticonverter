@@ -106,12 +106,65 @@ class TH_0x05 implements ITIVarTypeHandler
 
         if (isset($options['prettify']) && $options['prettify'] === true)
         {
-            $str = preg_replace('/\[?\|?([a-z]+)\]?/g', '\1', $str);
+            $str = preg_replace('/\[?\|?([a-z]+)\]?/', '\1', $str);
+        }
+
+        if (isset($options['reindent']) && $options['reindent'] === true)
+        {
+            $str = self::reindentCodeString($str);
         }
 
         return $str;
     }
 
+    public static function reindentCodeString($str = '')
+    {
+        $str = preg_replace_callback('/"[^$→"\n]+[→"$\n]|(\:)/mi', function($m) { return empty($m[1]) ? $m[0] : "\n"; }, $str);
+        $str = preg_replace('/([^\s])(Del|Eff)Var /mi', "$1\n$2Var ", $str);
+        $lines = explode("\n", $str);
+        foreach($lines as $key => $line)
+        {
+            $lines[$key] = [ 0, $line ]; // indent, text
+        }
+
+        $increaseIndentAfter = ['If', 'For', 'While', 'Repeat'];
+        $nextIndent = 0;
+        $oldFirstCommand = $firstCommand = '';
+        foreach($lines as $key => $lineData)
+        {
+            $oldFirstCommand = $firstCommand;
+
+            $trimmedLine = trim($lineData[1]);
+            $firstCommand = trim(strtok($trimmedLine, ' '));
+            if ($firstCommand === $trimmedLine)
+            {
+                $firstCommand = trim(strtok($trimmedLine, '('));
+            }
+
+            $lines[$key][0] = $nextIndent;
+
+            if (in_array($firstCommand, $increaseIndentAfter))
+            {
+                $nextIndent++;
+            }
+            if ($lines[$key][0] > 0 && ($firstCommand === 'Then' || $firstCommand === 'Else' || $firstCommand === 'End'))
+            {
+                $lines[$key][0]--;
+            }
+            if ($nextIndent > 0 && ($firstCommand === 'End' || ($oldFirstCommand === 'If' && $firstCommand !== 'Then')))
+            {
+                $nextIndent--;
+            }
+        }
+
+        $str = '';
+        foreach($lines as $line)
+        {
+            $str .= str_repeat(' ', $line[0]*4) . $line[1] . "\n";
+        }
+
+        return $str;
+    }
 
     public static function initTokens()
     {
@@ -141,7 +194,7 @@ class TH_0x05 implements ITIVarTypeHandler
             }
             fclose($handle);
         } else {
-            throw new \Exception("Could not open the tokens csv file")
+            throw new \Exception("Could not open the tokens csv file");
         }
     }
 }

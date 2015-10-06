@@ -1,4 +1,5 @@
 <?php
+session_start();	
 	if(isset($_GET['mode'])){
 			$mode = htmlspecialchars($_GET['mode']);
 	}else{
