@@ -10,14 +10,14 @@ namespace tivars;
 
 abstract class TIFeatureFlags
 {
-    const has82things  = (1 << 0);
-    const hasComplex   = (1 << 1);
-    const hasFlash     = (1 << 2);
-    const hasApps      = (1 << 3);
-    const hasClock     = (1 << 4);
-    const hasColorLCD  = (1 << 5);
-    const hasEZ80CPU   = (1 << 6);
-    const hasExactMath = (1 << 7);
+    const has82things  = 0b00000001; // (1 << 0);
+    const hasComplex   = 0b00000010; // (1 << 1);
+    const hasFlash     = 0b00000100; // (1 << 2);
+    const hasApps      = 0b00001000; // (1 << 3);
+    const hasClock     = 0b00010000; // (1 << 4);
+    const hasColorLCD  = 0b00100000; // (1 << 5);
+    const hasEZ80CPU   = 0b01000000; // (1 << 6);
+    const hasExactMath = 0b10000000; // (1 << 7);
 }
 
 abstract class TIModels
