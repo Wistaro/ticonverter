@@ -20,7 +20,7 @@
 
 		<div class="menu">
 			<ul>
-				<li class="itemmenu"><a href="#">Accueil</a></li>
+				<li class="itemmenu"><a href="/ticonvertisseur">Accueil</a></li>
 				<li class="itemmenu"><a href="#">Documentation</a></li>
 				<li class="itemmenu"><a href="#">Votre espace</a></li>
 				<li class="itemmenu"><a href="#">A propos</a></li>

@@ -35,7 +35,7 @@
 				</p>
 
 			<h2>Code source: </h2>
-					<textarea name="code_input" placeholder="" class="TTREA_code" id="TTREA_code"><?php echo $src; ?></textarea><br /> 
+					<textarea name="code_input" class="TTREA_code" id="?TTREA_code"><?php echo $src; ?></textarea><br /> 
 			
 		<form method="post" action="" >	
 

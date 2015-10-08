@@ -24,8 +24,8 @@
 				use tivars\TIVarTypes;
 
 	 $testPrgm = TIVarFile::loadFromFile('ressources/FRANCE.8xp');
-	$source = $testPrgm->getReadableContent(['lang' => 'fr']);
-	$myprgm = new converter($toto, 'input'); 
+	$toto = $testPrgm->getReadableContent(['lang' => 'fr']);
+	//$myprgm = new converter($toto, 'input'); 
 
 
 

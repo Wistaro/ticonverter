@@ -53,6 +53,23 @@ a:hover
 
 }
 
+.imginter img{
+
+		position: relative;
+		top: 4px;
+
+
+}
+
+.imginter img:hover{
+
+		position: relative;
+		top: 5px;
+		
+
+
+}
+
 .SEC_main
 {
 	position: absolute;

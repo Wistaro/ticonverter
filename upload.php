@@ -3,8 +3,14 @@ session_start();
 	//defaults values?
 	$_SESSION['src'] = 'Disp \"Hello World\"\n';
 	$_SESSION['lang'] = 'Anglais';
-	$_SESSION['type'] = 'Monochrome';
+	$_SESSION['type'] = 'Monochrome - 83(+)/84(+)(SE)';
 	$_SESSION['error_file_uploaded'] = 'ok';
+
+	include_once "libAdriweb\src/autoloader.php";
+
+				use tivars\TIVarFile;
+				use tivars\TIVarType;
+				use tivars\TIVarTypes;
 	
 
 
@@ -24,7 +30,11 @@ $lang2 = htmlspecialchars($_POST['lang']);
 	}elseif ($type == 'mono') {
 
 		$type = 'Monochrome - 83(+)/84(+)(SE)';
+	}elseif ($type == '82') {
+
+			$type="Monochrome - TI82Stats/82/76";
 	}
+		
 
 
 if($_POST['upload'] == 'input'){
@@ -54,12 +64,12 @@ if($_POST['upload'] == 'input'){
 
 
 			$name_input = htmlspecialchars($_FILES['fichier']['name']);
-
+			$id_saved = uniqid();
 
 
 			$ext_file = strtolower(substr(strrchr($_FILES['fichier']['name'],'.'),1));
 
-			$name_saved = uniqid().'.'.$ext_file; //création d'un fichier unique
+			$name_saved = $id_saved.'.'.$ext_file; //création d'un fichier unique
 
 
 			if (in_array($ext_file,$ext_ok) ){
@@ -68,14 +78,15 @@ if($_POST['upload'] == 'input'){
 
 						if($result){
 
+
+							 $testPrgm = TIVarFile::loadFromFile('files/'.$name_saved);
+							 $global_src = $testPrgm->getReadableContent(['lang' =>  strtolower($lang2)]);
+							
+
 									
-
-									//conversion avec le detokeniser, puis stockage dans une variable.
-
-									$_SESSION['src'] = $content;
-									$_SESSION['lang'] = $lang2;
-									$_SESSION['type'] = $type2;
-									$_SESSION['src'] = 'Disp "Hello World"';
+							 			$_SESSION['lang'] = $lang2;
+										$_SESSION['type'] = $type2;
+									    $_SESSION['src'] = $global_src;
 
 									
 
