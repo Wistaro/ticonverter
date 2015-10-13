@@ -1,6 +1,9 @@
 <?php
-		session_start();
+
+			session_start();
 			require('head.php');
+
+			
 
 		?>
 
@@ -37,7 +40,7 @@
 			<h2>Code source: </h2>
 					<textarea name="code_input" class="TTREA_code" id="?TTREA_code"><?php echo $src; ?></textarea><br /> 
 			
-		<form method="post" action="" >	
+		<form method="post" action="result.php" >	
 
 			<label>Convertir en: </label><select name="type">
 
@@ -61,7 +64,7 @@
 
 		<?php }else{
 
-			echo $_SESSION['error_file_uploaded'];
+			echo '<p class="error">'.$_SESSION['error_file_uploaded'].'</p>';
 
 		}
 

@@ -70,6 +70,14 @@ a:hover
 
 }
 
+.error{
+
+	background-color: red;
+	display: inline-block;
+
+
+}
+
 .SEC_main
 {
 	position: absolute;

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 	//defaults values?
 	$_SESSION['src'] = 'Disp \"Hello World\"\n';
@@ -71,6 +72,8 @@ if($_POST['upload'] == 'input'){
 
 			$name_saved = $id_saved.'.'.$ext_file; //création d'un fichier unique
 
+			$_SESSION['file'] == $name_saved;
+
 
 			if (in_array($ext_file,$ext_ok) ){
 
@@ -89,10 +92,6 @@ if($_POST['upload'] == 'input'){
 									    $_SESSION['src'] = $global_src;
 
 									
-
-
-
-
 						}
 
 			}else{
@@ -104,10 +103,15 @@ if($_POST['upload'] == 'input'){
 
 
 
+	}elseif($_FILES['fichier']['size'] == 0){
+
+
+		$_SESSION['error_file_uploaded'] = 'Vous devez entrer un fichier!';
+
 	}else{
 
-
 		$_SESSION['error_file_uploaded'] = 'Le fichier contient des erreurs';
+
 
 	}
 
