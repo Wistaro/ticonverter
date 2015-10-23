@@ -121,7 +121,7 @@ class TIVarFile extends BinaryFile
             ];
             return $instance;
         } else {
-            throw new \Exception("No file path given");
+            throw new \Exception("No type given");
         }
     }
 
