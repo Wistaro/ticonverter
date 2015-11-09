@@ -19,7 +19,7 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 	variables = /(Boxplot|Fix|Horiz|Full|Func|Param|Polar|Seq|IndpntAuto|IndpntAsk|DependAuto|DependAsk|Sequential|Simul|PolarGC|RectGC|CoordOn|CoordOff|Thick|Dot|Dot\-Thick|AxesOn|AxesOff|GridDot|GridOn|GridOff|LabelOn|LabelOff|Time|Trace|ZStandard|ZTrig|ZBox|Zoom In|Zoom Out|ZSquare|ZInteger|ZPrevious|ZDecimal|ZoomStat|ZoomRcl|PrintScreen|ZoomSto|FnOn|FnOff|Real|ExprOn|ExprOff|AsmComp|PlotsOn|PlotsOff|Plot1|Plot2|Plot3|ClockOff|ClockOn|CLASSIC|MATHPRINT|STATWIZARD ON|STATWIZARD OFF|GridLine|BackgroundOn|BackgroundOff|DetectAsymOn|DetectAsymOff|Thin|Dot\-Thin)/i;
 
 	var variables1 = /^([A-Zθ]|Str[0-9]|L[1-6]|\[[A-J]\])\b/i;
-	var numbers = /^([0-9\.]+)/i;
+	var numbers = /\d+?.?\d+_/;
 	var list = /⌊[A-Z0-9]{1,8}/;
 
 	return {
