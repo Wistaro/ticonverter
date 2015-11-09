@@ -7,6 +7,7 @@
 
 
 			$current_prgm = new Converter($_SESSION['src'],$_SESSION['type'], $_SESSION['lang']);
+			
 
 			/*$newPrgm->setContentFromString($current_prgm->ColorToMono());
 			$newPrgm->saveVarToFile("files/", "trololol");
