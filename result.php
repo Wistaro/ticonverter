@@ -2,6 +2,9 @@
 
 			session_start();
 			require('head.php');
+			echo '<pre>';
+			print_r($_SESSION);
+			echo '</pre>';
 
 
 
@@ -20,7 +23,10 @@
 
 		?>
 
-	<section class="SEC_main">
+	<section class="SEC_main"><?php
+	echo '<pre>';
+			print_r($_SESSION);
+			echo '</pre>'; ?>
 		<h1>Fichier converti</h1>
 
 		<?php 

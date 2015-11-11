@@ -1,64 +1,49 @@
 <?php
 			require('head.php');
+			require('php/regex.php');
 
 		?>
 
 	<section class="SEC_main">
-		<h1>Title</h1>
+		<h1>Convertisseur rapide debug</h1><?php
+
+		/*$test = "Pt-On(15,26540)";
+		preg_match($ptsimple2,$test,$res);
+		echo '<pre>';
+		echo print_r($res);
+		echo '</pre>';
+		if(count($res)>=5){
+
+			echo 'Valeur corrigée = '.substr($res[4],0,strlen($res[4]-1));
+
+		}*/
+?>
+
+<br /><br /><br /><hr>
+		<?php
+
+			$string = "TextColor(Red)\nLine(A+BI,2,3,4,Red\nDisp T\nLine(10,15,26,21\nLine(A+2,B*98,JK,0\n";
+
+		?>
+		<form method="post" action="">
+
+			<textarea name="inputtest" rows="10" cols="25"><?php //echo $string; ?></textarea>
+			<input type="submit" name="sub" value="convertir :)">
+		</form>
 
 		<?php
 
-		//convert coordonate monocrome to color
+			if(isset($_POST['sub'])){
 
-			$code = "Line(5A+C,6,8,9)\n";
+		$prgm = new Converter($_POST['inputtest']."\n");
+		
 
-			$code = "Line(1,1,1,1)\nDisp A";
-			$cal = new Converter($code);
-			//echo $cal->read_line(1);
-			echo '<br />';
-			 convert_coord_mono_to_color($cal->read_line(1));
-
-
-
-	function convert_coord_mono_to_color($code){	
-
-			include('php/regex.php');
-
-			preg_match($linesimple,$code,$test);
-
-			$nb = count($test);
-			$temp = "";
-			$global = $test[1].'(';
-
-			for ($i=2; $i < $nb ; $i++) { 
-
-						
-				if($i == 2 OR $i == 4){
-
-						$temp = '('.$test[$i].')*2.81';
-						$global = $global.$temp.',';
-					
-				}
-				if($i == 3){
-
-						$temp = '('.$test[$i].')*2.66';
-						$global = $global.$temp.',';
-					
-				}
-				if($i == 5){
-
-						$temp = '('.$test[$i].')*2.66';
-						$global = $global.$temp	;
-					
-				}
-
-				
-
-			}
-			echo $global;
-
+		echo 'Après correction couleur--mono: <textarea rows="10" cols="25">'.$prgm->ColorToMono().'</textarea><br /><br />';
 		}
-					
+
+
+
+			
 					//$correction = substr($currentline, 0, stripos($currentline, $regextext[count($regextext)-1]) -1).')';
 					
 					

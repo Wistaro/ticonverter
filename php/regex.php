@@ -4,9 +4,13 @@
 
 	$linesimple = '#^(Lig?ne)\(([0-9A-Z+*-\/]+)\,([0-9A-Z+*-\/]+)\,([0-9A-Z+*-\/]+)\,([0-9A-Z+*-\/]+)#i'; //is line colored 
 
+	$linesimple2 = '#^(Lig?ne)\(([^,]+)\,([^,]+)\,([^,]+)\,([^,]+)(\,0)?#i'; //is line colored 
+
 
 
 	$ptoncolor = '#^Pt-(On|Aff)\(([0-9A-Z*+-\/]+\,){2}([0-9A-Z*+-\/]+\,)?([a-zA-Z\s]+)\)#i'; //is pt colored
+
+	$ptsimple2 = "#^(Pt-(On|Aff))\(([^,]+)\,([^,]+)(\,([^\)]+))?#i";  //pt simple to get coord
 
 	$horizcolor = '#^horizontale?\s([0-9A-Z*+-\/]+\,)?([A-Za-z- \n]{3,8})#i'; //is horizontal colored
 

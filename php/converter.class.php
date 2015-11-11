@@ -43,9 +43,12 @@ class converter {
 							}
 
 								
-					
-
-				$global = $global.$currentline;
+				
+				
+				$corr_coord = self::coord_mono_to_color($currentline);	
+				
+				$global = $global.$corr_coord;	
+				
 
 		}
 
@@ -55,6 +58,92 @@ class converter {
 
 
 	}	
+	public function coord_mono_to_color($code){	
+
+
+
+
+			include('php/regex.php');
+
+		//convert in lines
+		preg_match($linesimple2,$code,$linenocolor);
+		preg_match($ptsimple2,$code,$ptnocolor);
+
+		if(count($linenocolor) > 0) { //there is a line here
+
+			$temp = "";
+			$global = $linenocolor[1].'(';
+
+			for ($i=2; $i < count($linenocolor); $i++) { 
+
+				if($i == 2 OR $i == 4){
+						$temp = '('.$linenocolor[$i].')/2.81';
+						$global = $global.$temp.',';
+				}
+				if($i == 3){
+						$temp = '('.$linenocolor[$i].')/2.66';
+						$global = $global.$temp.',';
+				}
+				if($i == 5){
+						
+						$temp = '(1/2.66)*('.$linenocolor[5];
+						$global = $global.$temp;
+				}
+			}
+
+			if(count($linenocolor) == 7){
+
+				$global = $global.'),0'."\n";
+			}
+
+			return $global;
+
+		}elseif (count($ptnocolor) > 0) { //there is a pton here
+			
+			$temp = "";
+			$global = $ptnocolor[1].'(';
+
+			for($i = 3;$i<= count($ptnocolor);$i++){
+
+					if($i == 3){
+
+							$global = $global.'('.$ptnocolor[3].')/2.81';
+					}
+					if($i == 4 AND count($ptnocolor) <= 5){
+
+							$global = $global.',('.substr($ptnocolor[4],0,strlen($ptnocolor[4]-1)).')/2.66';
+
+					}
+					if($i == 4 AND count($ptnocolor) > 5){
+
+							$global = $global.',('.$ptnocolor[4].')/2.66';
+
+					}
+					if($i == 6){
+
+							$global = $global.','.$ptnocolor[6];
+
+					}
+
+			}
+
+				return $global."\n";
+
+
+		}else{
+
+			return $code;
+		}
+
+	}
+
+		public function conv_coord(){
+
+
+
+
+
+		}
 
 	private function iscoloredtotal($currentline){
 
@@ -77,7 +166,8 @@ class converter {
 			if(preg_match($linecolor,$currentline,$regexline)){ //lignes couleurs vers lignes monochromes
 
 
-					$correction = substr($currentline, 0, stripos($currentline, $regexline[2]) -1).')';
+					$correction = substr($currentline, 0, stripos($currentline, $regexline[2]) -1).')'; //correction fonction
+					//$correction = self::coord_mono_to_color($currentline); //correction coordonnées
 					
 					return $correction;
 
@@ -135,6 +225,8 @@ class converter {
 		return "nothing";
 
 		}
+
+		
 
 
 	public function to83Plus(){
