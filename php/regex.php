@@ -12,6 +12,8 @@
 
 	$ptsimple2 = "#^(Pt-(On|Aff))\(([^,]+)\,([^,]+)(\,([^\)]+))?#i";  //pt simple to get coord
 
+	$ptsimpleno = "#^(Pt-(Off|NAff))\(([^,]+)\,([^,]+)(\,([^\)]+))?#i";  //pt simple off to get coord
+
 	$horizcolor = '#^horizontale?\s([0-9A-Z*+-\/]+\,)?([A-Za-z- \n]{3,8})#i'; //is horizontal colored
 
     $verticcolor = '#^Verticale?\s([0-9A-Z*+-\/]+\,)?([A-Za-z- \n]{3,8})#i'; //is vertical colored
@@ -19,6 +21,22 @@
 	$textcolor = '#^Texte?\(([0-9A-Z*+-\/]+\,){2}"[\w \s-+*\/\\\.]+"\,([a-zA-Z\s]{3,8})#i'; //is text colored
 
 	$pxlcolor = '#^Pxl-(Aff|On)\(([0-9A-Z*+-\/]+\,){2}([A-Za-z\s]{3,8})#i'; //is pxl colored
+
+	$horiznocolor =	"#^(Horizontale?)\s([^,]+)#i";
+	$vertinocolor =	"#^(Verticale?)\s([^,]+)#i";
+
+	$ptchangecolor = "#^Pt-Changer?\([^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
+	$ptchangenocolor = "#^(Pt-Changer?)\(([^,]+)\,([^,]+)#i";
+
+    $pxonnocolor = "#^(Pxl-(On|Aff))\(([^,]+)\,([^,]+)#i";
+    $pxoffnocolor = "#^(Pxl-(Off|NAff))\(([^,]+)\,([^,]+)#i";
+
+    $pxlchangecolor = "#^Pxl-Changer?\([^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
+    $pxlchangenocolor = "#^(Pxl-Changer?)\(([^,]+)\,([^,]+)#i";
+
+    $textnocolor = "#^(Texte?)\(([^,]+)\,([^,]+)\,([\w\s\/\-\,\*\+\"\']+)#i";
+
+
 
    // $ptchangecolor'#^Pt-changer?\(([0-9A-Z*+-\/])+\,){2}([0-9A-Z*+-\/]+\,)?[a-zA-Z\s]{3,8}#i'; //is ptchange colored
 

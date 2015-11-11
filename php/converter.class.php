@@ -60,14 +60,27 @@ class converter {
 	}	
 	public function coord_mono_to_color($code){	
 
-
+		$ratio_x_px = "2.81";
+		$ratio_y_px = "2.66";
+		
+		$ratio_x_txt = "2.8";
+		$ratio_y_txt = "2.63";
 
 
 			include('php/regex.php');
 
-		//convert in lines
+		//saving preg match
 		preg_match($linesimple2,$code,$linenocolor);
 		preg_match($ptsimple2,$code,$ptnocolor);
+		preg_match($ptsimpleno,$code,$ptoffnocolor);
+		preg_match($horiznocolor,$code,$horiznocolortab);
+		preg_match($vertinocolor,$code,$vertinocolortab);
+		preg_match($ptchangenocolor,$code,$ptchangenocolortab);
+		preg_match($pxonnocolor,$code,$pxonnocolortab);
+		preg_match($pxoffnocolor,$code,$pxoffnocolortab);
+		preg_match($pxlchangenocolor,$code,$pxlchangenocolortab);
+		preg_match($textnocolor,$code,$textnocolortab);
+
 
 		if(count($linenocolor) > 0) { //there is a line here
 
@@ -77,16 +90,16 @@ class converter {
 			for ($i=2; $i < count($linenocolor); $i++) { 
 
 				if($i == 2 OR $i == 4){
-						$temp = '('.$linenocolor[$i].')/2.81';
+						$temp = '('.$linenocolor[$i].')/'.$ratio_x_px;
 						$global = $global.$temp.',';
 				}
 				if($i == 3){
-						$temp = '('.$linenocolor[$i].')/2.66';
+						$temp = '('.$linenocolor[$i].')/'.$ratio_y_px;
 						$global = $global.$temp.',';
 				}
 				if($i == 5){
 						
-						$temp = '(1/2.66)*('.$linenocolor[5];
+						$temp = '(1/'.$ratio_y_px.')('.$linenocolor[5];
 						$global = $global.$temp;
 				}
 			}
@@ -107,16 +120,16 @@ class converter {
 
 					if($i == 3){
 
-							$global = $global.'('.$ptnocolor[3].')/2.81';
+							$global = $global.'('.$ptnocolor[3].')/'.$ratio_x_px;
 					}
 					if($i == 4 AND count($ptnocolor) <= 5){
 
-							$global = $global.',('.substr($ptnocolor[4],0,strlen($ptnocolor[4]-1)).')/2.66';
+							$global = $global.',('.substr($ptnocolor[4],0,(strlen($ptnocolor[4])-1)).'/'.$ratio_y_px;
 
 					}
 					if($i == 4 AND count($ptnocolor) > 5){
 
-							$global = $global.',('.$ptnocolor[4].')/2.66';
+							$global = $global.',('.$ptnocolor[4].')/'.$ratio_y_px;
 
 					}
 					if($i == 6){
@@ -130,6 +143,74 @@ class converter {
 				return $global."\n";
 
 
+		}elseif(count($ptoffnocolor) > 0){ 
+
+			$temp = "";
+			$global = $ptoffnocolor[1].'(';
+
+			for($i = 3;$i<= count($ptoffnocolor);$i++){
+
+					if($i == 3){
+
+							$global = $global.'('.$ptoffnocolor[3].')/'.$ratio_x_px;
+					}
+					if($i == 4 AND count($ptoffnocolor) <= 5){
+
+							$global = $global.',('.substr($ptoffnocolor[4],0,(strlen($ptoffnocolor[4])-1)).'/'.$ratio_y_px;
+
+					}
+					if($i == 4 AND count($ptoffnocolor) > 5){
+
+							$global = $global.',('.$ptoffnocolor[4].')/'.$ratio_y_px;
+
+					}
+					if($i == 6){
+
+							$global = $global.','.$ptoffnocolor[6];
+
+					}
+
+			}
+
+				return $global."\n";
+
+
+
+
+		}elseif(count($horiznocolortab) > 0){
+
+				$global = $horiznocolortab[1].' ('.rtrim($horiznocolortab[2]).'/'.$ratio_y_px.')';
+				return $global."\n";
+
+		}elseif(count($vertinocolortab) > 0){
+
+				$global = $vertinocolortab[1].' ('.rtrim($vertinocolortab[2]).'/'.$ratio_x_px.')';
+				return $global."\n";
+
+		}elseif (count($ptchangenocolortab) > 0) {
+
+				$global = $ptchangenocolortab[1].'(('.$ptchangenocolortab[2].')/'.$ratio_x_px.',('.rtrim($ptchangenocolortab[3]).'/'.$ratio_y_px;
+				return $global."\n";
+			
+		}elseif (count($pxonnocolortab) > 0) {
+				
+				$global = $pxonnocolortab[1].'(('.$pxonnocolortab[3].')/'.$ratio_x_px.',('.rtrim($pxonnocolortab[4]).'/'.$ratio_y_px;
+				return $global."\n";
+
+		}elseif (count($pxoffnocolortab) > 0) {
+				
+				$global = $pxoffnocolortab[1].'(('.$pxoffnocolortab[3].')/'.$ratio_x_px.',('.rtrim($pxoffnocolortab[4]).'/'.$ratio_y_px;
+				return $global."\n";
+
+		}elseif (count($pxlchangenocolortab) > 0) {
+				
+				$global = $pxlchangenocolortab[1].'(('.$pxlchangenocolortab[2].')/'.$ratio_x_px.',('.rtrim($pxlchangenocolortab[3]).'/'.$ratio_y_px;
+				return $global."\n";
+
+		}elseif (count($textnocolortab) > 0) {
+				
+				$global = $textnocolortab[1].'(int(('.$textnocolortab[2].')/'.$ratio_y_txt.'),int(('.$textnocolortab[3].')/'.$ratio_x_txt.'),'.$textnocolortab[4];
+				return $global;
 		}else{
 
 			return $code;
@@ -190,7 +271,7 @@ class converter {
 					return $correction;
 
 			}
-			if(preg_match($textcolor,$currentline,$regextext)){  //texte couleurs vers texte monochromes
+			/*if(preg_match($textcolor,$currentline,$regextext)){  //texte couleurs vers texte monochromes
 
 
 					
@@ -198,7 +279,7 @@ class converter {
 					
 					return $correction;
 
-			}
+			}*/
 			if(preg_match($ptoncolor,$currentline,$regexpt)){  //pton couleurs vers pton monochromes
 
 
@@ -213,6 +294,22 @@ class converter {
 
 					
 					$correction = substr($currentline, 0, stripos($currentline, $regexpxl[count($regexpxl)-1]) -1).')';
+					
+					return $correction;
+
+			}
+			if(preg_match($ptchangecolor,$currentline,$regexchg)){  //ptchange couleurs vers pxlon monochromes
+
+
+					$correction = substr($currentline, 0, stripos($currentline, $regexchg[count($regexchg)-1]) -1).')';
+					
+					return $correction;
+
+			}
+			if(preg_match($pxlchangecolor,$currentline,$regexpxlchg)){  //ptchange couleurs vers pxlon monochromes
+
+
+					$correction = substr($currentline, 0, stripos($currentline, $regexpxlchg[count($regexpxlchg)-1]) -1).')';
 					
 					return $correction;
 

@@ -7,14 +7,14 @@
 	<section class="SEC_main">
 		<h1>Convertisseur rapide debug</h1><?php
 
-		/*$test = "Pt-On(15,26540)";
-		preg_match($ptsimple2,$test,$res);
+		/*$test = "Pt-Off(10,10)";
+		preg_match($ptsimpleno,$test,$res);
 		echo '<pre>';
 		echo print_r($res);
 		echo '</pre>';
 		if(count($res)>=5){
 
-			echo 'Valeur corrigée = '.substr($res[4],0,strlen($res[4]-1));
+			echo 'Valeur corrigée = '.substr($res[4],0,(strlen($res[4])-1));
 
 		}*/
 ?>
@@ -27,7 +27,7 @@
 		?>
 		<form method="post" action="">
 
-			<textarea name="inputtest" rows="10" cols="25"><?php //echo $string; ?></textarea>
+			<textarea name="inputtest" rows="10" cols="25" placeholder="Code de test à convertir"><?php if(isset($_POST['sub'])){echo $_POST['inputtest'];} ?></textarea>
 			<input type="submit" name="sub" value="convertir :)">
 		</form>
 
@@ -38,7 +38,7 @@
 		$prgm = new Converter($_POST['inputtest']."\n");
 		
 
-		echo 'Après correction couleur--mono: <textarea rows="10" cols="25">'.$prgm->ColorToMono().'</textarea><br /><br />';
+		echo 'Après correction couleur--mono: <textarea rows="10" cols="50">'.$prgm->ColorToMono().'</textarea><br /><br />';
 		}
 
 
