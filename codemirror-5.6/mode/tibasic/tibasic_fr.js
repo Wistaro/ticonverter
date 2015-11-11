@@ -11,7 +11,7 @@
 })(function(CodeMirror) {
 "use strict";
 
-CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
+CodeMirror.defineMode('tibasic_fr', function(_config, parserConfig) {
 	var keywords1, keywords2, others, graph;
  
 	keywords1 = /^(►DMS|►Dec|►Frac|arrondi|chaîne|permutLigne|ligne|max|min|R►Pr|R►Pθ|P►Rx|P►Ry|médianne|MatAléat|moyenne|résoudre|suite|fnInt|nDeriv|fMin|fMax|RegCubique|RegQuatre|RegEQ|Arrangement|Combinaison|VARSTRING|NbrAléat|partEnt|abs|dét|identité|dim|somme|prod|ent|partDéc|vactNet|tauxRi|paSolde|paSomPrinc|ΣInt|►Nom|►Eff|jed|ppcm|pgcd|entAléat|BinAléat|Sous-chaine|Ecart-type|variance|carChaine|normalFRép|FracNormale|studentFRép|X²FRép|FFRép|binomfdp|binomFRép|poissonFdp|poissonFRép|géomtFdp|géomtFRép|normalFdp|StudentFdp|Χ²Fdp|Ffdp|normAléat|vatPmt|vat_I%|vat_Vact|vat_N|vat_vacq|conj|reel|imag|argument|somCum|expr|longueur|Δliste|Gauss|Gauss-Jordan|►Rect|►Polaire|RegSin|Logistique|RegLinTTest|OmbreNorm|Matr►list|List►matr|Z-Test|T-Test|2-CompZTest|1-PropZTest|2-PropZTest|χ²-Test|2-CompZIntC|1-PropZInt|2-PropZInt|2-CompTTest|2-CompFTest|TintConf|2-CompTIntC|ListesDéfaut|Pmt_Fin|Pmt_Déb|EffToutListes|Equ►Chaine|Chaine►Equ|Sélect|ANUVA|GraphBoitMoust|GraphProbNorm|ln|log|sin|Arcsin|cos|Arccos|tan|Arctan|sh|Argsh|ch|Argch|th|Argth|Remplir|Tricroi|Tridécroi|défDate|défHeure|AffMintr|défFmtDt|défFmtHr|convHeur|joursem|AffChDt|affChHr|affDate|affHeure|actMintr|affFmtDt|affFmtHr|actHorl|HorlNAff|HorlAff|OuvrirBiblio|ExécBiblio|invT|χ²GOF-Test|LinRegTInt|remainder|logBASE|randIntNoRep|Stats|1-Var|2-Var|RegLin\(a\+bx\)|RegExp|RegLn|RegPuiss|Med-Med|RegQuad|EffListe|EffTable|Histogramme|Polygone|Nuage|RegLin\(ax\+b\))\b/i;
@@ -82,6 +82,6 @@ CodeMirror.defineMode('tibasic', function(_config, parserConfig) {
 	};
 });
 
-CodeMirror.defineMIME("text/x-tibasic", "tibasic");
+CodeMirror.defineMIME("text/x-tibasic", "tibasic_fr");
 
 });
