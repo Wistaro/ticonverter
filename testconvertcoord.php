@@ -1,4 +1,5 @@
 <?php
+			session_start();
 			require('head.php');
 			require('php/regex.php');
 
@@ -35,7 +36,25 @@
 
 			if(isset($_POST['sub'])){
 
+
+
 		$prgm = new Converter($_POST['inputtest']."\n");
+		$_SESSION['src'] = $prgm->ColorToMono();
+		//header('location:export.php');
+
+		
+
+
+
+/*
+$testData = tivars\TypeHandlers\TH_0x05::makeDataFromString("Disp Toto");
+
+$goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName("Program"), "Bla", TIModel::createFromName("84+"));
+
+$goodTypeForCalc->setContentFromData($testData);
+
+$goodTypeForCalc->saveVarToFile("/", "trololol");
+*/
 		
 
 		echo 'Après correction couleur--mono: <textarea rows="10" cols="50">'.$prgm->ColorToMono().'</textarea><br /><br />';

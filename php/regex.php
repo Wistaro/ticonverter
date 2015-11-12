@@ -8,7 +8,7 @@
 
 
 
-	$ptoncolor = '#^Pt-(On|Aff)\(([0-9A-Z*+-\/]+\,){2}([0-9A-Z*+-\/]+\,)?([a-zA-Z\s]+)\)#i'; //is pt colored
+	$ptoncolor = '#^Pt-(On|Aff)\(([^,]+\,){2}([^,]+\,)?([a-zA-Z\s]+)#i'; //is pt colored
 
 	$ptsimple2 = "#^(Pt-(On|Aff))\(([^,]+)\,([^,]+)(\,([^\)]+))?#i";  //pt simple to get coord
 
@@ -34,7 +34,12 @@
     $pxlchangecolor = "#^Pxl-Changer?\([^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
     $pxlchangenocolor = "#^(Pxl-Changer?)\(([^,]+)\,([^,]+)#i";
 
-    $textnocolor = "#^(Texte?)\(([^,]+)\,([^,]+)\,([\w\s\/\-\,\*\+\"\']+)#i";
+    $textnocolor = "#^(Texte?)\(([^,]+)\,([^,]+)\,([\w\s\/\-\,\*\+\"\':]+)#i";
+    $cerclecolor = "#^C(i|e)rcle\([^,]+\,[^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
+
+    $cerclenocolor = "#(C(i|e)rcle)\(([^,]+)\,([^,]+)\,([^,]+)#i";
+
+
 
 
 

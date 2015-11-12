@@ -80,6 +80,7 @@ class converter {
 		preg_match($pxoffnocolor,$code,$pxoffnocolortab);
 		preg_match($pxlchangenocolor,$code,$pxlchangenocolortab);
 		preg_match($textnocolor,$code,$textnocolortab);
+		preg_match($cerclenocolor,$code,$cerclenocolortab);
 
 
 		if(count($linenocolor) > 0) { //there is a line here
@@ -194,7 +195,7 @@ class converter {
 			
 		}elseif (count($pxonnocolortab) > 0) {
 				
-				$global = $pxonnocolortab[1].'(('.$pxonnocolortab[3].')/'.$ratio_x_px.',('.rtrim($pxonnocolortab[4]).'/'.$ratio_y_px;
+				$global = $pxonnocolortab[1].'(int(('.$pxonnocolortab[3].')/'.$ratio_x_px.'),int(('.rtrim($pxonnocolortab[4]).')/'.$ratio_y_px.'';
 				return $global."\n";
 
 		}elseif (count($pxoffnocolortab) > 0) {
@@ -211,6 +212,14 @@ class converter {
 				
 				$global = $textnocolortab[1].'(int(('.$textnocolortab[2].')/'.$ratio_y_txt.'),int(('.$textnocolortab[3].')/'.$ratio_x_txt.'),'.$textnocolortab[4];
 				return $global;
+		}elseif (count($cerclenocolortab) > 0) {
+				
+				$global = $cerclenocolortab[1].'(('.$cerclenocolortab[3].')/'.$ratio_x_px.',('.$cerclenocolortab[4].')/'.$ratio_y_px.',('.rtrim($cerclenocolortab[5]).'/2.8';
+				return $global;
+
+
+
+
 		}else{
 
 			return $code;
@@ -306,10 +315,18 @@ class converter {
 					return $correction;
 
 			}
-			if(preg_match($pxlchangecolor,$currentline,$regexpxlchg)){  //ptchange couleurs vers pxlon monochromes
+			if(preg_match($pxlchangecolor,$currentline,$regexpxlchg)){  //pxlchange couleurs vers pxlon monochromes
 
 
 					$correction = substr($currentline, 0, stripos($currentline, $regexpxlchg[count($regexpxlchg)-1]) -1).')';
+					
+					return $correction;
+
+			}
+			if(preg_match($cerclecolor,$currentline,$regexcircle)){  //cercle couleur to mono
+
+
+					$correction = substr($currentline, 0, stripos($currentline, $regexcircle[count($regexcircle)-1]) -1).')';
 					
 					return $correction;
 

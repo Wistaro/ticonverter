@@ -14,48 +14,49 @@ use tivars\TIVarFile;
 use tivars\TIVarType;
 use tivars\TIVarTypes;
 
-/*
-$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"));
-$newPrgm->setContentFromString("Asm(prgmABCD");
-print_r($newPrgm->getRawContent());
 
-$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Real"));
-$newPrgm->setContentFromString("45.2");
-print_r($newPrgm->getRawContent());
-*/
+//$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"));
+//$newPrgm->setContentFromString("Asm(prgmABCD");
+//print_r($newPrgm->getRawContent());
 
-$testData = tivars\TypeHandlers\TH_0x05::makeDataFromString("Asm(prgmABCD");
-$goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName("Program"), "Bla", TIModel::createFromName("83PCE"));
+//$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Real"));
+//$newPrgm->setContentFromString("45.2");
+//print_r($newPrgm->getRawContent());
+
+
+$testData = tivars\TypeHandlers\TH_0x05::makeDataFromString("Disp Toto");
+
+$goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName("Program"), "Bla", TIModel::createFromName("84+"));
+
 $goodTypeForCalc->setContentFromData($testData);
 
-
-$badTypeForCalc = TIVarFile::createNew(TIVarType::createFromName('ExactComplexFrac'), 'Bla', TIModel::createFromName('83PCE'));
-try
-{
-    $goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName('ExactComplexFrac'), 'Bla', TIModel::createFromName('84+'));
-    assert(false);
-} catch (Exception $e) {}
-
+$goodTypeForCalc->saveVarToFile("/", "trololol");
+//try
+//{
+    //$goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName('ExactComplexFrac'), 'Bla', TIModel::createFromName('84+'));
+    //assert(false);
+//} catch (Exception $e) {}
 
 
-assert(TIVarTypes::getIDFromName("ExactRealPi") === 32);
+
+//assert(TIVarTypes::getIDFromName("ExactRealPi") === 32);
 
 
 
 $testPrgm = TIVarFile::loadFromFile('testData/Program.8xp');
-echo "testPrgm->getHeader()['entries_len'] == " . $testPrgm->getHeader()['entries_len'] . "\n";
-echo "testPrgm->size() - 57 == " . ($testPrgm->size() - 57) . "\n";
+//echo "testPrgm->getHeader()['entries_len'] == " . $testPrgm->getHeader()['entries_len'] . "\n";
+//echo "testPrgm->size() - 57 == " . ($testPrgm->size() - 57) . "\n";
 
-assert($testPrgm->getHeader()['entries_len'] === $testPrgm->size() - 57);
-$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"));
-$testPrgmcontent = $testPrgm->getReadableContent(['lang' => 'fr']);
+//assert($testPrgm->getHeader()['entries_len'] === $testPrgm->size() - 57);
+//$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"));
+//$testPrgmcontent = $testPrgm->getReadableContent(['lang' => 'fr']);
 //echo "testPrgmContent :\n$testPrgmcontent\n";
-$newPrgm->setContentFromString($testPrgmcontent);
-assert($testPrgm->getRawContent() === $newPrgm->getRawContent());
+//$newPrgm->setContentFromString($testPrgmcontent);
+//ssert($testPrgm->getRawContent() === $newPrgm->getRawContent());
 //$newPrgm->saveVarToFile();
 
 
-
+/*
 $testPrgm = TIVarFile::loadFromFile('testData/ProtectedProgram_long.8xp');
 $testPrgmcontent = $testPrgm->getReadableContent(['prettify' => true, 'reindent' => true]);
 echo "All prettified and reindented:\n" . $testPrgmcontent . "\n";
@@ -76,14 +77,16 @@ $newReal = TIVarFile::createNew(TIVarType::createFromName("Real"), "A");
 $newReal->setContentFromString('-42.1337');
 assert($testReal->getReadableContent() === '-42.1337');
 assert($testReal->getRawContent() === $newReal->getRawContent());
+
+
 //$newReal->saveVarToFile("/Users/adriweb/", "trololol");
 
 
 
-$testExactRealFrac = TIVarFile::loadFromFile('testData/Exact_RealFrac.8xn');
-echo "Before: " . $testExactRealFrac->getReadableContent() . "\t" . "Now: ";
-$testExactRealFrac->setContentFromString("0.2");
-echo $testExactRealFrac->getReadableContent() . "\n";
+//$testExactRealFrac = TIVarFile::loadFromFile('testData/Exact_RealFrac.8xn');
+//echo "Before: " . $testExactRealFrac->getReadableContent() . "\t" . "Now: ";
+//$testExactRealFrac->setContentFromString("0.2");
+//echo $testExactRealFrac->getReadableContent() . "\n";
 //$testExactRealFrac->saveVarToFile();
 
 
@@ -95,5 +98,5 @@ echo $testExactRealFrac->getReadableContent() . "\n";
 //echo $testExactRealFrac->getReadableContent() . "\n";
 //$testExactRealFrac->saveVarToFile();
 
-
+**/
 ?>
