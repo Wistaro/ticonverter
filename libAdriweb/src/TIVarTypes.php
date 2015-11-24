@@ -120,7 +120,7 @@ abstract class TIVarTypes
         {
             return self::$types[$id]['exts'];
         } else {
-            return 'Unknown';
+            return [];
         }
     }
 

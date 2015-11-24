@@ -25,7 +25,7 @@ session_start();
 					<label>Type de programme: </label><select name="type">
 
 						<option value="Monochrome - TI83(+)/84(+)(SE)">Monochrome - TI83(+)/84(+)(SE)</option>
-						<option value="Monochrome - TI82Stats/82/76">Monochrome - TI82Stats/82/76</option>
+						<option value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 						<option value="Couleur - TI83PCE/84+CE">Couleur - TI83PCE/84+CE</option>
 
 					</select> <a href="help.php?section=typeprogramm" class="imginter"><img src="template/img/int.png" alt="howto" width="20" height="20" class="imginter" id="imginter"/></a><br />

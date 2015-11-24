@@ -10,12 +10,12 @@ class converter {
 		public $type;
 		private $typeofinput;
 
-	public function __construct($prgm, $type="", $lang = "", $user = "Guest"){
+	public function __construct($prgm, $typeconvert="", $lang = "", $user = "Guest"){
 
 			$this->user = $user;
 			$this->prgm_decode = $prgm;
 			$this->lang_prgm = $lang;
-			$this->type = $type;
+			$this->type = $typeconvert;
 			//$this->typeofinput = $typeofinput; //type: 'input' OR 'file' only! See docs for further informations
 
 		}
@@ -45,7 +45,7 @@ class converter {
 								
 				
 				
-				$corr_coord = self::coord_mono_to_color($currentline);	
+				$corr_coord = self::conv_coord($currentline,"MTC");	
 				
 				$global = $global.$corr_coord;	
 				
@@ -58,13 +58,19 @@ class converter {
 
 
 	}	
-	public function coord_mono_to_color($code){	
+	public function conv_coord($code,$mode){	
 
 		$ratio_x_px = "2.81";
 		$ratio_y_px = "2.66";
 		
 		$ratio_x_txt = "2.8";
 		$ratio_y_txt = "2.63";
+
+		if($mode == "CTM"){ //Color to Mono
+				$sign = "/";
+		}elseif ($mode == "MTC") { //Mono to color
+				$sign = "*";
+		}
 
 
 			include('php/regex.php');
@@ -81,6 +87,7 @@ class converter {
 		preg_match($pxlchangenocolor,$code,$pxlchangenocolortab);
 		preg_match($textnocolor,$code,$textnocolortab);
 		preg_match($cerclenocolor,$code,$cerclenocolortab);
+		preg_match("#(Pxl-Test)\(([^,]+)\,([^,]+)#i",$code,$pxtesttab);
 
 
 		if(count($linenocolor) > 0) { //there is a line here
@@ -91,16 +98,21 @@ class converter {
 			for ($i=2; $i < count($linenocolor); $i++) { 
 
 				if($i == 2 OR $i == 4){
-						$temp = '('.$linenocolor[$i].')/'.$ratio_x_px;
+						$temp = '('.$linenocolor[$i].')'.$sign.$ratio_x_px;
 						$global = $global.$temp.',';
 				}
 				if($i == 3){
-						$temp = '('.$linenocolor[$i].')/'.$ratio_y_px;
+						$temp = '('.$linenocolor[$i].')'.$sign.$ratio_y_px;
 						$global = $global.$temp.',';
 				}
-				if($i == 5){
+				if($i == 5 AND $mode == "CTM"){
 						
 						$temp = '(1/'.$ratio_y_px.')('.$linenocolor[5];
+						$global = $global.$temp;
+				}
+				if($i == 5 AND $mode == "MTC"){
+						
+						$temp = '('.$ratio_y_px.')('.$linenocolor[5];
 						$global = $global.$temp;
 				}
 			}
@@ -121,16 +133,16 @@ class converter {
 
 					if($i == 3){
 
-							$global = $global.'('.$ptnocolor[3].')/'.$ratio_x_px;
+							$global = $global.'('.$ptnocolor[3].')'.$sign.$ratio_x_px;
 					}
 					if($i == 4 AND count($ptnocolor) <= 5){
 
-							$global = $global.',('.substr($ptnocolor[4],0,(strlen($ptnocolor[4])-1)).'/'.$ratio_y_px;
+							$global = $global.',('.substr($ptnocolor[4],0,(strlen($ptnocolor[4])-1)).$sign.$ratio_y_px;
 
 					}
 					if($i == 4 AND count($ptnocolor) > 5){
 
-							$global = $global.',('.$ptnocolor[4].')/'.$ratio_y_px;
+							$global = $global.',('.$ptnocolor[4].')'.$sign.'$ratio_y_px';
 
 					}
 					if($i == 6){
@@ -153,16 +165,16 @@ class converter {
 
 					if($i == 3){
 
-							$global = $global.'('.$ptoffnocolor[3].')/'.$ratio_x_px;
+							$global = $global.'('.$ptoffnocolor[3].')'.$sign.$ratio_x_px;
 					}
 					if($i == 4 AND count($ptoffnocolor) <= 5){
 
-							$global = $global.',('.substr($ptoffnocolor[4],0,(strlen($ptoffnocolor[4])-1)).'/'.$ratio_y_px;
+							$global = $global.',('.substr($ptoffnocolor[4],0,(strlen($ptoffnocolor[4])-1)).$sign.$ratio_y_px;
 
 					}
 					if($i == 4 AND count($ptoffnocolor) > 5){
 
-							$global = $global.',('.$ptoffnocolor[4].')/'.$ratio_y_px;
+							$global = $global.',('.$ptoffnocolor[4].')'.$sign.$ratio_y_px;
 
 					}
 					if($i == 6){
@@ -180,61 +192,112 @@ class converter {
 
 		}elseif(count($horiznocolortab) > 0){
 
-				$global = $horiznocolortab[1].' ('.rtrim($horiznocolortab[2]).'/'.$ratio_y_px.')';
+				$global = $horiznocolortab[1].' ('.rtrim($horiznocolortab[2]).$sign.$ratio_y_px.')';
 				return $global."\n";
 
 		}elseif(count($vertinocolortab) > 0){
 
-				$global = $vertinocolortab[1].' ('.rtrim($vertinocolortab[2]).'/'.$ratio_x_px.')';
+				$global = $vertinocolortab[1].' ('.rtrim($vertinocolortab[2]).$sign.$ratio_x_px.')';
 				return $global."\n";
 
 		}elseif (count($ptchangenocolortab) > 0) {
 
-				$global = $ptchangenocolortab[1].'(('.$ptchangenocolortab[2].')/'.$ratio_x_px.',('.rtrim($ptchangenocolortab[3]).'/'.$ratio_y_px;
+				$global = $ptchangenocolortab[1].'(('.$ptchangenocolortab[2].')'.$sign.$ratio_x_px.',('.rtrim($ptchangenocolortab[3]).$sign.$ratio_y_px;
 				return $global."\n";
 			
 		}elseif (count($pxonnocolortab) > 0) {
 				
-				$global = $pxonnocolortab[1].'(int(('.$pxonnocolortab[3].')/'.$ratio_x_px.'),int(('.rtrim($pxonnocolortab[4]).')/'.$ratio_y_px.'';
+				$global = $pxonnocolortab[1].'(int(('.$pxonnocolortab[3].')'.$sign.$ratio_x_px.'),int(('.rtrim($pxonnocolortab[4]).')'.$sign.$ratio_y_px.'';
 				return $global."\n";
 
 		}elseif (count($pxoffnocolortab) > 0) {
 				
-				$global = $pxoffnocolortab[1].'(('.$pxoffnocolortab[3].')/'.$ratio_x_px.',('.rtrim($pxoffnocolortab[4]).'/'.$ratio_y_px;
+				$global = $pxoffnocolortab[1].'(('.$pxoffnocolortab[3].')'.$sign.$ratio_x_px.',('.rtrim($pxoffnocolortab[4]).$sign.$ratio_y_px;
 				return $global."\n";
 
 		}elseif (count($pxlchangenocolortab) > 0) {
 				
-				$global = $pxlchangenocolortab[1].'(('.$pxlchangenocolortab[2].')/'.$ratio_x_px.',('.rtrim($pxlchangenocolortab[3]).'/'.$ratio_y_px;
+				$global = $pxlchangenocolortab[1].'(('.$pxlchangenocolortab[2].')'.$sign.$ratio_x_px.',('.rtrim($pxlchangenocolortab[3]).$sign.$ratio_y_px;
 				return $global."\n";
 
 		}elseif (count($textnocolortab) > 0) {
 				
-				$global = $textnocolortab[1].'(int(('.$textnocolortab[2].')/'.$ratio_y_txt.'),int(('.$textnocolortab[3].')/'.$ratio_x_txt.'),'.$textnocolortab[4];
+				$global = $textnocolortab[1].'(int(('.$textnocolortab[2].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[3].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[4];
 				return $global;
 		}elseif (count($cerclenocolortab) > 0) {
 				
-				$global = $cerclenocolortab[1].'(('.$cerclenocolortab[3].')/'.$ratio_x_px.',('.$cerclenocolortab[4].')/'.$ratio_y_px.',('.rtrim($cerclenocolortab[5]).'/2.8';
+				$global = $cerclenocolortab[1].'(('.$cerclenocolortab[3].')'.$sign.$ratio_x_px.',('.$cerclenocolortab[4].')'.$sign.$ratio_y_px.',('.rtrim($cerclenocolortab[5]).$sign.'2.8';
 				return $global;
 
 
 
 
+		}elseif (count($pxtesttab) > 0) {
+
+			if(preg_match($pxtest,$code)){
+
+				//que du pixel test
+
+				if(preg_match("#[\)]#i",$pxtesttab[3])){
+
+
+
+						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).'/'.$ratio_x_txt;
+
+
+				}else{
+						
+						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')/'.$ratio_x_txt;
+
+
+				}
+
+				//
+			}else{
+
+
+				$regex_get_only_func = "(#(Pxl-Test)\(([^,]+)\,([^,]+)#i)";
+
+				//du pixel test et autre chose
+
+				$pos = strpos($code, "Pxl-Test(");
+				$before =  substr($code, $pos,strlen($code)-1);	
+				$yolo = substr($code,$pos+12,strlen($code)-1);
+				$space = strpos($yolo," ");	
+
+				$after =substr($yolo, $space, strlen($code)-1);
+				
+				$endOfString = strpos($code, $after);
+				$PxlTextOnly = substr($code, $pos,$endOfString-2);	
+				//return $PxlTextOnly;
+
+				preg_match("#^(Pxl-Test)\(([^,]+)\,([^,]+)#i",$PxlTextOnly,$pxtesttab);
+
+				if(preg_match("#[\)]#i",$pxtesttab[3])){
+
+						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).'/'.$ratio_x_txt;
+
+
+				}else{
+						
+						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')/'.$ratio_x_txt;
+
+
+				}
+
+
+			}
+				
+				
+				return $global."\n";
 		}else{
 
 			return $code;
-		}
 
+		}
 	}
 
-		public function conv_coord(){
-
-
-
-
-
-		}
-
+		
 	private function iscoloredtotal($currentline){
 
 		include('php/regex.php');

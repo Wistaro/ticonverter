@@ -15,6 +15,15 @@ class TIModel
     private $flags   = 0;
     private $sig     = '';
 
+
+    /**
+     * @return int
+     */
+    public function getOrderId()
+    {
+        return $this->orderID;
+    }
+
     /**
      * @return string
      */

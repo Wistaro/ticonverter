@@ -1,44 +1,13 @@
 <?php
+session_start();
+echo '<meta charset="utf-8"><pre>';
+//print_r($_SESSION);
+echo '</pre>';
 
-			session_start();
-			require('head.php');
-			echo '<pre>';
-			print_r($_SESSION);
-			echo '</pre>';
+include('php/converter.class.php');
 
+$file = new converter($_SESSION['src'], $_SESSION['format_convert'], $_SESSION['lang'],"Gest");
 
+echo '<textarea>'.$file->GetSrc().'</textarea><br />';
+echo '<textarea>'.$file->ColorToMono().'</textarea><br />';
 
-
-			$current_prgm = new Converter($_SESSION['src'],$_SESSION['type'], $_SESSION['lang']);
-			
-
-			/*$newPrgm->setContentFromString($current_prgm->ColorToMono());
-			$newPrgm->saveVarToFile("files/", "trololol");
-*/
-
-
-
-
-
-
-		?>
-
-	<section class="SEC_main"><?php
-	echo '<pre>';
-			print_r($_SESSION);
-			echo '</pre>'; ?>
-		<h1>Fichier converti</h1>
-
-		<?php 
-			 ?>
-		
-			<textarea><?php echo $current_prgm->getSrc();?></textarea>
-			<textarea><?php echo $current_prgm->colorToMono();?></textarea>
-			
-				
-
-	</section>
-
-	<?php
-
-	require('footer.php');

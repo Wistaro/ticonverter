@@ -2,6 +2,16 @@
 
 			session_start();
 			require('head.php');
+			
+			if($_SESSION['type'] == "Monochrome - TI83(+)/84(+)(SE)"){
+
+				$_SESSION['format_convert'] = "Couleur - 83PCE/84+CE";
+
+
+			}elseif ($_SESSION['type'] == "Couleur - TI83PCE/84+CE") {
+				
+				$_SESSION['format_convert'] ="Monochrome - TI83(+)/84(+)(SE)";
+			}
 
 			
 
@@ -45,9 +55,8 @@
 			<label>Convertir en: </label><select name="type">
 
 						<option value="convert_none" selected>Ne rien convertir</option>
-						<option value="convert_to_mono">Monochrome - 83(+)/84(+)(SE)</option>
-						<option value="convert_to_color">Couleur - 83PCE/84+CE</option>
-
+						<option value="convert_to_mono"><?php echo $_SESSION['format_convert']; ?></option>
+						
 					</select><br /><br />
 			<label>Exportation: </label><select name="type">
 

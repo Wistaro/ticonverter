@@ -135,7 +135,7 @@ abstract class TIModels
      * @param   int     $flags  The model flags
      * @return  int             The default calc order ID whose file formats use that signature
      */
-    public static function getDefaulOrderIDFromFlags($flags = 0)
+    public static function getDefaultOrderIDFromFlags($flags = 0)
     {
         return self::isValidFlags($flags) ? self::$models[$flags]['orderID'] : -1;
     }

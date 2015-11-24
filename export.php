@@ -21,15 +21,11 @@
 	$id_test = uniqid();
 
 
-	$testData = tivars\TypeHandlers\TH_0x05::makeDataFromString($source_code);
+	$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"), "Bla", TIModel::createFromName("84+"));
+	$newPrgm->setContentFromString($source_code);
+	$newPrgm->saveVarToFile("exported", $id_test);
 
-	$goodTypeForCalc = TIVarFile::createNew(TIVarType::createFromName("Program"), "Bla", TIModel::createFromName("84+"));
-
-	$goodTypeForCalc->setContentFromData($testData);
-
-	$goodTypeForCalc->saveVarToFile("exported", $id_test);
-
-	echo '<a href="exported/'.$id_test.'.82p">Download the program converted</a>';
+	echo '<a href="exported/'.$id_test.'.8xp">Download the program converted</a>';
 
 
 

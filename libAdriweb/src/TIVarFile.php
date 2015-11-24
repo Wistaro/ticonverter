@@ -78,24 +78,15 @@ class TIVarFile extends BinaryFile
         }
     }
 
-    public static function createNew(TIVarType $type = null, $name = '', TIModel $version = null)
+    public static function createNew(TIVarType $type = null, $name = '', TIModel $model = null)
     {
         if ($type !== null)
         {
-            if ($name === '')
-            {
-                $name = 'FILE' . ((count($type->getExts()) > 0) ? $type->getExts()[0] : '');
-            }
-            $newName = preg_replace('/[^a-zA-Z0-9]/', '', $name);
-            if ($newName !== $name || strlen($newName) > 8 || $newName === '' || is_numeric($newName[0]))
-            {
-                throw new \Exception("Invalid name given. 8 chars (A-Z, 0-9) max, starting by a letter");
-            }
-            $name = strtoupper(substr($name, 0, 8));
-
             $instance = new self();
             $instance->type = $type;
-            $instance->calcModel = ($version !== null) ? $version : TIModel::createFromName('84+'); // default
+            $instance->calcModel = ($model !== null) ? $model : TIModel::createFromName('84+'); // default
+
+            $name = $instance->fixVarName($name);
 
             if (!$instance->calcModel->supportsType($instance->type))
             {
@@ -236,6 +227,21 @@ class TIVarFile extends BinaryFile
         $this->computedChecksum = $this->computeChecksumFromInstanceData();
     }
 
+    private function fixVarName($name = '')
+    {
+        if ($name === '')
+        {
+            $name = 'FILE' . ((count($this->type->getExts()) > 0) ? $this->type->getExts()[0] : '');
+        }
+        $newName = preg_replace('/[^a-zA-Z0-9]/', '', $name);
+        if ($newName !== $name || strlen($newName) > 8 || $newName === '' || is_numeric($newName[0]))
+        {
+            throw new \Exception("Invalid name given. 8 chars (A-Z, 0-9) max, starting by a letter");
+        }
+        $name = strtoupper(substr($name, 0, 8));
+
+        return $name;
+    }
 
     /*** Public actions **/
 
@@ -257,6 +263,24 @@ class TIVarFile extends BinaryFile
     {
         $handler = $this->type->getTypeHandler();
         $this->varEntry['data'] = $handler::makeDataFromString($str, $options);
+        $this->refreshMetadataFields();
+    }
+
+    public function setCalcModel(TIModel $model = null)
+    {
+        if ($model !== null)
+        {
+            $this->calcModel = $model;
+            $this->header['signature'] = $model->getSig();
+        } else {
+            throw new \Exception("No model given");
+        }
+    }
+
+    public function setVarName($name = '')
+    {
+        $name = TIVarFile::fixVarName($name);
+        $this->varEntry['varname'] = str_pad($name, 8, "\0");
         $this->refreshMetadataFields();
     }
 
@@ -305,8 +329,12 @@ class TIVarFile extends BinaryFile
             {
                 $name = $this->varEntry['varname'];
             }
-            // TODO: make user be able to precise for which model the extension will be fitted
-            $fileName = str_replace("\0", '', $name) . '.' . $this->getType()->getExts()[0];
+            $extIndex = $this->calcModel->getOrderId();
+            if ($extIndex < 0)
+            {
+                $extIndex = 0;
+            }
+            $fileName = str_replace("\0", '', $name) . '.' . $this->getType()->getExts()[$extIndex];
             if ($directory === '')
             {
                 $directory = './';

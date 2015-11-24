@@ -39,6 +39,9 @@
 
     $cerclenocolor = "#(C(i|e)rcle)\(([^,]+)\,([^,]+)\,([^,]+)#i";
 
+    $pxtest = "#^(Pxl-Test)\(([^,]+)\,([^,]+)#i";
+    $pxtestnobegin = "#^(Pxl-Test)\(([^,]+)\,([^,]+)#i";
+
 
 
 
