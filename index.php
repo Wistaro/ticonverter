@@ -42,7 +42,7 @@ session_start();
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> <br />
 					<label class="SELECT_type">Type: </label><select name="type">
 						<option onclick="alert('test'); editor = CodeMirror.fromTextArea(document.getElementById('TTREA_code'), mode, 'tibasic_fr')" value="Monochrome - TI83(+)/84(+)(SE)">Monochrome - TI83(+)/84(+)(SE)</option>
-						<option onchange="" value="Monochrome - TI82Stats/82/76">Monochrome - TI82Stats/82/76</option>
+						<option onchange="" value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 						<option value="Couleur - TI83PCE/84+CE">Couleur - TI83PCE/84+CE</option>
 					</select><br /><br />
 					<input type="submit" action="envoyer" style="float: left;" class="BT_send" />

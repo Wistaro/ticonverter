@@ -16,11 +16,53 @@ class converter {
 			$this->prgm_decode = $prgm;
 			$this->lang_prgm = $lang;
 			$this->type = $typeconvert;
+
+			
 			//$this->typeofinput = $typeofinput; //type: 'input' OR 'file' only! See docs for further informations
 
 		}
 
+	
+
 	public function ColorToMono(){
+
+		$global = "";
+		$nblines = count(explode("\n", $this->prgm_decode))-1;
+
+		for ($i=1; $i <=$nblines; $i++) { 
+			
+			$currentline = self::read_line($i)."\n";
+			
+
+			
+						if(self::iscoloredtotal($currentline) == "delall"){
+
+							//effacement total
+							$currentline = "";
+							
+							}elseif (self::iscoloredtotal($currentline) != "nothing") {
+								
+								$currentline = self::iscoloredtotal($currentline)."\n";
+
+							}
+
+								
+				
+				
+				$corr_coord = self::conv_coord($currentline,"CTM");	
+				
+				$global = $global.$corr_coord;	
+				
+
+		}
+
+		return $global;
+
+
+
+
+	}	
+	public function MonoToColor(){
 
 		$global = "";
 		$nblines = count(explode("\n", $this->prgm_decode))-1;
@@ -242,54 +284,47 @@ class converter {
 
 
 
-						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).'/'.$ratio_x_txt;
+						$global = 'Pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).$sign.$ratio_x_txt;
 
 
 				}else{
 						
-						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')/'.$ratio_x_txt;
+						$global = 'Pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')'.$sign.$ratio_x_txt;
 
 
 				}
+				return $global."\n";
 
 				//
 			}else{
 
+				//start
 
-				$regex_get_only_func = "(#(Pxl-Test)\(([^,]+)\,([^,]+)#i)";
-
-				//du pixel test et autre chose
-
-				$pos = strpos($code, "Pxl-Test(");
-				$before =  substr($code, $pos,strlen($code)-1);	
-				$yolo = substr($code,$pos+12,strlen($code)-1);
-				$space = strpos($yolo," ");	
-
-				$after =substr($yolo, $space, strlen($code)-1);
-				
-				$endOfString = strpos($code, $after);
-				$PxlTextOnly = substr($code, $pos,$endOfString-2);	
-				//return $PxlTextOnly;
-
-				preg_match("#^(Pxl-Test)\(([^,]+)\,([^,]+)#i",$PxlTextOnly,$pxtesttab);
-
-				if(preg_match("#[\)]#i",$pxtesttab[3])){
-
-						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).'/'.$ratio_x_txt;
+				preg_match_all("#Pxl-Test\([^,]+\,[^,:\)\s→]+#i", $code, $matches);
 
 
-				}else{
-						
-						$global = 'Pxl-Test(('.$pxtesttab[2].')/'.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')/'.$ratio_x_txt;
 
 
-				}
+				for($i=0;$i<count($matches[0]);$i++){
 
+					$TestString = new Converter($matches[0][$i]."\n");
 
+					if($mode == "CTM"){ //Color to Mono
+						 $code = str_replace($matches[0][$i], rtrim($TestString->ColorToMono()), $code);
+					}elseif ($mode == "MTC") { //Mono to color
+						 $code = str_replace($matches[0][$i], rtrim($TestString->MonoToColor()), $code);
+					}
+				    
+
+					}
+	
+				return $code;
+
+				//end
 			}
 				
 				
-				return $global."\n";
+				
 		}else{
 
 			return $code;

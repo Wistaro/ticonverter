@@ -48,14 +48,14 @@
 				</p>
 
 			<h2>Code source: </h2>
-					<textarea name="code_input" class="TTREA_code" id="?TTREA_code"><?php echo $src; ?></textarea><br /> 
+					<textarea name="code_input" class="TTREA_code" id="?TTREA_code" disabled><?php echo $src; ?></textarea><br /> 
 			
 		<form method="post" action="result.php" >	
 
-			<label>Convertir en: </label><select name="type">
+			<label>Convertir en: </label><select name="conversion">
 
 						<option value="convert_none" selected>Ne rien convertir</option>
-						<option value="convert_to_mono"><?php echo $_SESSION['format_convert']; ?></option>
+						<option value="<?php echo $_SESSION['format_convert']; ?>"><?php echo $_SESSION['format_convert']; ?></option>
 						
 					</select><br /><br />
 			<label>Exportation: </label><select name="type">
@@ -66,7 +66,7 @@
 
 					</select><br /><br /><br />
 
-					
+					<input type="hidden" value="<?php echo $src; ?>" name="sourcecode" />
 
 					<input type="submit" value="Allons-y!" />
 		</form>

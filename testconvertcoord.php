@@ -37,10 +37,10 @@
 
 		$prgm = new Converter($_POST['inputtest']."\n");
 		$_SESSION['src'] = $prgm->ColorToMono();
-		header('location:export.php');
+		//header('location:export.php');
 	
 
-		echo 'Après correction couleur--mono: <textarea rows="10" cols="50">'.$prgm->ColorToMono().'</textarea><br /><br />';
+		echo 'Après correction mmono--color: <textarea rows="10" cols="50">'.$prgm->MonoToColor().'</textarea><br /><br />';
 		}
 
 

@@ -1,13 +1,37 @@
-<?php
-session_start();
-echo '<meta charset="utf-8"><pre>';
-//print_r($_SESSION);
-echo '</pre>';
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>TI-Convertisseur</title>
+  <link rel="stylesheet" href="template/css/style.css">
+  <link rel="stylesheet" href="codemirror-5.6/lib/codemirror.css">
+  <link rel="stylesheet" href="codemirror-5.6/theme/base16-dark.css">
+</head>
+<body>
 
-include('php/converter.class.php');
+	<menu>
 
-$file = new converter($_SESSION['src'], $_SESSION['format_convert'], $_SESSION['lang'],"Gest");
+		<div class="menu">
+			<ul>
+				<li class="itemmenu"><a href="/ticonvertisseur">Accueil</a></li>
+				<li class="itemmenu"><a href="#">Documentation</a></li>
+				<li class="itemmenu"><a href="#">Votre espace</a></li>
+				<li class="itemmenu"><a href="#">A propos</a></li>
 
-echo '<textarea>'.$file->GetSrc().'</textarea><br />';
-echo '<textarea>'.$file->ColorToMono().'</textarea><br />';
+			</ul>
+
+		</div>
+
+
+	</menu>
+
+	<section class="SEC_main">
+		<h1>Conversion terminée!</h1>
+
+		<p>La conversion de votre programme s'est bien déroulée. </p><hr><br />
+		<?php
+			include_once('end.php');
+		?>
+
+
 
