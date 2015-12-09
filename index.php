@@ -40,10 +40,14 @@ session_start();
 					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_neg" class="BT" onclick="return false;">(-)</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button><button id="BT_subT" class="BT" style="height: 26px;" onclick="return false;">ᴛ</button>
 					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> <br />
-					<label class="SELECT_type">Type: </label><select name="type">
-						<option onclick="alert('test'); editor = CodeMirror.fromTextArea(document.getElementById('TTREA_code'), mode, 'tibasic_fr')" value="Monochrome - TI83(+)/84(+)(SE)">Monochrome - TI83(+)/84(+)(SE)</option>
-						<option onchange="" value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
+					<label class="SELECT_type">Type : </label><select name="type">
+						<option value="Monochrome - TI83(+)/84(+)(SE)">Monochrome - TI83(+)/84(+)(SE)</option>
+						<option value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 						<option value="Couleur - TI83PCE/84+CE">Couleur - TI83PCE/84+CE</option>
+					</select>
+					<label class="SELECT_type">Le code est en : </label><select name="lang">
+						<option onclick="changeLang('tibasic_en');" value="EN" selected>Anglais (défaut)</option>
+						<option onclick="changeLang('tibasic_fr');" value="FR">Français</option>
 					</select><br /><br />
 					<input type="submit" action="envoyer" style="float: left;" class="BT_send" />
 					<button style="float: right; margin: 10px 0 10px 25px;" onclick="editor.setValue(localStorage.getItem('converterValue')); return false;">Restaurer</button><button style="float: right; margin: 10px 0 10px 25px;" onclick="localStorage.setItem('converterValue', editor.getValue()); return false;">Sauvegarder</button><br /><br />
