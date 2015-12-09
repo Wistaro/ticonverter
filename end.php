@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$sourcecode = $_POST['sourcecode']."\n";
+	$sourcecode = $_POST['code_input']."\n";
 
 	$typeexport = htmlspecialchars($_POST['type']);
 	$converted_string = "";
@@ -26,7 +26,7 @@ include('php/converter.class.php');
 
 		if(htmlspecialchars($_POST['type']) == 'expt_text'){
 
-			echo 'Votre code: <br /><textarea class="TTREA_code" id="TTREA_code" disabled>'.$converted_string.'</textarea>';
+			echo 'Votre code: <br /><br /><textarea class="TTREA_code" id="TTREA_code">'.$converted_string.'</textarea>';
 
 		}elseif (htmlspecialchars($_POST['type']) == 'expt_file') {
 
