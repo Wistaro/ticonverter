@@ -47,10 +47,10 @@
 
 				</p>
 
-			<h2>Code source: </h2>
-					<textarea name="code_input" class="TTREA_code" id="?TTREA_code" disabled><?php echo $src; ?></textarea><br /> 
 			
 		<form method="post" action="result.php" >	
+			<h2>Code source: </h2>
+					<textarea name="code_input" class="TTREA_code" id="TTREA_code"><?php echo $src; ?></textarea><br /> 
 
 			<label>Convertir en: </label><select name="conversion">
 
