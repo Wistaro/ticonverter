@@ -6,7 +6,7 @@
 			if($_SESSION['type'] == "Monochrome - TI83(+)/84(+)(SE)"){
 
 				$_SESSION['format_convert'] = "Couleur - 83PCE/84+CE";
-
+				
 
 			}elseif ($_SESSION['type'] == "Couleur - TI83PCE/84+CE") {
 				
