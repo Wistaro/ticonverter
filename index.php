@@ -11,7 +11,7 @@ session_start();
 	<section class="SEC_main">
 		<h1 id="BT_send">Convertisseur multi-TI</h1>
 		<form method="post" action="upload.php" enctype="multipart/form-data">
-	
+
 			<?php 
 				if($mode == "upload") { ?>
 	
