@@ -42,15 +42,15 @@ session_start();
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> <br />
 					<label class="SELECT_type">Type : </label><select name="type">
 						<option value="Monochrome - TI83(+)/84(+)(SE)">Monochrome - TI83(+)/84(+)(SE)</option>
-						<option value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 						<option value="Couleur - TI83PCE/84+CE">Couleur - TI83PCE/84+CE</option>
+						<option value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 					</select>
 					<label class="SELECT_type">Le code est en : </label><select name="lang">
 						<option onclick="changeLang('tibasic_en');" value="EN" selected>Anglais (défaut)</option>
 						<option onclick="changeLang('tibasic_fr');" value="FR">Français</option>
 					</select><br /><br />
 					<input type="submit" action="envoyer" style="float: left;" class="BT_send" />
-					<button style="float: right; margin: 10px 0 10px 25px;" onclick="editor.setValue(localStorage.getItem('converterValue')); return false;">Restaurer</button><button style="float: right; margin: 10px 0 10px 25px;" onclick="localStorage.setItem('converterValue', editor.getValue()); return false;">Sauvegarder</button><br /><br />
+					<button style="float: right; margin: 10px 0 10px 25px;" onclick="editor.setValue(localStorage.getItem('converterValue')); return false;">Restaurer</button><button style="float: right; margin: 10px 0 10px 25px;" onclick="localStorage.setItem('converterValue', editor.getValue()); return false;" title="Cette option vous permettra de sauvegarder votre code, même une fois votre ordinateur éteint.">Sauvegarder</button><br /><br />
 
 					
 			

@@ -23,6 +23,14 @@
 				theme: "base16-dark"
 			});
 			editor.setValue(content);
+			if(editor.lineCount() > 20)
+				document.querySelector(".cm-s-base16-dark.CodeMirror").style.height = "auto";
+			editor.on("change", function() {
+				if(editor.lineCount() > 20)
+					document.querySelector(".cm-s-base16-dark.CodeMirror").style.height = "auto";
+				else
+					document.querySelector(".cm-s-base16-dark.CodeMirror").style.height = "330px";
+			});
 		}
 
 		document.getElementById("BT_triangle").addEventListener("click", function() {
