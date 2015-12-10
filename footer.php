@@ -11,7 +11,7 @@
 			viewportMargin: Infinity,
 			theme: "base16-dark"
 		});
-
+	
 		function changeLang(lang) {
 			var content = editor.getValue();
 			document.getElementsByClassName("CodeMirror").remove();
