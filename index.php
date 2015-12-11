@@ -1,5 +1,7 @@
 <?php
-session_start();	
+	session_start();
+	$_SESSION['lang'] = "EN";
+
 	if(isset($_GET['mode'])){
 			$mode = htmlspecialchars($_GET['mode']);
 	}else{

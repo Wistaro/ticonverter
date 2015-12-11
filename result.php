@@ -31,6 +31,7 @@
 		<p>La conversion de votre programme s'est bien déroulée. </p><hr><br />
 		<?php
 			include_once('end.php');
+			require("footer.php");
 		?>
 
 
