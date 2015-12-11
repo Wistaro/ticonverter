@@ -5,7 +5,7 @@
 <script src="codemirror-5.6/mode/tibasic/tibasic_en.js"></script>
 	<script type="text/javascript">
 		var editor = CodeMirror.fromTextArea(document.getElementById("TTREA_code"), {
-			mode: "tibasic_en",
+			<?php if($_SESSION['lang'] == "EN") echo "mode: 'tibasic_en',"; else echo "mode: 'tibasic_fr'," ?>
 			styleActiveLine: true,
 			lineNumbers: true,
 			viewportMargin: Infinity,
