@@ -184,7 +184,7 @@ class converter {
 					}
 					if($i == 4 AND count($ptnocolor) > 5){
 
-							$global = $global.',('.$ptnocolor[4].')'.$sign.'$ratio_y_px';
+							$global = $global.',('.$ptnocolor[4].')'.$sign.$ratio_y_px;
 
 					}
 					if($i == 6){
@@ -264,7 +264,7 @@ class converter {
 
 		}elseif (count($textnocolortab) > 0) {
 				
-				$global = $textnocolortab[1].'(int(('.$textnocolortab[2].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[3].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[4];
+				$global = $textnocolortab[1].'(int(('.$textnocolortab[5].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[count($textnocolortab)-2].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[count($textnocolortab)-1];
 				return $global;
 		}elseif (count($cerclenocolortab) > 0) {
 				
