@@ -1,7 +1,7 @@
 <?php
-	session_start();
-	$sourcecode = $_POST['code_input']."\n";
-
+	//session_start();
+	//$sourcecode = $_POST['code_input']."\n";
+	$sourcecode = $_SESSION['src']."\n";
 	$typeexport = htmlspecialchars($_POST['type']);
 	$converted_string = "";
 	

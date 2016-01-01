@@ -50,7 +50,7 @@
 			
 		<form method="post" action="result.php" >	
 			<h2>Code source: </h2>
-					<textarea name="code_input" class="TTREA_code" id="TTREA_code"><?php echo $src; ?></textarea><br /> 
+					<textarea name="sourcecode" class="TTREA_code" id="TTREA_code"><?php echo $src; ?></textarea><br /> 
 
 			<label>Convertir en: </label><select name="conversion">
 
@@ -66,7 +66,7 @@
 
 					</select><br /><br /><br />
 
-					<input type="hidden" value="<?php echo $src; ?>" name="sourcecode" />
+					<input type="hidden" value='toto'name="code_input" />
 
 					<input type="submit" value="Allons-y!" />
 		</form>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if($_POST['sourcecode'] != $_SESSION['src']){
+
+	$_SESSION['src'] = $_POST['sourcecode'];
+
+}
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -30,6 +38,7 @@
 
 		<p>La conversion de votre programme s'est bien déroulée. </p><hr><br />
 		<?php
+
 			include_once('end.php');
 			require("footer.php");
 		?>
