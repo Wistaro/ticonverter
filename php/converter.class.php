@@ -262,10 +262,32 @@ class converter {
 				$global = $pxlchangenocolortab[1].'(('.$pxlchangenocolortab[2].')'.$sign.$ratio_x_px.',('.rtrim($pxlchangenocolortab[3]).$sign.$ratio_y_px;
 				return $global."\n";
 
-		}elseif (count($textnocolortab) > 0) {
+		}elseif (count($textnocolortab) > 0) { //need fix
+
+
+				if(strrpos($code,"Text(-1,") === FALSE AND strrpos($code,"Texte(-1,") === FALSE){
+					//classic: no -1 argument
+					$global = $textnocolortab[1].'(int(('.$textnocolortab[count($textnocolortab)-3].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[count($textnocolortab)-2].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[count($textnocolortab)-1];
+
+				}else{
+
+					//maj size: -1 argument
+
+					if($textnocolortab[1] == "Text"){
+						$pos = 8;
 				
-				$global = $textnocolortab[1].'(int(('.$textnocolortab[5].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[count($textnocolortab)-2].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[count($textnocolortab)-1];
-				return $global;
+					}else{
+						$pos = 9;
+					}
+
+					$newstring = $textnocolortab[1]."(".substr($code, $pos);
+					preg_match($textnocolor,$newstring,$textwt1);
+					$global = $textnocolortab[1].'(-1,(int(('.$textwt1[3].')'.$sign.$ratio_y_txt.'),int(('.$textwt1[4].')'.$sign.$ratio_y_txt.'),'.$textwt1[5];
+
+				}
+				
+				//$global = $textnocolortab[1].'(int(('.$textnocolortab[count($textnocolortab)-3].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[count($textnocolortab)-2].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[count($textnocolortab)-1];
+				return $global."\n";
 		}elseif (count($cerclenocolortab) > 0) {
 				
 				$global = $cerclenocolortab[1].'(('.$cerclenocolortab[3].')'.$sign.$ratio_x_px.',('.$cerclenocolortab[4].')'.$sign.$ratio_y_px.',('.rtrim($cerclenocolortab[5]).$sign.'2.8';
