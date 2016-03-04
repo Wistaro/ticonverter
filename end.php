@@ -9,6 +9,10 @@ include('php/converter.class.php');
 
 	$file = new converter($sourcecode, $_POST['conversion'], $_SESSION['lang'],"Gest");
 
+	$file->GetTypeOfDefinitionScreen(); //get the type of the windows (rel or abs)
+
+
+
 		if($_POST['conversion'] == 'Couleur - 83PCE/84+CE'){
 
 				$converted_string = $file->MonoToColor();

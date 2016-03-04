@@ -9,6 +9,7 @@ class converter {
 		private $lang_prgm;
 		public $type;
 		private $typeofinput;
+		public $typeOfWindows;
 
 	public function __construct($prgm, $typeconvert="", $lang = "", $user = "Guest"){
 
@@ -17,12 +18,37 @@ class converter {
 			$this->lang_prgm = $lang;
 			$this->type = $typeconvert;
 
+
 			
 			//$this->typeofinput = $typeofinput; //type: 'input' OR 'file' only! See docs for further informations
 
 		}
 
-	
+	public function GetTypeOfDefinitionScreen(){
+
+		$nblines = count(explode("\n", $this->prgm_decode))-1;
+		for ($i=1; $i <=$nblines; $i++) { 
+			
+			$currentline = self::read_line($i)."\n";
+
+			if(strrpos($currentline, '∆X') === FALSE AND strrpos($currentline, '∆Y') === FALSE){
+										
+
+			}else{
+				$this->typeOfWindows = "delta";
+				
+
+			}
+
+		}
+
+		if($this->typeOfWindows == ""){
+				$this->typeOfWindows = "pasDelta";
+		}
+
+
+
+	}
 
 	public function ColorToMono(){
 
@@ -49,7 +75,7 @@ class converter {
 								
 				
 				
-				$corr_coord = self::conv_coord($currentline,"CTM");	
+				$corr_coord = self::conv_coord($currentline,"CTM",$this->typeOfWindows);	
 				
 				$global = $global.$corr_coord;	
 				
@@ -87,7 +113,7 @@ class converter {
 								
 				
 				
-				$corr_coord = self::conv_coord($currentline,"MTC");	
+				$corr_coord = self::conv_coord($currentline,"MTC",$this->typeOfWindows);	
 				
 				$global = $global.$corr_coord;	
 				
@@ -100,11 +126,12 @@ class converter {
 
 
 	}	
-	public function conv_coord($code,$mode){	
+	public function conv_coord($code,$mode, $typeOfWindows){	
 
 		$ratio_x_px = "2.81";
 		$ratio_y_px = "2.66";
 		
+
 		$ratio_x_txt = "2.8";
 		$ratio_y_txt = "2.63";
 
@@ -132,7 +159,7 @@ class converter {
 		preg_match("#(Pxl-Test)\(([^,]+)\,([^,]+)#i",$code,$pxtesttab);
 
 
-		if(count($linenocolor) > 0) { //there is a line here
+		if(count($linenocolor) > 0 AND $typeOfWindows == "delta") { //there is a line here
 
 			$temp = "";
 			$global = $linenocolor[1].'(';
@@ -166,7 +193,7 @@ class converter {
 
 			return $global;
 
-		}elseif (count($ptnocolor) > 0) { //there is a pton here
+		}elseif (count($ptnocolor) > 0 AND $typeOfWindows == "delta") { //there is a pton here
 			
 			$temp = "";
 			$global = $ptnocolor[1].'(';
@@ -198,7 +225,7 @@ class converter {
 				return $global."\n";
 
 
-		}elseif(count($ptoffnocolor) > 0){ 
+		}elseif(count($ptoffnocolor) > 0 AND $typeOfWindows == "delta"){ 
 
 			$temp = "";
 			$global = $ptoffnocolor[1].'(';
@@ -232,17 +259,17 @@ class converter {
 
 
 
-		}elseif(count($horiznocolortab) > 0){
+		}elseif(count($horiznocolortab) > 0 AND $typeOfWindows == "delta"){
 
 				$global = $horiznocolortab[1].' ('.rtrim($horiznocolortab[2]).$sign.$ratio_y_px.')';
 				return $global."\n";
 
-		}elseif(count($vertinocolortab) > 0){
+		}elseif(count($vertinocolortab) > 0 AND $typeOfWindows == "delta"){
 
 				$global = $vertinocolortab[1].' ('.rtrim($vertinocolortab[2]).$sign.$ratio_x_px.')';
 				return $global."\n";
 
-		}elseif (count($ptchangenocolortab) > 0) {
+		}elseif (count($ptchangenocolortab) > 0 AND $typeOfWindows == "delta") {
 
 				$global = $ptchangenocolortab[1].'(('.$ptchangenocolortab[2].')'.$sign.$ratio_x_px.',('.rtrim($ptchangenocolortab[3]).$sign.$ratio_y_px;
 				return $global."\n";
@@ -288,7 +315,7 @@ class converter {
 				
 				//$global = $textnocolortab[1].'(int(('.$textnocolortab[count($textnocolortab)-3].')'.$sign.$ratio_y_txt.'),int(('.$textnocolortab[count($textnocolortab)-2].')'.$sign.$ratio_x_txt.'),'.$textnocolortab[count($textnocolortab)-1];
 				return $global."\n";
-		}elseif (count($cerclenocolortab) > 0) {
+		}elseif (count($cerclenocolortab) > 0 AND $typeOfWindows == "delta") {
 				
 				$global = $cerclenocolortab[1].'(('.$cerclenocolortab[3].')'.$sign.$ratio_x_px.',('.$cerclenocolortab[4].')'.$sign.$ratio_y_px.',('.rtrim($cerclenocolortab[5]).$sign.'2.8';
 				return $global;
@@ -306,12 +333,12 @@ class converter {
 
 
 
-						$global = 'Pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).$sign.$ratio_x_txt;
+						$global = 'pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).$sign.$ratio_x_txt;
 
 
 				}else{
 						
-						$global = 'Pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')'.$sign.$ratio_x_txt;
+						$global = 'pxl-Test(('.$pxtesttab[2].')'.$sign.$ratio_y_txt.',('.rtrim($pxtesttab[3]).')'.$sign.$ratio_x_txt;
 
 
 				}
@@ -742,6 +769,11 @@ class converter {
 	public function getSrc(){
 
 			return $this->prgm_decode;
+
+	}
+	public function getTypeWindows(){
+
+			return $this->typeOfWindows;
 
 	}
 
