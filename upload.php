@@ -2,7 +2,7 @@
 
 session_start();
 	//defaults values?
-	$_SESSION['src'] = 'Disp \"Hello World\"\n';
+	$_SESSION['src'] = "Une erreur est survenue lors de la lecture de votre fichier.";
 	$_SESSION['lang'] = 'Anglais';
 	$_SESSION['type'] = 'Monochrome - 83(+)/84(+)(SE)';
 	$_SESSION['error_file_uploaded'] = 'ok';
