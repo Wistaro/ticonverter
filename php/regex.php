@@ -34,7 +34,7 @@
     $pxlchangecolor = "#^Pxl-Changer?\([^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
     $pxlchangenocolor = "#^(Pxl-Changer?)\(([^,]+)\,([^,]+)#i";
 
-    $textnocolor = "#^(Texte?)\((-1)?([^,]+)\,([^,]+)\,([\w\s\/\-\,\*\+\"\'\ʟ\(\):]+)#i";
+    $textnocolor = "#^(Texte?)\((⁻1,)?([^,]+)\,([^,]+)\,([^\n]+)#i";
     $cerclecolor = "#^C(i|e)rcle\([^,]+\,[^,]+\,[^,]+\,([a-zA-Z\s]{3,8})#i";
 
     $cerclenocolor = "#(C(i|e)rcle)\(([^,]+)\,([^,]+)\,([^,]+)#i";
