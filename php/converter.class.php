@@ -440,7 +440,7 @@ class converter {
 
 
 					
-					$correction = substr($currentline, 0, stripos($currentline, $regexpt[count($regexpt)-1]) -1).')'."\n";
+					$correction = substr($currentline, 0, stripos($currentline, $regexpt[count($regexpt)-1]) -1);
 					
 					return $correction;
 

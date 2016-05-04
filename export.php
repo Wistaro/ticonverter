@@ -12,13 +12,11 @@
 	$id_test = uniqid();
 
 
-	$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"), "CONVERT", TIModel::createFromName("84+"));
+	$newPrgm = TIVarFile::createNew(TIVarType::createFromName("Program"), $_SESSION['filename'], TIModel::createFromName("84+"));
 	$newPrgm->setContentFromString($source_code);
-	$newPrgm->saveVarToFile("exported", $id_test);
+	$newPrgm->saveVarToFile("exported", $_SESSION['filename']);
 
-	echo '<a href="exported/'.$id_test.'.8xp">Telecharge le programme</a>';
-
-
+	echo '<a href="exported/'.$_SESSION['filename'].'.8xp">Telecharge le programme</a>';
 
 
 

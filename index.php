@@ -39,6 +39,7 @@
 	
 					
 					<input type="hidden" name="upload" value="input" />
+					<input type="text" name="filename" placeholder="Your file name" style="width: 99%; margin-bottom: 40px; background: #151515; border: none; color: #D0D0E0; padding: 5px;" required />
 					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_neg" class="BT" onclick="return false;">(-)</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button><button id="BT_subT" class="BT" style="height: 26px;" onclick="return false;">ᴛ</button>
 					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> <br />

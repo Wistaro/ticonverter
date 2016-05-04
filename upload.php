@@ -47,8 +47,8 @@ if($_POST['upload'] == 'input'){
 	$_SESSION['src'] = $content;
 	$_SESSION['lang'] = $lang2;
 	$_SESSION['type'] = $type2;
+	$_SESSION['filename'] = strtoupper($_POST['filename']);
 
-	
 	
 
 
@@ -65,6 +65,7 @@ if($_POST['upload'] == 'input'){
 
 
 			$name_input = htmlspecialchars($_FILES['fichier']['name']);
+			$_SESSION['filename'] = substr($name_input, 0, -4);
 			$id_saved = uniqid();
 
 
