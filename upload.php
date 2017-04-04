@@ -1,24 +1,26 @@
 <?php
 
 session_start();
-	//defaults values?
+	
+	/*Default values*/
 	$_SESSION['src'] = "Une erreur est survenue lors de la lecture de votre fichier.";
+	
 	$_SESSION['lang'] = 'Anglais';
 	$_SESSION['type'] = 'Monochrome - 83(+)/84(+)(SE)';
 	$_SESSION['error_file_uploaded'] = 'ok';
 
+	/* Load Tivar-lib, by Adriweb */
 	include_once "libAdriweb\src/autoloader.php";
-
-				use tivars\TIVarFile;
-				use tivars\TIVarType;
-				use tivars\TIVarTypes;
+	use tivars\TIVarFile;
+	use tivars\TIVarType;
+	use tivars\TIVarTypes;
 	
 
-
-$type = htmlspecialchars($_POST['type']);
-$type2 = htmlspecialchars($_POST['type']);
-$lang = htmlspecialchars($_POST['lang']);
-$lang2 = htmlspecialchars($_POST['lang']);
+	/* get users informations */
+	$type = htmlspecialchars($_POST['type']);
+	$type2 = htmlspecialchars($_POST['type']);
+	$lang = htmlspecialchars($_POST['lang']);
+	$lang2 = htmlspecialchars($_POST['lang']);
 
 	if($type == 'auto'){
 
@@ -47,7 +49,8 @@ if($_POST['upload'] == 'input'){
 	$_SESSION['src'] = $content;
 	$_SESSION['lang'] = $lang2;
 	$_SESSION['type'] = $type2;
-	$_SESSION['filename'] = strtoupper($_POST['filename']);
+	$_SESSION['filename'] = substr(strtoupper($_POST['filename']),0,8);
+	$_SESSION['uploadMode'] = 'input';
 
 	
 
@@ -65,7 +68,7 @@ if($_POST['upload'] == 'input'){
 
 
 			$name_input = htmlspecialchars($_FILES['fichier']['name']);
-			$_SESSION['filename'] = substr($name_input, 0, -4);
+			//$_SESSION['filename'] = substr($name_input, 0, -4);
 			$id_saved = uniqid();
 
 
@@ -82,16 +85,24 @@ if($_POST['upload'] == 'input'){
 
 						if($result){
 
-
+							 /*If ok, updating vars*/
 							 $testPrgm = TIVarFile::loadFromFile('files/'.$name_saved);
+
+							 $_SESSION['test'] = $testPrgm->getHeader();
+
+
 							 $global_src = $testPrgm->getReadableContent(['lang' =>  strtolower($lang2)]);
+													
+							 $_SESSION['uploadMode'] = 'file';						
+							 $_SESSION['lang'] = $lang2;
+							 $_SESSION['type'] = $type2;
+							 $_SESSION['src'] = $global_src;
+							 $_SESSION['sizeOfPrgm'] = $testPrgm->size();
+
+							 $tempName = substr($_FILES['fichier']['name'],0,stripos($_FILES['fichier']['name'],'.'));
+
+							 $_SESSION['filename'] = substr(strtoupper($tempName),0,8);
 							
-
-									
-							 			$_SESSION['lang'] = $lang2;
-										$_SESSION['type'] = $type2;
-									    $_SESSION['src'] = $global_src;
-
 									
 						}
 
@@ -106,11 +117,11 @@ if($_POST['upload'] == 'input'){
 
 	}elseif($_FILES['fichier']['size'] == 0){
 
-
+		//empty file
 		$_SESSION['error_file_uploaded'] = 'Vous devez entrer un fichier!';
 
 	}else{
-
+		//errors in uploaded file
 		$_SESSION['error_file_uploaded'] = 'Le fichier contient des erreurs';
 
 

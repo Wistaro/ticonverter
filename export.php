@@ -16,7 +16,7 @@
 	$newPrgm->setContentFromString($source_code);
 	$newPrgm->saveVarToFile("exported", $_SESSION['filename']);
 
-	echo '<a href="exported/'.$_SESSION['filename'].'.8xp">Telecharge le programme</a>';
+	echo '<a href="exported/'.$_SESSION['filename'].'.8xp">Télécharge le programme</a>';
 
 
 

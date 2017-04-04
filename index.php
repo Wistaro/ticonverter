@@ -30,7 +30,7 @@
 						<option value="Monochrome - TI82Stats/82/76" disabled>Monochrome - TI82Stats/82/76</option>
 						<option value="Couleur - TI83PCE/84+CE">Couleur - TI83PCE/84+CE</option>
 
-					</select> <a href="help.php?section=typeprogramm" class="imginter"><img src="template/img/int.png" alt="howto" width="20" height="20" class="imginter" id="imginter"/></a><br />
+					</select> <span class="imginter"><img src="template/img/int.png" alt="howto" width="20" title="Couleur ou Noir et blanc" height="20" class="imginter" id="imginter"/></span><br />
 					<input type="hidden" name="upload" value="file" />
 					<input type="submit" action="envoyer" class="BT_send" />
 					
@@ -39,7 +39,7 @@
 	
 					
 					<input type="hidden" name="upload" value="input" />
-					<input type="text" name="filename" placeholder="Your file name" style="width: 99%; margin-bottom: 40px; background: #151515; border: none; color: #D0D0E0; padding: 5px;" required />
+					<input type="text" name="filename" maxleng="8" placeholder="Nom du fichier" style="width: 99%; margin-bottom: 40px; background: #151515; border: none; color: #D0D0E0; padding: 5px;" required />
 					<button id="BT_arrow" class="BT" onclick="return false;">→</button><button id="BT_triangle" class="BT" onclick="return false;">►</button><button id="BT_theta" class="BT" onclick="return false;">θ</button><button id="BT_sigma" class="BT" onclick="return false;">Σ</button><button id="BT_delta" class="BT" onclick="return false;">Δ</button><button id="BT_neg" class="BT" onclick="return false;">(-)</button><button id="BT_list" class="BT" style="font-size: 12.5px;" onclick="return false;">⌊</button><button id="BT_subT" class="BT" style="height: 26px;" onclick="return false;">ᴛ</button>
 					<br />
 					<textarea name="code_input" placeholder="Saisissez votre code ici" class="TTREA_code" id="TTREA_code"></textarea> <br />
@@ -59,9 +59,18 @@
 			
 			<?php }  else { ?>
 
-				<p><b>TI-Converter est un outils gratuit permettant de convertir des fichiers TI-Basic.</b></p><br />
+				<p><b>TI-Converter est un outils gratuit permettant de convertir des fichiers TI-Basic monochrome vers couleur et vice-versa</b></p> Il permet également de visualiser le contenu de ces fichiers.<br />
+				<br /><div class="diclaimer"  style="font-size: 80%;"><hr>
+				Notez les informations suivantes:
+				<ul>
+					<li>Ce logiciel ne fonctionne qu'avec des programmes écrits en TI-Basic z80 et/ou eZ80. Les programmes en C, ou en assembleur ne sont pas supportés.</li><br />
+					<li>Dans le cas où ce logiciel serait utilisé pour des jeux ou applications de taille importante et manipulant beaucoup l'écran graphique, restez vigilant quand au résultat du convertisseur. Suivant la manère de programmer, il se peut que la conversion aboutisse à un jeux/une application inutilisable!</li><br />
+					<li>Ce logiciel fonctionne uniquement dans le cas où le pas des axes x et y sont unitaires, soit le delta x et le delta y sont à 1. Dans le cas inverse, la conversion est inutile et aboutira à des erreurs.</li>
 
-				<p><a href="?mode=upload">Télécharger un fichier</a> ou <a href="?mode=input">Saisir le programme</a></p>
+
+				</ul>
+				<hr><br ></div>
+				<center><p><a href="?mode=upload">Télécharger un fichier</a> ou <a href="?mode=input">Saisir le programme</a></p></center>
 
 			<?php } ?>
 	

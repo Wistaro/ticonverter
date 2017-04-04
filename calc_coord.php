@@ -1,43 +1,5 @@
 <?php
 			require('head.php');
-			if(!isset($_GET['xpxcolor'])){
-
-					$xpxcolor = "";
-
-			}else{
-
-				$xpxcolor = htmlspecialchars($_GET['xpxcolor']);
-
-			}
-			if(!isset($_GET['ypxcolor'])){
-
-					$ypxcolor = "";
-
-			}else{
-
-				$ypxcolor = htmlspecialchars($_GET['ypxcolor']);
-
-			}
-			if(!isset($_GET['xpxmono'])){
-
-					$xpxmono = "";
-
-			}else{
-
-				$xpxmono = htmlspecialchars($_GET['xpxmono']);
-
-			}
-			if(!isset($_GET['ypxmono'])){
-
-					$ypxmono = "";
-
-			}else{
-
-				$ypxmono = htmlspecialchars($_GET['ypxmono']);
-
-			}
-
-
 
 		?>
 
@@ -52,19 +14,38 @@
 				<li><b>Rapport de réduction texte:</b> 2.63 (y) * 2.80 px (x)</li>
 
 
-			</ul><br /><br />
+			</ul><br />
+			<u><b>Attention!</b></u><br />Cette méthode de conversion fonctionne uniquement si le pas des axes x et y est unitaire (dans la majorité des programmes c'est le cas).
+			<br /><br />
+	<div id="converter">
+			<button class="startPixel">Convertir des pixels</button><button class="startText">Convertir des texts</button>
 		
+		<div class="ConvPixel">
 			<h2>Conversion coordonnées pixels: </h2>
-			<form method="post" action="conv.php">
-			<label>Coordonnée pixel sur x (horizontale) pour écran <b>couleur</b>: </label><input type="text" name="xpxcolor" value="<?php echo $xpxcolor; ?>" /><br />
-			<label>Coordonnée pixel sur y (verticale)  pour écran <b>couleur</b>: </label><input type="text" name="ypxcolor" value="<?php echo $ypxcolor; ?>"/><br /><br /><br />
+			
+			<label>Coordonnée pixel sur x (horizontale) pour écran <b>couleur</b>: </label><input type="text" class="xpxcolor" value="" /><br />
+			<label>Coordonnée pixel sur y (verticale)  pour écran <b>couleur</b>: </label><input type="text" class="ypxcolor" value=""/><br /><br /><br />
 
-			<label>Coordonnée pixel sur x (horizontale) pour écran <b>monochrome</b>: </label><input type="text" name="xpxmono" value="<?php echo $xpxmono; ?>"/><br />
-			<label>Coordonnée pixel sur y (verticale)  pour écran <b>monochrome</b>: </label><input type="text" name="ypxmono" value="<?php echo $ypxmono; ?>"/><br />
-			<input type="submit" name="px" value="Convertir" />
+			<label>Coordonnée pixel sur x (horizontale) pour écran <b>monochrome</b>: </label><input type="text" class="xpxmono" value=""/><br />
+			<label>Coordonnée pixel sur y (verticale)  pour écran <b>monochrome</b>: </label><input type="text" class="ypxmono" value=""/><br />
+			<button class="goConv">Convertir</button><button class="restart">Recommencer</button>
 
-					</form>
+			</div>
+
+			<div class="ConvText">
 			<h2>Conversion coordonnées texte: </h2>
+
+			<u>Remarque</u><br />En TI-Basic, la syntaxe d'un Text(e) est: <b>Text(Y,X,"Un truc")</b><br /><ul>
+			<br />
+			
+			<label>Coordonnée texte sur x (horizontale) pour écran <b>couleur</b>: </label><input type="text" class="xtxcolor" value="" /><br />
+			<label>Coordonnée texte sur y (verticale)  pour écran <b>couleur</b>: </label><input type="text" class="ytxcolor" value=" "/><br /><br /><br />
+
+			<label>Coordonnée texte sur x (horizontale) pour écran <b>monochrome</b>: </label><input type="text" class="xtxmono" value=""/><br />
+			<label>Coordonnée texte sur y (verticale)  pour écran <b>monochrome</b>: </label><input type="text" class="ytxmono" value=""/><br />
+			<button class="goConv">Convertir</button><button class="restart">Recommencer</button>
+		</div>
+	</div>
 
 			
 			
@@ -75,3 +56,114 @@
 	<?php
 
 	require('footer.php');
+
+	?>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+	var mode = '';
+
+	jQuery(function($){
+    	$(".ConvPixel").hide();
+    	$(".ConvText").hide();
+	});
+
+
+
+	$(".goConv").click(function(){
+	
+	 button = $(this).html(); 
+
+	 if(mode == 'pxl'){
+
+		 var val1 = $(".xpxcolor").val();
+		 var val2 = $(".ypxcolor").val();
+		 var val3 = $(".xpxmono").val();
+		 var val4 = $(".xpxmono").val();
+
+	 	
+
+
+	 	if(!val1 && !val2 && val3 && val4){
+
+	 		//mono to color - pixel
+
+	 		$(".xpxcolor").val(parseInt(val3)*2.81);
+	 		$(".ypxcolor").val(parseInt(val4)*2.66);
+
+	 	}
+	 	if(val1 && val2 && !val3 && !val4){
+
+	 		//color to mono - pixel
+
+	 		$(".xpxmono").val(parseInt(val1)/2.81);
+	 		$(".ypxmono").val(parseInt(val2)/2.66);
+
+	 	}
+
+
+
+
+	 }else{
+
+	 	 var val1 = $(".xtxcolor").val();
+		 var val2 = $(".ytxcolor").val();
+	 	 var val3 = $(".xtxmono").val();
+	 	 var val4 = $(".xtxmono").val();
+
+	 	if(!val1 && !val2 && val3 && val4){
+
+	 		//mono to color - text
+
+	 		$(".xtxcolor").val(Math.round(parseInt(val3)*2.80));
+	 		$(".ytxcolor").val(Math.round(parseInt(val4)*2.63));
+
+	 	}
+	 	if(val1 && val2 && !val3 && !val4){
+
+	 		//color to mono - text
+
+	 		$(".xtxmono").val(Math.round(parseInt(val1)/2.80));
+	 		$(".ytxmono").val(Math.round(parseInt(val2)/2.63));
+
+	 	}
+
+	 }
+
+
+	});
+
+	$(".startPixel").click(function(){
+	
+		$(".ConvPixel").fadeIn('1000').show();
+		$(".ConvText").hide();
+		mode = 'pxl';
+
+	});
+	$(".startText").click(function(){
+	
+		$(".ConvPixel").hide();
+		$(".ConvText").fadeIn('1000').show();
+		mode = 'txt';
+
+	});
+
+	$(".restart").click(function(){
+		
+		 $(':input','#converter')
+   			.not(':button, :submit, :reset, :hidden')
+  			.val('')
+   			.removeAttr('checked')
+   			.removeAttr('selected');
+		
+
+	});
+
+
+
+
+
+</script>
+
+

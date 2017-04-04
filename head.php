@@ -20,10 +20,9 @@
 
 		<div class="menu">
 			<ul>
-				<li class="itemmenu"><a href="/ticonvertisseur">Accueil</a></li>
-				<li class="itemmenu"><a href="#">Documentation</a></li>
-				<li class="itemmenu"><a href="#">Votre espace</a></li>
-				<li class="itemmenu"><a href="#">A propos</a></li>
+				<li class="itemmenu"><a href="index.php">Accueil</a></li>
+				<li class="itemmenu"><a href="calc_coord.php">Conversion manuelle</a></li>
+				<li class="itemmenu"><a href="about.php">A propos</a></li>
 
 			</ul>
 
