@@ -50,6 +50,7 @@ if($_POST['upload'] == 'input'){
 	$_SESSION['lang'] = $lang2;
 	$_SESSION['type'] = $type2;
 	$_SESSION['filename'] = substr(strtoupper($_POST['filename']),0,8);
+	 $_SESSION['filename']= preg_replace('#[^[:alnum:]]#u', '',  $_SESSION['filename']);
 	$_SESSION['uploadMode'] = 'input';
 
 	
@@ -102,6 +103,9 @@ if($_POST['upload'] == 'input'){
 							 $tempName = substr($_FILES['fichier']['name'],0,stripos($_FILES['fichier']['name'],'.'));
 
 							 $_SESSION['filename'] = substr(strtoupper($tempName),0,8);
+
+							 $_SESSION['filename']= preg_replace('#[^[:alnum:]]#u', '',  $_SESSION['filename']);
+
 							
 									
 						}

@@ -16,6 +16,12 @@
 	$newPrgm->setContentFromString($source_code);
 	$newPrgm->saveVarToFile("exported", $_SESSION['filename']);
 
+	$getNewInfos = TIVarFile::loadFromFile('exported/'.$_SESSION['filename'].'.8xp');
+	$sizeNewProgram = $getNewInfos->size();
+
+	echo '<b>Taille du programme exporté:</b> '.$sizeNewProgram.' octets<br /><br />';
+	 if($_SESSION['uploadMode'] == 'file'){ ?><b>Gain taille: </b> <?=ceil(100*($_SESSION['sizeOfPrgm']/$sizeNewProgram)); ?> % <span class="imginter"><img src="template/img/int.png" alt="howto" width="20" title="Ratio entre le programme de base et le programme convertit" height="20" class="imginter" id="imginter"/></span><br /><br /> <?php } 
+
 	echo '<a href="exported/'.$_SESSION['filename'].'.8xp">Télécharge le programme</a>';
 
 
