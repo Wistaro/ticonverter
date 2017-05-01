@@ -21,6 +21,7 @@
 		<div class="menu">
 			<ul>
 				<li class="itemmenu"><a href="index.php">Accueil</a></li>
+				<li class="itemmenu"><a href="createCourse.php">Générateur de cours</a></li>
 				<li class="itemmenu"><a href="calc_coord.php">Conversion manuelle</a></li>
 				<li class="itemmenu"><a href="about.php">A propos</a></li>
 
