@@ -25,6 +25,8 @@
 		$size = strlen($course);
 
 		$Cptlines = 0;
+		$CptlinesSave = 0;
+		$CptPages = 1;
 		$YText = 0;
 		$XText = 0;
 
@@ -35,8 +37,9 @@
 				if($i % MAX_CHAR_LINE == 0){
 					
 					
-					$outputString.='Text('.$YText.','.$XText.',"'.substr($course, $Cptlines*MAX_CHAR_LINE, MAX_CHAR_LINE).'"):';
+					$outputString.='Text('.$YText.','.$XText.',"'.substr($course, $CptlinesSave*MAX_CHAR_LINE, MAX_CHAR_LINE).'"):';
 					$Cptlines++;
+					$CptlinesSave++;
 					$YText+=MIN_PAS_Y;
 				}
 
@@ -45,9 +48,15 @@
 					$outputString.='Pause :ClrDraw:';
 					$YText = 0;
 					$Cptlines = 0;
+					$CptPages++;
+
+					
+
 
 
 				}
+
+
 			}
 
 		$outputString.='Pause :ClrDraw:Disp " ';
@@ -68,6 +77,8 @@
 		$_SESSION['error_course'] = '<br /><span style="color:green;">Votre fichier est disponible ici: <a href="generatedCourses/'.$id_course.'.8xp">Télécharger</a></span>';
 
 		header('location: createCourse.php?mode=OK');
+
+
 
 
 
