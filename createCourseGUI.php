@@ -45,6 +45,7 @@
 
 	
 		<script type="text/javascript" src="js/courseGenerator.js"></script>
+		 <script src="js/tivars_test_utils.js" async></script>
 		 <script src="js/FileSaver.js" async></script>
 	    <script src="js/tivars_test.js" async></script>
 	     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

@@ -70,6 +70,7 @@
 
 				if(isMenu == 1){
 					inputStr = $('#'+j).val();
+					newCourse+="Lbl "+eval(j+1)+"\n";
 
 				}else{
 					inputStr = $('#1').val();
