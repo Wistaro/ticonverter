@@ -1,10 +1,17 @@
 
+		/*Course Generator V1.0		
+			Authors: William "Wistaro" Romiguières (main program)
+					 Adrien "Adriweb" Bertrand (TI_var_lib_ccp)
+
+			Help: tiplanet.org
+
+		*/
+
 		var newCourse = "0→Xmin:0→Ymin:1→∆X:1→∆Y:AxesOff:BackgroundOff:ClrDraw:";
 		var step = 0;
 		var isMenu = 0;
 		var options = new Array();
 		var nbOptions = 0;
-
 
 		function start(){
 
@@ -41,7 +48,6 @@
 
 				newCourse+=")\n";
 
-
 			  }else{
 
 			  	nbOptions = 1;
@@ -56,15 +62,11 @@
 
 		}
 
-
-
 		function generateCourse(){
 
 			var inputStr = new String;
 
 			for(var j = 0; j<=nbOptions-1;j++){
-
-				//var inputStr = "idtLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumrdhtrdtrdtrdtrdtrdhtrdtrdtrdtrdatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
 
 				if(isMenu == 1){
 					inputStr = $('#'+j).val();
@@ -72,8 +74,7 @@
 				}else{
 					inputStr = $('#1').val();
 
-				}
-				
+				}			
 
 				const MIN_PAS_Y = 12;
 				const MIN_PAS_X = 0;
@@ -147,7 +148,6 @@
 			/*END OF GENERATION*/
 
 		}
-
 
 	function addValue2Text(text2write){
 
