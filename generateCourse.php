@@ -29,40 +29,62 @@
 		$CptPages = 1;
 		$YText = 0;
 		$XText = 0;
+		$stopTransfFlag = 0;
+
+		$extCpt = 0;
 
 		$outputString = '0→Xmin:0→Ymin:1→∆X:1→∆Y:AxesOff:BackgroundOff:ClrDraw:';
 
-		for ($i=1; $i<=$size ; $i++) { 	
-
-				if($i % MAX_CHAR_LINE == 0){
-					
-					
-					$outputString.='Text('.$YText.','.$XText.',"'.substr($course, $CptlinesSave*MAX_CHAR_LINE, MAX_CHAR_LINE).'"):';
-					$Cptlines++;
-					$CptlinesSave++;
-					$YText+=MIN_PAS_Y;
-				}
-
-				if($Cptlines == LAST_LINE){
-
-					$outputString.='Pause :ClrDraw:';
-					$YText = 0;
-					$Cptlines = 0;
-					$CptPages++;
-
-					
 
 
+		for ($i=1; $i<=$size ; $i++) { 
 
-				}
+			if($stopTransfFlag == 0){
 
+				$extCpt++;
+
+			}
+
+
+			if(substr($course,$i-1,1) == '$' AND $stopTransfFlag == 0){
+
+				$stopTransfFlag = 1; //on arrete le traitement
+
+
+			}elseif (substr($course,$i-1,1) == '$' AND $stopTransfFlag == 1) {
+				
+				$stopTransfFlag = 0; //on reprend le traitement
+			}
+
+		 	
+			echo $stopTransfFlag;
+
+
+					if($extCpt % MAX_CHAR_LINE == 0){
+						
+						$outputString.='Text('.$YText.','.$XText.',"'.substr($course, $CptlinesSave*MAX_CHAR_LINE, MAX_CHAR_LINE).'"):'; 		
+						$Cptlines++;
+						$CptlinesSave++;
+						$YText+=MIN_PAS_Y;
+					}
+
+					if($Cptlines == LAST_LINE){
+
+						$outputString.='Pause :ClrDraw:';
+						$YText = 0;
+						$Cptlines = 0;
+						$CptPages++;
+
+
+				    }
+				
 
 			}
 
 		$outputString.='Pause :ClrDraw:Disp " ';
 
 
-		echo '<textarea>'.$outputString.'</textarea>';
+		echo '<textarea rows="20" cols="100">'.$outputString.'</textarea>';
 
 		/*Generate 8xp File*/
 		$id_course = uniqid();
@@ -76,7 +98,7 @@
 
 		$_SESSION['error_course'] = '<br /><span style="color:green;">Votre fichier est disponible ici: <a href="generatedCourses/'.$id_course.'.8xp">Télécharger</a></span>';
 
-		header('location: createCourse.php?mode=OK');
+		//header('location: createCourse.php?mode=OK');
 
 
 

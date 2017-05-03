@@ -60,7 +60,13 @@ a:hover
 
 
 }
+.loaderCourse{
 
+	position: relative;
+	top: 32px;
+
+
+}
 .imginter img:hover{
 
 		position: relative;
