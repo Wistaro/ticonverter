@@ -83,6 +83,7 @@
 				inputStr = inputStr.replace(/\"/g, "''");	//replacing ""
 				inputStr = inputStr.replace(/\n/g, "                              "); //replacing return	
 				inputStr = inputStr.replace(/→/g, "->");	//replacing arrow
+				inputStr = inputStr.replace(/ /g, "  "); //spaces more agreables on the screen
 
 				const MIN_PAS_Y = 12;
 				const MIN_PAS_X = 0;
