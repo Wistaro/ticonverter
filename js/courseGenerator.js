@@ -31,7 +31,7 @@
 
 			  	var menuName = prompt('Titre de votre menu?');
 			  	nbOptions = prompt('Nombre d\'options dans votre menu? (1 - 6)');
-			  	if(nbOptions < 1 && nbOptions >6) nbOptions = 1;
+			  	if(nbOptions < 1 || nbOptions > 6){ nbOptions = 1 } ;
 
 			  	newCourse += '\nLbl 0\nMenu(\"'+menuName.toUpperCase()+'\"';
 
@@ -148,7 +148,7 @@
 			
 
 			create8xpFile(titlePrgm,newCourse);
-			$('.infos').html('<b>Fichier généré . <br /></b>Merci d\'utiliser nos services!<br /><br /><a href="createCourseGUI.php">Générer un nouveau cours</a>');
+			$('.infos').html('<b>Fichier généré . <br />N\'oublie pas d\'installer également le fichier "ZTEXT" sur ta calculatrice! <i>(disponible ici: <a href="ressources/ZTEXT.8xp">Télécharger</a>)</i><br /><br /></b>Merci d\'utiliser nos services!<br /><br /><a href="createCourseGUI.php">Générer un nouveau cours</a>');
 			
 
 
