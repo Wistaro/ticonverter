@@ -7,11 +7,14 @@
 
 		*/
 
-		var newCourse = "0→Xmin:0→Ymin:1→∆X:1→∆Y:AxesOff:BackgroundOff:ClrDraw:";
+		var newCourse = "0→Xmin:0→Ymin:1→∆X:1→∆Y:AxesOff:BackgroundOff:ClrDraw:Trace:\n";
 		var step = 0;
 		var isMenu = 0;
 		var options = new Array();
 		var nbOptions = 0;
+		var goGen = 0;
+
+
 
 		function start(){
 
@@ -27,8 +30,8 @@
 			  	isMenu = 1;
 
 			  	var menuName = prompt('Titre de votre menu?');
-			  	nbOptions = prompt('Nombre d\'options dans votre menu? (1 - 7)');
-			  	if(nbOptions < 1 && nbOptions >7) nbOptions = 1;
+			  	nbOptions = prompt('Nombre d\'options dans votre menu? (1 - 6)');
+			  	if(nbOptions < 1 && nbOptions >6) nbOptions = 1;
 
 			  	newCourse += '\nLbl 0\nMenu(\"'+menuName.toUpperCase()+'\"';
 
@@ -46,7 +49,7 @@
 
 				$('.infos').html('Vous pouvez maintenant taper votre cours dans chaque partie puis cliquer sur générer.');
 
-				newCourse+=")\n";
+				newCourse+=",\"Quitter\",Q\n";
 
 			  }else{
 
@@ -75,7 +78,11 @@
 				}else{
 					inputStr = $('#1').val();
 
-				}			
+				}		
+
+				inputStr = inputStr.replace(/\"/g, "''");	//replacing ""
+				inputStr = inputStr.replace(/\n/g, "                              "); //replacing return	
+				inputStr = inputStr.replace(/→/g, "->");	//replacing arrow
 
 				const MIN_PAS_Y = 12;
 				const MIN_PAS_X = 0;
@@ -88,16 +95,28 @@
 				var YText = 0;
 				var XText = 0;
 
+				newCourse+="\n0→V\n";
+
+				var currentSubStr = String;
+
 				for (var i = 0; i <= inputStr.length - 1; i++) {
 
 				  if (!(i%MAX_CHAR_LINE)) {
-				    newCourse+= "Text(" + YText + "," + XText + ",\"" + inputStr.substring(i, i + MAX_CHAR_LINE) + "\n"
+
+				  	currentSubStr = inputStr.substring(i, i + MAX_CHAR_LINE);
+
+				  	/*FILTERING*/
+				  	//currentSubStr = currentSubStr.replace("\"","''");
+				  	//currentSubStr = filter(currentSubStr);
+
+				    //newCourse+= "Text(" + YText + "," + XText + ",\"" + currentSubStr + "\n"
+				    newCourse+= "\"" + currentSubStr + "\nprgmZTEXT\n"
 				    Cptlines++;
 				    CptlinesSave++;
 				    YText += MIN_PAS_Y;
 				  }
 				  if (Cptlines == LAST_LINE) {
-				    newCourse+= "Pause :ClrDraw\n";
+				    newCourse+= "Pause :ClrDraw:0→V\n";
 				    YText = 0;
 				    Cptlines = 0;
 				    CptPages++;
@@ -113,7 +132,12 @@
 
 			}
 
-			alert(newCourse);
+			newCourse+="\nLbl Q\nClrDraw:Disp \"";
+			var titlePrgm = $('#prgmName').val();
+			//newCourse+="\n\"      Titre:"+titlePrgm+"→Y₁\n";
+
+
+
 			$('.step2').fadeOut(500);
 			$('.buttonGenerate').fadeOut(500);
 			$('.nameOfPrgm').fadeOut(500);
@@ -121,29 +145,11 @@
 
 			/*STARTING GENERATION*/
 
-			const TIVarFile = Module['TIVarFile'];
-	        const TIVarType = Module['TIVarType'];
-	        const TIModel   = Module['TIModel'];
+			
 
-	        const name = $("#prgmName").val();
-	        const txt = unescape(encodeURIComponent(newCourse)); // encoding issues...
-
-	        const prgm = TIVarFile.createNew(TIVarType.createFromName("Program"), name, TIModel.createFromName("84+"));
-	        prgm.setContentFromString(txt);
-	        prgm.saveVarToFile("generatedCourses", name);
-
-	        const fileName = name + ".8xp";
-
-	        const file = FS.readFile(fileName, {encoding: 'binary'});
-	        if (file) {
-	            const blob = new Blob([file], {type: 'application/octet-stream'});
-	            window['saveAs'](blob, fileName);
-	            $('.infos').html('Génération terminée! Votre fichier est disponible au téléchargement en cliquant <a href="generatedCourses/'+fileName+'">ici</a>');
-
-	        } else {
-	            alert('Oops, something went wrong retrieving the generated .8xp file :(');
-	            $('.infos').html('Echec lors de la génération du fichier. Veuillez réessayer ou contactez l\'équipe.');
-	        }
+			create8xpFile(titlePrgm,newCourse);
+			$('.infos').html('<b>Fichier généré . <br /></b>Merci d\'utiliser nos services!<br /><br /><a href="createCourseGUI.php">Générer un nouveau cours</a>');
+			
 
 
 			/*END OF GENERATION*/
@@ -163,3 +169,43 @@
 
 	}
 
+
+	function create8xpFile(title,programm){
+
+		const TIVarFile = Module['TIVarFile'];
+        const TIVarType = Module['TIVarType'];
+        const TIModel   = Module['TIModel'];
+
+        const name = title;
+        const txt = unescape(encodeURIComponent(programm)); // encoding issues...
+
+       /* const options = new Module['options_t']();
+        options.set('useShortestTokens', 1);*/
+
+        const prgm = TIVarFile.createNew(TIVarType.createFromName("Program"), name, TIModel.createFromName("84+"));
+        prgm.setContentFromString(txt);
+        prgm.saveVarToFile("", name);
+
+        const fileName = name + ".8xp";
+
+        const file = FS.readFile(fileName, {encoding: 'binary'});
+        if (file) {
+            const blob = new Blob([file], {type: 'application/octet-stream'});
+            window['saveAs'](blob, fileName);
+        } else {
+            alert('Oops, something went wrong retrieving the generated .8xp file :(');
+        }
+
+
+
+
+
+	}
+
+	function filter(toBeFiltered){
+
+
+
+
+
+	}
