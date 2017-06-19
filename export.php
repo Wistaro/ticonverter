@@ -2,8 +2,8 @@
 
 	
 	$source_code = $_SESSION['src_conv'];
-	include_once "libAdriweb\src/autoloader.php";
-	include_once "libAdriweb\src/TypeHandlers/TH_0x05.php";
+	include_once "libAdriweb/src/autoloader.php";
+	include_once "libAdriweb/src/TypeHandlers/TH_0x05.php";
 	
 	use tivars\TIModel;
 	use tivars\TIVarFile;
