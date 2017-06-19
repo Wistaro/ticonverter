@@ -10,7 +10,7 @@ session_start();
 	$_SESSION['error_file_uploaded'] = 'ok';
 
 	/* Load Tivar-lib, by Adriweb */
-	include_once "libAdriweb\src/autoloader.php";
+	include_once "libAdriweb/src/autoloader.php";
 	use tivars\TIVarFile;
 	use tivars\TIVarType;
 	use tivars\TIVarTypes;
