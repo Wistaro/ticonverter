@@ -1,6 +1,6 @@
 
 		/*Course Generator V1.0		
-			Authors: William "Wistaro" Romiguières (main program)
+			Authors: Wistaro (main program)
 					 Adrien "Adriweb" Bertrand (TI_var_lib_ccp)
 
 			Help: tiplanet.org
